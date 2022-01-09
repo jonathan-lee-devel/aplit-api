@@ -4,13 +4,13 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import csrf from 'csurf';
 import helmet from 'helmet';
 import {connect} from 'mongoose';
 import expressSession from 'express-session';
 import passport from 'passport';
 
 import {passportConfig} from './config/Passport';
+import {UsersRouter} from './routes/users/routes';
 
 dotenv.config();
 
@@ -36,16 +36,17 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(
-    csrf({
-      cookie: {httpOnly: true},
-      ignoreMethods: ['GET'],
-    }),
-);
-app.use((req, res, next) => {
-  res.cookie('XSRF-TOKEN', req.csrfToken());
-  next();
-});
+// TODO re-enable CSRF
+// app.use(
+//     csrf({
+//       cookie: {httpOnly: true},
+//       ignoreMethods: ['GET'],
+//     }),
+// );
+// app.use((req, res, next) => {
+//   res.cookie('XSRF-TOKEN', req.csrfToken());
+//   next();
+// });
 
 connect(process.env.DATABASE_URL)
     .then((_) => {
@@ -54,6 +55,8 @@ connect(process.env.DATABASE_URL)
     .catch((err) => {
       console.error(err);
     });
+
+app.use('/users', UsersRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

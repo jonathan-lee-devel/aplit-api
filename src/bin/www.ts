@@ -24,15 +24,16 @@ const server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
+ *
+ * @param {Object} val value to be normalized
+ * @return {number | string | boolean} normalized port number
  */
-
 function normalizePort(val: any) {
   const thisPort = parseInt(val, 10);
 
@@ -51,8 +52,9 @@ function normalizePort(val: any) {
 
 /**
  * Event listener for HTTP server "error" event.
+ *
+ * @param {Object} error error to be handled.
  */
-
 function onError(error: any) {
   if (error.syscall !== 'listen') {
     throw error;
@@ -78,10 +80,9 @@ function onError(error: any) {
 /**
  * Event listener for HTTP server "listening" event.
  */
-
 function onListening() {
   const address = server.address();
   const bind =
-        typeof address === 'string' ? 'pipe ' + address : 'port ' + address.port;
+    typeof address === 'string' ? 'pipe ' + address : 'port ' + address.port;
   debug('Listening on ' + bind);
 }

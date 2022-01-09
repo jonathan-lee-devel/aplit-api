@@ -14,12 +14,13 @@ export const registerRoute = (
 ) => {
   router.post(
       '/register',
-      body('email', 'Only valid Ericsson e-mail addresses are allowed')
+      body('email', 'Only valid e-mail addresses are allowed')
           .exists()
-          .isEmail()
-          .custom((input) => {
-            return input.toString().endsWith('@ericsson.com');
-          }),
+          .isEmail(),
+      body('firstname', 'A first name must be provided')
+          .exists(),
+      body('lastname', 'A last name must be provided')
+          .exists(),
       body('password', 'Passwords must match')
           .exists()
           .custom((input, {req}) => {
