@@ -3,13 +3,16 @@ import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import {PasswordResetStatus} from './enum/status';
 import {HydratedDocument} from 'mongoose';
 import {User, UserModel} from '../../models/User';
-import {PasswordResetTokenModel} from '../../models/PasswordResetToken';
+import {
+  PasswordResetToken,
+  PasswordResetTokenModel,
+} from '../../models/PasswordResetToken';
+import {sendMail} from '../email/send';
 import {generatePasswordResetToken} from '../password-reset-token/generate';
 import {
   DEFAULT_EXPIRY_TIME_MINUTES,
   DEFAULT_TOKEN_SIZE,
 } from '../../config/Token';
-import {sendMail} from '../email/send';
 
 export const resetPassword = async (
     transporter: Transporter<SMTPTransport.SentMessageInfo>,
@@ -20,20 +23,27 @@ export const resetPassword = async (
     return PasswordResetStatus.AWAITING_EMAIL_VERIFICATION;
   }
 
-  const passwordResetTokenDocument =
-    await new PasswordResetTokenModel(
-        await generatePasswordResetToken(
-            DEFAULT_TOKEN_SIZE,
-            DEFAULT_EXPIRY_TIME_MINUTES,
-        ),
-    ).save();
+  const passwordResetTokenDocument: HydratedDocument<PasswordResetToken> =
+    await PasswordResetTokenModel.findOne({user: existingUser});
 
-  existingUser.passwordResetToken = passwordResetTokenDocument.id;
+  if (!passwordResetTokenDocument) {
+    console.error('Password reset token does not exist for user');
+    return PasswordResetStatus.AWAITING_EMAIL_VERIFICATION;
+  }
 
-  await existingUser.save();
+  const newPasswordResetToken =
+    await generatePasswordResetToken(
+        DEFAULT_TOKEN_SIZE,
+        DEFAULT_EXPIRY_TIME_MINUTES);
+
+  passwordResetTokenDocument.value = newPasswordResetToken.value;
+  passwordResetTokenDocument.expiryDate = newPasswordResetToken.expiryDate;
+
+  await passwordResetTokenDocument.save();
 
   sendMail(transporter, email, 'Password Reset',
-      `Please click the following link to reset your password: http://localhost:3000/users/password/reset?token=${passwordResetTokenDocument.value}`);
+      // eslint-disable-next-line max-len
+      `Please click the following link to reset your password: ${process.env.FRONT_END_URL}/password/reset/confirm?token=${passwordResetTokenDocument.value}`);
 
   return PasswordResetStatus.AWAITING_EMAIL_VERIFICATION;
 };

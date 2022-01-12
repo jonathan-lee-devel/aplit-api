@@ -25,7 +25,7 @@ export const passwordResetConfirmRoute = (router: Router, salt: string) => {
 
         switch (passwordResetStatus) {
           case PasswordResetStatus.SUCCESS:
-            return res.redirect(`${process.env.FRONT_END_URL}/login`);
+            return formatPasswordResetResponse(res, 200, passwordResetStatus);
           case PasswordResetStatus.INVALID_TOKEN:
           case PasswordResetStatus.EMAIL_VERIFICATION_EXPIRED:
             return formatPasswordResetResponse(res, 400, passwordResetStatus);
