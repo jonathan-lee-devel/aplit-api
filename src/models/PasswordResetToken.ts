@@ -2,13 +2,13 @@ import {model, Schema} from 'mongoose';
 import {ObjectID} from 'bson';
 import {User} from './User';
 
-export interface RegistrationVerificationToken {
+export interface PasswordResetToken {
   value: string;
   expiryDate: Date;
   user: User;
 }
 
-const schema = new Schema<RegistrationVerificationToken>({
+const schema = new Schema<PasswordResetToken>({
   value: {
     type: String,
     required: true,
@@ -26,5 +26,5 @@ const schema = new Schema<RegistrationVerificationToken>({
   },
 });
 
-export const RegistrationVerificationTokenModel =
-  model<RegistrationVerificationToken>('RegistrationVerificationToken', schema);
+export const PasswordResetTokenModel =
+  model<PasswordResetToken>('PasswordResetToken', schema);

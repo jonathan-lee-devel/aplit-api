@@ -4,7 +4,7 @@
   "private": true,
   "main": "dist/app.js",
   "scripts": {
-    "prebuild": "eslint -c .eslintrc.json --fix",
+    "prebuild": "eslint -c .eslintrc.js --fix",
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node dist/bin/www.js",

@@ -2,7 +2,7 @@ import {Router} from 'express';
 import {body, validationResult} from 'express-validator';
 import {Transporter} from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
-import {formatRegistrationResponse} from './helpers/format';
+import {formatRegistrationResponse} from './helpers/registration-format';
 import {RegistrationStatus} from '../../services/registration/enum/status';
 import {registerUser} from '../../services/registration/register';
 import {encodePassword} from '../../services/password/encode';
@@ -37,13 +37,15 @@ export const registerRoute = (
           return res.status(400).json({errors: errors.array()});
         }
 
-        const {email, password} = req.body;
+        const {email, firstname, lastname, password} = req.body;
 
         const hashedPassword = await encodePassword(salt, password);
 
         const registrationStatus = await registerUser(
             transporter,
             email,
+            firstname,
+            lastname,
             hashedPassword,
         );
 

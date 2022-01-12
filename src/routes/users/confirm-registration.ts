@@ -1,10 +1,10 @@
 import {Router} from 'express';
 import {query} from 'express-validator';
-import {formatRegistrationResponse} from './helpers/format';
+import {formatRegistrationResponse} from './helpers/registration-format';
 import {RegistrationStatus} from '../../services/registration/enum/status';
 import {confirmUserRegistration} from '../../services/registration/confirm';
 
-export const confirmRoute = (router: Router) => {
+export const confirmRegistrationRoute = (router: Router) => {
   router.get('/register/confirm', query('token').exists(), async (req, res) => {
     const {token} = req.query;
     if (!token) {
