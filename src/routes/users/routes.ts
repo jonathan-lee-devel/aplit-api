@@ -8,6 +8,8 @@ import {logoutRoute} from './logout';
 import {transporter} from '../../config/Mail';
 import {passwordResetConfirmRoute} from './password-reset-confirm';
 import {passwordResetRoute} from './password-reset';
+import {profileRoute} from './profile-route';
+import {profileUpdateRoute} from './profile-update-route';
 
 dotenv.config();
 
@@ -23,5 +25,7 @@ confirmRegistrationRoute(router);
 passwordResetRoute(router, transporter);
 loginRoute(router);
 logoutRoute(router);
+profileRoute(router);
+profileUpdateRoute(router);
 
 export {router as UsersRouter};
