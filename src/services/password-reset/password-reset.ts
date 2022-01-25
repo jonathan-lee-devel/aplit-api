@@ -1,20 +1,22 @@
 import {Transporter} from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
-import {PasswordResetStatus} from './enum/status';
+import {PasswordResetStatus} from './enum/password-reset-status';
 import {HydratedDocument} from 'mongoose';
 import {User, UserModel} from '../../models/User';
 import {
   PasswordResetToken,
   PasswordResetTokenModel,
 } from '../../models/PasswordResetToken';
-import {sendMail} from '../email/send';
-import {generatePasswordResetToken} from '../password-reset-token/generate';
+import {sendMail} from '../email/send-mail';
+import {
+  passwordResetTokenGenerate,
+} from '../password-reset-token/password-reset-token-generate';
 import {
   DEFAULT_EXPIRY_TIME_MINUTES,
   DEFAULT_TOKEN_SIZE,
 } from '../../config/Token';
 
-export const resetPassword = async (
+export const passwordReset = async (
     transporter: Transporter<SMTPTransport.SentMessageInfo>,
     email: string,
 ): Promise<PasswordResetStatus> => {
@@ -32,7 +34,7 @@ export const resetPassword = async (
   }
 
   const newPasswordResetToken =
-    await generatePasswordResetToken(
+    await passwordResetTokenGenerate(
         DEFAULT_TOKEN_SIZE,
         DEFAULT_EXPIRY_TIME_MINUTES);
 

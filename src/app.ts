@@ -11,6 +11,7 @@ import passport from 'passport';
 
 import {passportConfig} from './config/Passport';
 import {UsersRouter} from './routes/users/routes';
+import {PropertiesRouter} from './routes/properties/routes';
 
 dotenv.config();
 
@@ -57,6 +58,7 @@ connect(process.env.DATABASE_URL)
     });
 
 app.use('/users', UsersRouter);
+app.use('/properties', PropertiesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

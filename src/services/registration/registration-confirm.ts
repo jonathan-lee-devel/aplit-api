@@ -1,4 +1,4 @@
-import {RegistrationStatus} from './enum/status';
+import {RegistrationStatus} from './enum/registration-status';
 import {HydratedDocument} from 'mongoose';
 import {
   RegistrationVerificationToken,
@@ -6,7 +6,7 @@ import {
 } from '../../models/RegistrationVerificationToken';
 import {User, UserModel} from '../../models/User';
 
-export const confirmUserRegistration = async (
+export const registrationConfirm = async (
     token: string,
 ): Promise<RegistrationStatus> => {
   const foundToken: HydratedDocument<RegistrationVerificationToken> =

@@ -1,19 +1,25 @@
 import {Router} from 'express';
 import {body} from 'express-validator';
-import {confirmPasswordReset} from '../../services/password-reset/confirm';
-import {PasswordResetStatus} from '../../services/password-reset/enum/status';
+import {
+  passwordResetConfirm,
+} from '../../services/password-reset/password-reset-confirm';
+import {
+  PasswordResetStatus,
+} from '../../services/password-reset/enum/password-reset-status';
 import {formatPasswordResetResponse} from './helpers/password-reset-format';
 
 export const passwordResetConfirmRoute = (router: Router, salt: string) => {
   router.post('/password/reset/confirm',
       body('token').exists(),
-      body('password', 'Passwords must match')
+      body('password', 'Passwords must match and be at least 8 characters long')
           .exists()
+          .isLength({min: 8})
           .custom((input, {req}) => {
             return input === req.body.confirm_password;
           }),
-      body('confirm_password', 'Passwords must match')
+      body('confirm_password', 'Passwords must match and be at least 8 characters long')
           .exists()
+          .isLength({min: 8})
           .custom((input, {req}) => {
             return input === req.body.password;
           }),
@@ -21,7 +27,7 @@ export const passwordResetConfirmRoute = (router: Router, salt: string) => {
         const {token, password} = req.body;
 
         const passwordResetStatus =
-          await confirmPasswordReset(token, salt, password);
+          await passwordResetConfirm(token, salt, password);
 
         switch (passwordResetStatus) {
           case PasswordResetStatus.SUCCESS:

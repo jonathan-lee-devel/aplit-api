@@ -1,12 +1,12 @@
 import {HydratedDocument} from 'mongoose';
-import {RegistrationStatus} from './enum/status';
+import {RegistrationStatus} from './enum/registration-status';
 import {User, UserModel} from '../../models/User';
-import {sendMail} from '../email/send';
+import {sendMail} from '../email/send-mail';
 import {Transporter} from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import {
-  generateRegistrationVerificationToken,
-} from '../registration-verification-token/generate';
+  registrationVerificationTokenGenerate,
+} from '../registration-verification-token/registration-verification-token-generate';
 import {
   RegistrationVerificationTokenModel,
 } from '../../models/RegistrationVerificationToken';
@@ -15,9 +15,11 @@ import {
   DEFAULT_TOKEN_SIZE,
 } from '../../config/Token';
 import {PasswordResetTokenModel} from '../../models/PasswordResetToken';
-import {generatePasswordResetToken} from '../password-reset-token/generate';
+import {
+  passwordResetTokenGenerate,
+} from '../password-reset-token/password-reset-token-generate';
 
-export const registerUser = async (
+export const registrationRegister = async (
     transporter: Transporter<SMTPTransport.SentMessageInfo>,
     email: string,
     firstname: string,
@@ -30,7 +32,7 @@ export const registerUser = async (
 
   const registrationVerificationTokenDocument =
     await new RegistrationVerificationTokenModel(
-        await generateRegistrationVerificationToken(
+        await registrationVerificationTokenGenerate(
             DEFAULT_TOKEN_SIZE,
             DEFAULT_EXPIRY_TIME_MINUTES,
         ),
@@ -39,7 +41,7 @@ export const registerUser = async (
   // Generate an expired token to satisfy user requirement
   const passwordResetVerificationTokenDocument =
     await new PasswordResetTokenModel(
-        await generatePasswordResetToken(
+        await passwordResetTokenGenerate(
             DEFAULT_TOKEN_SIZE,
             0,
         ),

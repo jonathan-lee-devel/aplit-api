@@ -4,7 +4,7 @@ import {
 import {randomBytes} from 'crypto';
 import {addMinutes} from 'date-fns';
 
-export const generateRegistrationVerificationToken = async (
+export const registrationVerificationTokenGenerate = async (
     tokenSize: number,
     expiryTimeMinutes: number,
 ): Promise<RegistrationVerificationToken> => {

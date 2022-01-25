@@ -1,5 +1,7 @@
 import {Response} from 'express-serve-static-core';
-import {RegistrationStatus} from '../../../services/registration/enum/status';
+import {
+  RegistrationStatus,
+} from '../../../services/registration/enum/registration-status';
 
 export const formatRegistrationResponse = (
     res: Response,

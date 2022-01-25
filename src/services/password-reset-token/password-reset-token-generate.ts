@@ -2,7 +2,7 @@ import {PasswordResetToken} from '../../models/PasswordResetToken';
 import {randomBytes} from 'crypto';
 import {addMinutes} from 'date-fns';
 
-export const generatePasswordResetToken = async (
+export const passwordResetTokenGenerate = async (
     tokenSize: number,
     expiryTimeMinutes: number,
 ): Promise<PasswordResetToken> => {

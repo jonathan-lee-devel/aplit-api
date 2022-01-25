@@ -1,13 +1,13 @@
-import {PasswordResetStatus} from './enum/status';
+import {PasswordResetStatus} from './enum/password-reset-status';
 import {HydratedDocument} from 'mongoose';
 import {
   PasswordResetToken,
   PasswordResetTokenModel,
 } from '../../models/PasswordResetToken';
 import {User, UserModel} from '../../models/User';
-import {encodePassword} from '../password/encode';
+import {passwordEncode} from '../password/password-encode';
 
-export const confirmPasswordReset = async (
+export const passwordResetConfirm = async (
     token: string,
     salt: string,
     password: string,
@@ -28,7 +28,7 @@ export const confirmPasswordReset = async (
   }
 
   if (foundToken.expiryDate.getTime() > new Date().getTime()) {
-    user.password = await encodePassword(salt, password);
+    user.password = await passwordEncode(salt, password);
     await user.save();
     foundToken.expiryDate = new Date();
     await foundToken.save();

@@ -2,7 +2,7 @@ import {UserProfileDto} from '../../dto/UserProfileDto';
 import {User, UserModel} from '../../models/User';
 import {HydratedDocument} from 'mongoose';
 
-export const getUserProfile = async (
+export const userProfileGet = async (
     email: string,
 ) : Promise<UserProfileDto> => {
   const userModel: HydratedDocument<User> = await UserModel.findOne({email});

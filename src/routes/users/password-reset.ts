@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import {query, validationResult} from 'express-validator';
-import {resetPassword} from '../../services/password-reset/reset';
+import {passwordReset} from '../../services/password-reset/password-reset';
 import {Transporter} from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import {formatPasswordResetResponse} from './helpers/password-reset-format';
@@ -21,7 +21,7 @@ export const passwordResetRoute = (
 
         const {email} = req.query;
 
-        const passwordResetStatus = await resetPassword(transporter, email);
+        const passwordResetStatus = await passwordReset(transporter, email);
 
         return formatPasswordResetResponse(res, 200, passwordResetStatus);
       },

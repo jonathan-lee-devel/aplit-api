@@ -1,5 +1,5 @@
 import {Transporter} from 'nodemailer';
-import {EmailSendStatus} from './enum/status';
+import {EmailSendStatus} from './enum/email-send-status';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
 export const sendMail = async (

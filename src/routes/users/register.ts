@@ -3,9 +3,13 @@ import {body, validationResult} from 'express-validator';
 import {Transporter} from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import {formatRegistrationResponse} from './helpers/registration-format';
-import {RegistrationStatus} from '../../services/registration/enum/status';
-import {registerUser} from '../../services/registration/register';
-import {encodePassword} from '../../services/password/encode';
+import {
+  RegistrationStatus,
+} from '../../services/registration/enum/registration-status';
+import {
+  registrationRegister,
+} from '../../services/registration/registration-register';
+import {passwordEncode} from '../../services/password/password-encode';
 
 export const registerRoute = (
     router: Router,
@@ -21,13 +25,15 @@ export const registerRoute = (
           .exists(),
       body('lastname', 'A last name must be provided')
           .exists(),
-      body('password', 'Passwords must match')
+      body('password', 'Passwords must match and be at least 8 characters long')
           .exists()
+          .isLength({min: 8})
           .custom((input, {req}) => {
             return input === req.body.confirm_password;
           }),
-      body('confirm_password', 'Passwords must match')
+      body('confirm_password', 'Passwords must match and be at least 8 characters long')
           .exists()
+          .isLength({min: 8})
           .custom((input, {req}) => {
             return input === req.body.password;
           }),
@@ -39,9 +45,9 @@ export const registerRoute = (
 
         const {email, firstname, lastname, password} = req.body;
 
-        const hashedPassword = await encodePassword(salt, password);
+        const hashedPassword = await passwordEncode(salt, password);
 
-        const registrationStatus = await registerUser(
+        const registrationStatus = await registrationRegister(
             transporter,
             email,
             firstname,

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 
-export const encodePassword = async (
+export const passwordEncode = async (
     salt: string,
     password: string,
 ): Promise<string> => {
