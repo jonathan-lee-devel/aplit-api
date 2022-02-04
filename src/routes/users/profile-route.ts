@@ -6,7 +6,7 @@ import {isLoggedIn} from '../../config/Auth';
 export const profileRoute = (
     router: Router,
 ) => {
-  router.get('/user-profile', isLoggedIn,
+  router.get('/profile', isLoggedIn,
       query('email', 'Only valid e-mail addresses are allowed')
           .exists()
           .isEmail(),

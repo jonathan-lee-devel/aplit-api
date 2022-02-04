@@ -6,7 +6,7 @@ import {userProfileUpdate} from '../../services/user-profile/profile-update';
 export const profileUpdateRoute = (
     router: Router,
 ) => {
-  router.patch('/user-profile', isLoggedIn,
+  router.patch('/profile', isLoggedIn,
       body('email',
           'Only the logged in user can edit their user-profile')
           .custom((input, meta) => {

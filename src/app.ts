@@ -1,19 +1,17 @@
 import createError from 'http-errors';
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import logger from 'morgan';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import helmet from 'helmet';
 import {connect} from 'mongoose';
 import expressSession from 'express-session';
-import passport from 'passport';
-
 import {passportConfig} from './config/Passport';
+import {loggerConfig, getLoggingPrefix} from './config/Logger';
 import {UsersRouter} from './routes/users/routes';
 import {PropertiesRouter} from './routes/properties/routes';
-
 dotenv.config();
+const logger = loggerConfig();
 
 const app = express();
 app.use(
@@ -23,11 +21,10 @@ app.use(
       saveUninitialized: false,
     }),
 );
-passportConfig();
+const passport = passportConfig();
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(helmet.hidePoweredBy());
-app.use(logger('dev'));
 app.use(
     cors({
       credentials: true,
@@ -51,7 +48,10 @@ app.use(cookieParser());
 
 connect(process.env.DATABASE_URL)
     .then((_) => {
-      console.log('Connected to database');
+      logger.info(
+          getLoggingPrefix(),
+          'Connected to database: %s', process.env.DATABASE_URL,
+      );
     })
     .catch((err) => {
       console.error(err);

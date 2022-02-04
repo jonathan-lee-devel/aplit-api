@@ -4,7 +4,7 @@ import {HydratedDocument} from 'mongoose';
 import {User, UserModel} from '../models/User';
 import bcrypt from 'bcrypt';
 
-export const passportConfig = () => {
+export const passportConfig = (): passport.PassportStatic => {
   passport.use(
       new LocalStrategy(async (username, password, done) => {
         try {
@@ -44,4 +44,6 @@ export const passportConfig = () => {
       done(err, user);
     });
   });
+
+  return passport;
 };
