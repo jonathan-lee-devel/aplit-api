@@ -2,60 +2,33 @@ import createError from 'http-errors';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
-import cors from 'cors';
 import helmet from 'helmet';
-import {connect} from 'mongoose';
-import expressSession from 'express-session';
 import {passportConfig} from './config/Passport';
 import {loggerConfig, getLoggingPrefix} from './config/Logger';
+import {logAuthError} from './config/Auth';
+import {databaseConfig} from './config/Database';
+import {expressSessionConfig} from './config/Session';
+import {corsConfig} from './config/Cors';
 import {UsersRouter} from './routes/users/routes';
 import {PropertiesRouter} from './routes/properties/routes';
+import {csrfConfig, csrfSetCookie} from "./config/Csrf";
+
 dotenv.config();
 const logger = loggerConfig();
 
 const app = express();
-app.use(
-    expressSession({
-      secret: process.env.SESSION_SECRET,
-      resave: false,
-      saveUninitialized: false,
-    }),
-);
+databaseConfig(logger);
+app.use(expressSessionConfig());
 const passport = passportConfig();
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(helmet.hidePoweredBy());
-app.use(
-    cors({
-      credentials: true,
-      origin: process.env.FRONT_END_URL,
-    }),
-);
+app.use(corsConfig());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 // TODO re-enable CSRF
-// app.use(
-//     csrf({
-//       cookie: {httpOnly: true},
-//       ignoreMethods: ['GET'],
-//     }),
-// );
-// app.use((req, res, next) => {
-//   res.cookie('XSRF-TOKEN', req.csrfToken());
-//   next();
-// });
-
-connect(process.env.DATABASE_URL)
-    .then((_) => {
-      logger.info(
-          getLoggingPrefix(),
-          'Connected to database: %s', process.env.DATABASE_URL,
-      );
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+app.use(logAuthError);
 
 app.use('/users', UsersRouter);
 app.use('/properties', PropertiesRouter);
@@ -81,6 +54,7 @@ app.use(
       res.locals.message = err.message;
       res.locals.error = req.app.get('env') === 'development' ? err : {};
 
+      logger.error(getLoggingPrefix(), 'Error: %j', err);
       res.status(err.status || 500);
       res.json({error: err});
     },
