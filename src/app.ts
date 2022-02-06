@@ -11,7 +11,6 @@ import {expressSessionConfig} from './config/Session';
 import {corsConfig} from './config/Cors';
 import {UsersRouter} from './routes/users/routes';
 import {PropertiesRouter} from './routes/properties/routes';
-import {csrfConfig, csrfSetCookie} from "./config/Csrf";
 
 dotenv.config();
 const logger = loggerConfig();
