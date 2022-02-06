@@ -1,7 +1,8 @@
 import {Router} from 'express';
 import passport from 'passport';
+import npmlog from 'npmlog';
 
-export const loginRoute = (router: Router) => {
+export const loginRoute = (logger: npmlog.Logger, router: Router) => {
   router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, _) => {
       if (err) {

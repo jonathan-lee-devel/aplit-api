@@ -12,9 +12,9 @@ import {propertyCreate} from '../../services/properties/property-create';
 import {getLoggingPrefix} from '../../config/Logger';
 
 export const propertyCreateRoute = (
+    logger: npmlog.Logger,
     router: Router,
     transporter: Transporter<SMTPTransport.SentMessageInfo>,
-    logger: npmlog.Logger,
 ) => {
   router.post('/create',
       body('title', 'Title must be of length 5-25 characters')

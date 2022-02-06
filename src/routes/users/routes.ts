@@ -5,11 +5,14 @@ import {registerRoute} from './register';
 import {confirmRegistrationRoute} from './confirm-registration';
 import {loginRoute} from './login';
 import {logoutRoute} from './logout';
+import {loggerConfig} from '../../config/Logger';
 import {transporter} from '../../config/Mail';
 import {passwordResetConfirmRoute} from './password-reset-confirm';
 import {passwordResetRoute} from './password-reset';
 import {profileRoute} from './profile-route';
 import {profileUpdateRoute} from './profile-update-route';
+
+const logger = loggerConfig();
 
 dotenv.config();
 
@@ -18,14 +21,14 @@ const router = express.Router();
 
 bcrypt.genSalt((err, salt) => {
   if (err) throw err;
-  registerRoute(router, salt, transporter);
-  passwordResetConfirmRoute(router, salt);
+  registerRoute(logger, router, salt, transporter);
+  passwordResetConfirmRoute(logger, router, salt);
 });
-confirmRegistrationRoute(router);
-passwordResetRoute(router, transporter);
-loginRoute(router);
-logoutRoute(router);
-profileRoute(router);
-profileUpdateRoute(router);
+confirmRegistrationRoute(logger, router);
+passwordResetRoute(logger, router, transporter);
+loginRoute(logger, router);
+logoutRoute(logger, router);
+profileRoute(logger, router);
+profileUpdateRoute(logger, router);
 
 export {router as UsersRouter};

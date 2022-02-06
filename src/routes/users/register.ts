@@ -2,6 +2,7 @@ import {Router} from 'express';
 import {body, validationResult} from 'express-validator';
 import {Transporter} from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import npmlog from 'npmlog';
 import {formatRegistrationResponse} from './helpers/registration-format';
 import {
   RegistrationStatus,
@@ -12,6 +13,7 @@ import {
 import {passwordEncode} from '../../services/password/password-encode';
 
 export const registerRoute = (
+    logger: npmlog.Logger,
     router: Router,
     salt: string,
     transporter: Transporter<SMTPTransport.SentMessageInfo>,
@@ -31,7 +33,8 @@ export const registerRoute = (
           .custom((input, {req}) => {
             return input === req.body.confirm_password;
           }),
-      body('confirm_password', 'Passwords must match and be at least 8 characters long')
+      body('confirm_password',
+          'Passwords must match and be at least 8 characters long')
           .exists()
           .isLength({min: 8})
           .custom((input, {req}) => {
@@ -48,6 +51,7 @@ export const registerRoute = (
         const hashedPassword = await passwordEncode(salt, password);
 
         const registrationStatus = await registrationRegister(
+            logger,
             transporter,
             email,
             firstname,

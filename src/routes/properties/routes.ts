@@ -10,6 +10,6 @@ dotenv.config();
 // eslint-disable-next-line new-cap
 const router = express.Router();
 
-propertyCreateRoute(router, transporter, logger);
+propertyCreateRoute(logger, router, transporter);
 
 export {router as PropertiesRouter};

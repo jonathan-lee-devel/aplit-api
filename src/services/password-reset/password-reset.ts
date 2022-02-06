@@ -1,5 +1,6 @@
 import {Transporter} from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import npmlog from 'npmlog';
 import {PasswordResetStatus} from './enum/password-reset-status';
 import {HydratedDocument} from 'mongoose';
 import {User, UserModel} from '../../models/User';
@@ -17,6 +18,7 @@ import {
 } from '../../config/Token';
 
 export const passwordReset = async (
+    logger: npmlog.Logger,
     transporter: Transporter<SMTPTransport.SentMessageInfo>,
     email: string,
 ): Promise<PasswordResetStatus> => {
@@ -43,7 +45,7 @@ export const passwordReset = async (
 
   await passwordResetTokenDocument.save();
 
-  sendMail(transporter, email, 'Password Reset',
+  sendMail(logger, transporter, email, 'Password Reset',
       // eslint-disable-next-line max-len
       `Please click the following link to reset your password: ${process.env.FRONT_END_URL}/password/reset/confirm?token=${passwordResetTokenDocument.value}`);
 

@@ -1,5 +1,6 @@
 import {Router} from 'express';
-import {query} from 'express-validator';
+import {query, validationResult} from 'express-validator';
+import npmlog from 'npmlog';
 import {formatRegistrationResponse} from './helpers/registration-format';
 import {
   RegistrationStatus,
@@ -7,12 +8,26 @@ import {
 import {
   registrationConfirm,
 } from '../../services/registration/registration-confirm';
+import {getLoggingPrefix} from '../../config/Logger';
 
-export const confirmRegistrationRoute = (router: Router) => {
+export const confirmRegistrationRoute = (
+    logger: npmlog.Logger, router: Router
+) => {
   router.get('/register/confirm', query('token').exists(), async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.info(
+          getLoggingPrefix(), 'Bad request: %j', errors.array(),
+      );
+      return res.status(400).json({errors: errors.array()});
+    }
     const {token} = req.query;
     if (!token) {
       // Strange behaviour with express-validator for query parameter
+      logger.info(
+          getLoggingPrefix(),
+          'Bad request: missing required query parameter \'token\'',
+      );
       return res.status(400).json({
         errors: [
           {

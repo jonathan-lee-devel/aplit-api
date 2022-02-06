@@ -1,8 +1,11 @@
 import {Transporter} from 'nodemailer';
 import {EmailSendStatus} from './enum/email-send-status';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import npmlog from 'npmlog';
+import {getLoggingPrefix} from '../../config/Logger';
 
 export const sendMail = async (
+    logger: npmlog.Logger,
     transporter: Transporter<SMTPTransport.SentMessageInfo>,
     addressTo: string,
     subject: string,
@@ -20,7 +23,10 @@ export const sendMail = async (
           console.error(err);
           return EmailSendStatus.FAILED;
         }
-        console.log(`E-mail sent with response: ${info.response}`);
+        logger.info(
+            getLoggingPrefix(), 'E-mail sent to %s with response: %s',
+            addressTo, info.response,
+        );
         return EmailSendStatus.SENT;
       },
   );
