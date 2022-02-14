@@ -5,10 +5,7 @@ import npmlog from 'npmlog';
 import {body, validationResult} from 'express-validator';
 import {isLoggedIn} from '../../config/Auth';
 import {verifyEmail} from '../../services/email/verify-email';
-import {
-  PropertyCreationStatus,
-} from '../../services/properties/enum/property-creation-status';
-import {propertyCreate} from '../../services/properties/property-create';
+import {createProperty} from '../../services/properties/create-property';
 import {getLoggingPrefix} from '../../config/Logger';
 
 export const propertyCreateRoute = (
@@ -40,25 +37,26 @@ export const propertyCreateRoute = (
 
         const {title, tenants} = req.body;
 
-        const propertyCreationStatus = await propertyCreate(
+        const propertyContainer = await createProperty(
+            logger,
             transporter,
             title,
             tenants,
             // @ts-ignore
             req.user,
+            // @ts-ignore
+            req.user,
         );
 
-        switch (propertyCreationStatus) {
-          case PropertyCreationStatus.SUCCESS:
-            return res.status(200).json({
-              title, tenants,
-            });
-          default:
-            return res.status(500)
-                .json(
-                    {propertyCreationStatus: propertyCreationStatus},
-                );
+        if (propertyContainer.status === 200) {
+          return res
+              .status(propertyContainer.status)
+              .json(propertyContainer.data);
         }
+        logger.error(
+            getLoggingPrefix(), 'Error has occurred while creating property'
+        );
+        return res.status(500).json({message: 'An error has occurred'});
       },
   );
 };

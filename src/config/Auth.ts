@@ -17,11 +17,21 @@ export const logAuthError = (
 ) => {
   res.on('finish', () => {
     if (res.statusCode === 401 || res.statusCode === 403) {
+      let username = undefined;
+      if (req.body.email) {
+        username = req.body.email;
+      } else if (req.user) {
+        // @ts-ignore
+        username = req.user.email;
+      } else if (req.body.username) {
+        username = req.body.username;
+      }
       logger.info(
           getLoggingPrefix(),
           'Authentication/Authorization error (%s)' +
-          ' at %s from %s {"username":"%s"}',
-          res.statusCode, req.url, req.ip, req.body.username,
+                ' at %s%s from %s {"username":"%s"}',
+          res.statusCode, req.baseUrl, req.url,
+          req.ip, username,
       );
     }
   });

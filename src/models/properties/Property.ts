@@ -4,12 +4,19 @@ import {ObjectID} from 'bson';
 
 
 export interface Property {
+  id: string;
   title: string;
   tenants: string[];
-  user: User;
+  createdBy: User;
+  admin: User;
 }
 
 const schema = new Schema<Property>({
+  id: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   title: {
     type: String,
     required: true,
@@ -20,7 +27,12 @@ const schema = new Schema<Property>({
     required: true,
     unique: false,
   },
-  user: {
+  createdBy: {
+    type: ObjectID,
+    required: true,
+    unique: false,
+  },
+  admin: {
     type: ObjectID,
     required: true,
     unique: false,
