@@ -4,7 +4,7 @@ import {isLoggedIn} from '../../config/Auth';
 import {getProperty} from '../../services/properties/get-property';
 import {getLoggingPrefix} from '../../config/Logger';
 
-export const propertyRoute = (
+export const getPropertyRoute = (
     logger: npmlog.Logger,
     router: Router,
 ) => {

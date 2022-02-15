@@ -11,7 +11,7 @@ import {
 import {getLoggingPrefix} from '../../config/Logger';
 
 export const confirmRegistrationRoute = (
-    logger: npmlog.Logger, router: Router
+    logger: npmlog.Logger, router: Router,
 ) => {
   router.get('/register/confirm', query('token').exists(), async (req, res) => {
     const errors = validationResult(req);

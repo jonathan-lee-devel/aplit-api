@@ -10,7 +10,7 @@ import {databaseConfig} from './config/Database';
 import {expressSessionConfig} from './config/Session';
 import {corsConfig} from './config/Cors';
 import {UsersRouter} from './routes/users/routes';
-import {PropertiesRouter} from './routes/properties/routes';
+import {PropertiesRouter} from './routes/properties/property-routes';
 
 dotenv.config();
 const logger = loggerConfig();

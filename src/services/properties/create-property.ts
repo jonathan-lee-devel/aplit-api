@@ -36,7 +36,7 @@ export const createProperty = async (
   }
 
   return {
-    status: 200,
+    status: 201,
     data: property,
   };
 };

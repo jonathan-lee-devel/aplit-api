@@ -8,7 +8,7 @@ import {verifyEmail} from '../../services/email/verify-email';
 import {createProperty} from '../../services/properties/create-property';
 import {getLoggingPrefix} from '../../config/Logger';
 
-export const propertyCreateRoute = (
+export const postPropertyRoute = (
     logger: npmlog.Logger,
     router: Router,
     transporter: Transporter<SMTPTransport.SentMessageInfo>,
@@ -48,7 +48,7 @@ export const propertyCreateRoute = (
             req.user,
         );
 
-        if (propertyContainer.status === 200) {
+        if (propertyContainer.status === 201) {
           return res
               .status(propertyContainer.status)
               .json(propertyContainer.data);
