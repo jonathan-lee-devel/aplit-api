@@ -3,10 +3,10 @@ import {body, validationResult} from 'express-validator';
 import npmlog from 'npmlog';
 import {
   passwordResetConfirm,
-} from '../../services/password-reset/password-reset-confirm';
+} from '../../services/password/confirm-password-reset';
 import {
   PasswordResetStatus,
-} from '../../services/password-reset/enum/password-reset-status';
+} from '../../services/password/enum/password-reset-status';
 import {formatPasswordResetResponse} from './helpers/password-reset-format';
 import {getLoggingPrefix} from '../../config/Logger';
 

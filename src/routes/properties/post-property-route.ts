@@ -1,15 +1,14 @@
 import {Router} from 'express';
 import {Transporter} from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
-import npmlog from 'npmlog';
 import {body, validationResult} from 'express-validator';
 import {isLoggedIn} from '../../config/Auth';
 import {verifyEmail} from '../../services/email/verify-email';
-import {createProperty} from '../../services/properties/create-property';
-import {getLoggingPrefix} from '../../config/Logger';
+import {createProperty} from '../../services/properties';
+import {Logger} from '../../generic/Logger';
 
 export const postPropertyRoute = (
-    logger: npmlog.Logger,
+    logger: Logger,
     router: Router,
     transporter: Transporter<SMTPTransport.SentMessageInfo>,
 ) => {
@@ -54,7 +53,7 @@ export const postPropertyRoute = (
               .json(propertyContainer.data);
         }
         logger.error(
-            getLoggingPrefix(), 'Error has occurred while creating property'
+            getLoggingPrefix(), 'Error has occurred while creating property',
         );
         return res.status(500).json({message: 'An error has occurred'});
       },

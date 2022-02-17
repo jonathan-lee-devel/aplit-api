@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import {query, validationResult} from 'express-validator';
-import {passwordReset} from '../../services/password-reset/password-reset';
+import {resetPassword} from '../../services/password/reset-password';
 import {Transporter} from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import npmlog from 'npmlog';
@@ -23,7 +23,7 @@ export const passwordResetRoute = (
 
         const {email} = req.query;
 
-        const passwordResetStatus = await passwordReset(
+        const passwordResetStatus = await resetPassword(
             logger, transporter, email,
         );
 

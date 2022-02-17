@@ -1,11 +1,10 @@
-import npmlog from 'npmlog';
 import {Router} from 'express';
 import {isLoggedIn} from '../../config/Auth';
-import {getProperty} from '../../services/properties/get-property';
-import {getLoggingPrefix} from '../../config/Logger';
+import {getProperty} from '../../services/properties';
+import {Logger} from '../../generic/Logger';
 
 export const getPropertyRoute = (
-    logger: npmlog.Logger,
+    logger: Logger,
     router: Router,
 ) => {
   router.get('/:id', isLoggedIn, async (req, res, _) => {

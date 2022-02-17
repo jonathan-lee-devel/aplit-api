@@ -1,7 +1,7 @@
 import {Response} from 'express-serve-static-core';
 import {
   PasswordResetStatus,
-} from '../../../services/password-reset/enum/password-reset-status';
+} from '../../../services/password/enum/password-reset-status';
 
 export const formatPasswordResetResponse = (
     res: Response,

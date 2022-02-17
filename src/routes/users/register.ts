@@ -10,7 +10,7 @@ import {
 import {
   registrationRegister,
 } from '../../services/registration/registration-register';
-import {passwordEncode} from '../../services/password/password-encode';
+import {passwordEncode} from '../../services/password/encode-password';
 
 export const registerRoute = (
     logger: npmlog.Logger,

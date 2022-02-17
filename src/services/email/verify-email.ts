@@ -1,7 +1,7 @@
-export const verifyEmail = (
-    emailToVerify: string,
-): boolean => {
-  // eslint-disable-next-line max-len
-  const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-  return emailRegexp.test(emailToVerify);
+export const makeVerifyEmail = () => {
+  return function(emailToVerify: string): boolean {
+    // eslint-disable-next-line max-len
+    const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    return emailRegexp.test(emailToVerify);
+  };
 };

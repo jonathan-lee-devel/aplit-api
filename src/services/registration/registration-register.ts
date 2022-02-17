@@ -7,7 +7,7 @@ import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import npmlog from 'npmlog';
 import {
   registrationVerificationTokenGenerate,
-} from '../registration-verification-token/registration-verification-token-generate';
+} from './registration-verification-token-generate';
 import {
   RegistrationVerificationTokenModel,
 } from '../../models/RegistrationVerificationToken';
@@ -18,7 +18,7 @@ import {
 import {PasswordResetTokenModel} from '../../models/PasswordResetToken';
 import {
   passwordResetTokenGenerate,
-} from '../password-reset-token/password-reset-token-generate';
+} from '../password/generate-password-reset-token';
 
 export const registrationRegister = async (
     logger: npmlog.Logger,
