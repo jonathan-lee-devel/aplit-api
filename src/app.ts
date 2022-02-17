@@ -4,16 +4,18 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 import {passportConfig} from './config/Passport';
-import {loggerConfig, getLoggingPrefix} from './config/Logger';
-import {logAuthError} from './config/Auth';
+import {interceptAndLogAuthError} from './config/Auth';
 import {databaseConfig} from './config/Database';
 import {expressSessionConfig} from './config/Session';
 import {corsConfig} from './config/Cors';
 import {UsersRouter} from './routes/users/routes';
 import {PropertiesRouter} from './routes/properties/property-routes';
+import {Logger} from './generic/Logger';
 
 dotenv.config();
-const logger = loggerConfig();
+
+const logger = new Logger();
+logger.info('Test');
 
 const app = express();
 databaseConfig(logger);
@@ -27,7 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 // TODO re-enable CSRF
-app.use(logAuthError);
+app.use(interceptAndLogAuthError);
 
 app.use('/users', UsersRouter);
 app.use('/properties', PropertiesRouter);
@@ -54,9 +56,9 @@ app.use(
       res.locals.error = req.app.get('env') === 'development' ? err : {};
 
       logger.error(
-          getLoggingPrefix(),
-          'Error at %j: {"status":"%s", "message":"%s"}',
-          req.url, err.status, err.message);
+          // eslint-disable-next-line max-len
+          `Error at ${req.url}: {"status":"${err.status}", "message":"${err.message}"}`,
+      );
       res.status(err.status || 500);
       res.json({error: err});
     },

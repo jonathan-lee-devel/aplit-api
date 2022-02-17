@@ -1,9 +1,20 @@
 import {NextFunction, Request, Response} from 'express-serve-static-core';
-import {loggerConfig, getLoggingPrefix} from './Logger';
+import {loggerConfig} from './Logger';
 
 const logger = loggerConfig();
 
-export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
+/**
+ * Used as a guard to prevent unauthenticated users
+ * from accessing specified routes.
+ *
+ * @param {Request} req request
+ * @param {Response} res response
+ * @param {NextFunction} next next function
+ * @return {NextFunction} call to next function
+ */
+export const isLoggedIn = (
+    req: Request, res: Response, next: NextFunction
+) => {
   if (req.isAuthenticated()) {
     return next();
   }
@@ -12,7 +23,7 @@ export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
       .json({message: 'You must be logged in to view this resource'});
 };
 
-export const logAuthError = (
+export const interceptAndLogAuthError = (
     req: Request, res: Response, next: NextFunction,
 ) => {
   res.on('finish', () => {
@@ -27,11 +38,8 @@ export const logAuthError = (
         username = req.body.username;
       }
       logger.info(
-          getLoggingPrefix(),
-          'Authentication/Authorization error (%s)' +
-                ' at %s%s from %s {"username":"%s"}',
-          res.statusCode, req.baseUrl, req.url,
-          req.ip, username,
+          // eslint-disable-next-line max-len
+          `Authentication/Authorization error (${req.statusCode}) at ${req.baseUrl}${req.url} from ${req.ip} {"username":"${username}"}`,
       );
     }
   });

@@ -6,13 +6,14 @@ import {confirmRegistrationRoute} from './confirm-registration';
 import {loginRoute} from './login';
 import {logoutRoute} from './logout';
 import {loggerConfig} from '../../config/Logger';
-import {transporter} from '../../config/Mail';
+import {transporterConfig} from '../../config/Mail';
 import {passwordResetConfirmRoute} from './password-reset-confirm';
 import {passwordResetRoute} from './password-reset';
 import {profileRoute} from './profile-route';
 import {profileUpdateRoute} from './profile-update-route';
 
 const logger = loggerConfig();
+const transporter = transporterConfig();
 
 dotenv.config();
 

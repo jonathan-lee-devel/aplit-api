@@ -1,20 +1,17 @@
 import {connect} from 'mongoose';
-import {getLoggingPrefix} from './Logger';
-import npmlog from 'npmlog';
+import {Logger} from '../generic/Logger';
 
-export const databaseConfig = (logger: npmlog.Logger) => {
+export const databaseConfig = (logger: Logger) => {
   connect(process.env.DATABASE_URL)
       .then((_) => {
         logger.info(
-            getLoggingPrefix(),
-            'Connected to database: %s', process.env.DATABASE_URL,
+            `Connected to database: ${process.env.DATABASE_URL}`,
         );
       })
       .catch((err) => {
         logger.error(
-            getLoggingPrefix(),
-            'Could not connect to database: %s -> %j',
-            process.env.DATABASE_URL, err,
+            // eslint-disable-next-line max-len
+            `Could not connect to database: ${process.env.DATABASE_URL} -> ${err.message}`,
         );
       });
 };

@@ -1,14 +1,5 @@
-import logger from 'npmlog';
-import getCallerFile from 'get-caller-file';
+import {Logger} from '../generic/Logger';
 
-logger.prefixStyle = {
-  bold: true,
-};
-
-export const loggerConfig = (): logger.Logger => {
-  return logger;
-};
-
-export const getLoggingPrefix = (): string => {
-  return getCallerFile().split('/').pop();
+export const loggerConfig = (): Logger => {
+  return new Logger();
 };
