@@ -11,6 +11,7 @@
     "start": "node dist/bin/www.js",
     "test": "ENV_FILE=./.env.test jest",
     "test:unit": "ENV_FILE=./.env.test jest",
+    "lint": "eslint **/src/*.ts -c .eslintrc.js --fix",
     "sonar": "node sonar-project.js"
   },
   "jestSonar": {
