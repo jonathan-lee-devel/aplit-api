@@ -3,8 +3,10 @@ import {makeResetPassword} from './reset-password';
 import {makeConfirmPasswordReset} from './confirm-password-reset';
 import {makeGeneratePasswordResetToken} from './generate-password-reset-token';
 import {makeGenerateSalt} from './wrapper/generate-salt';
-import {loggerConfig} from '../../config/Logger';
 import {sendMail} from '../email';
+import {PasswordResetTokenModel} from '../../models/PasswordResetToken';
+import {UserModel} from '../../models/User';
+import {loggerConfig} from '../../config/Logger';
 
 const logger = loggerConfig();
 
@@ -17,4 +19,8 @@ export const resetPassword = makeResetPassword(
     generatePasswordResetToken,
     sendMail,
 );
-export const confirmPasswordReset = makeConfirmPasswordReset(encodePassword);
+export const confirmPasswordReset = makeConfirmPasswordReset(
+    PasswordResetTokenModel,
+    UserModel,
+    encodePassword,
+);

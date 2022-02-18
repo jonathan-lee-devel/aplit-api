@@ -1,12 +1,11 @@
 import {PasswordResetStatus} from './enum/password-reset-status';
 import {HydratedDocument} from 'mongoose';
-import {
-  PasswordResetToken,
-  PasswordResetTokenModel,
-} from '../../models/PasswordResetToken';
-import {User, UserModel} from '../../models/User';
+import {PasswordResetToken} from '../../models/PasswordResetToken';
+import {User} from '../../models/User';
 
 export const makeConfirmPasswordReset = (
+    passwordResetTokenModel: any,
+    userModel: any,
     encodePassword: { (password: string): Promise<string>; },
 ) => {
   return async function confirmPasswordReset(
@@ -14,15 +13,14 @@ export const makeConfirmPasswordReset = (
       password: string,
   ): Promise<PasswordResetStatus> {
     const foundToken: HydratedDocument<PasswordResetToken> =
-        await PasswordResetTokenModel.findOne({value: token});
+        await passwordResetTokenModel.findOne({value: token});
 
     if (!foundToken) {
       return PasswordResetStatus.INVALID_TOKEN;
     }
 
-    const user: HydratedDocument<User> = await UserModel.findOne({
-      passwordResetToken: foundToken.id,
-    });
+    const user: HydratedDocument<User> =
+        await userModel.findOne({value: token});
 
     if (!user) {
       return PasswordResetStatus.FAILURE;
