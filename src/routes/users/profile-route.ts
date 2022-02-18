@@ -1,12 +1,16 @@
 import {Router} from 'express';
 import {query, validationResult} from 'express-validator';
-import npmlog from 'npmlog';
-import {userProfileGet} from '../../services/user-profile/profile';
 import {isLoggedIn} from '../../config/Auth';
-import {getLoggingPrefix} from '../../config/Logger';
+import {UserProfileDto} from '../../dto/UserProfileDto';
+import {Logger} from '../../generic/Logger';
 
-export const profileRoute = (
-    logger: npmlog.Logger, router: Router,
+export const configureProfileRoute = (
+    logger: Logger,
+    router: Router,
+    getUserProfile: {
+        (email: string)
+            : Promise<UserProfileDto>;
+        },
 ) => {
   router.get('/profile', isLoggedIn,
       query('email', 'Only valid e-mail addresses are allowed')
@@ -16,14 +20,14 @@ export const profileRoute = (
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
           logger.info(
-              getLoggingPrefix(), 'Bad request: %j', errors.array(),
+              `Bad request: ${JSON.stringify(errors.array())}`,
           );
           return res.status(400).json({errors: errors.array()});
         }
 
         const {email} = req.query;
 
-        const profile = await userProfileGet(email);
+        const profile = await getUserProfile(email);
 
         return res.status(200).json(profile);
       },

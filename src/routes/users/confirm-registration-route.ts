@@ -1,23 +1,30 @@
 import {Router} from 'express';
 import {query, validationResult} from 'express-validator';
-import npmlog from 'npmlog';
-import {formatRegistrationResponse} from './helpers/registration-format';
 import {
   RegistrationStatus,
 } from '../../services/registration/enum/registration-status';
-import {
-  registrationConfirm,
-} from '../../services/registration/registration-confirm';
-import {getLoggingPrefix} from '../../config/Logger';
+import {Logger} from '../../generic/Logger';
+import {Response} from 'express-serve-static-core';
 
-export const confirmRegistrationRoute = (
-    logger: npmlog.Logger, router: Router,
+export const configureConfirmRegistrationRoute = (
+    logger: Logger,
+    router: Router,
+    confirmRegistration: {
+      (token: string)
+          : Promise<RegistrationStatus>;
+      },
+    formatRegistrationResponse: {
+      (res: Response,
+       httpStatus: number,
+       registrationStatus: RegistrationStatus)
+          : void;
+      },
 ) => {
   router.get('/register/confirm', query('token').exists(), async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       logger.info(
-          getLoggingPrefix(), 'Bad request: %j', errors.array(),
+          `Bad request: ${JSON.stringify(errors.array())}`,
       );
       return res.status(400).json({errors: errors.array()});
     }
@@ -25,14 +32,13 @@ export const confirmRegistrationRoute = (
     if (!token) {
       // Strange behaviour with express-validator for query parameter
       logger.info(
-          getLoggingPrefix(),
-          'Bad request: missing required query parameter \'token\'',
+          `Bad request: missing required query parameter 'token'`,
       );
       return res.status(400).json({
         errors: [
           {
             value: token,
-            msg: 'Query parameter \'token\' is required',
+            msg: `Query parameter 'token' is required`,
             param: 'token',
             location: 'query',
           },
@@ -40,7 +46,7 @@ export const confirmRegistrationRoute = (
       });
     }
 
-    const registrationStatus = await registrationConfirm(token);
+    const registrationStatus = await confirmRegistration(token);
 
     switch (registrationStatus) {
       case RegistrationStatus.SUCCESS:

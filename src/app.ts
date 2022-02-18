@@ -8,8 +8,8 @@ import {interceptAndLogAuthError} from './config/Auth';
 import {databaseConfig} from './config/Database';
 import {expressSessionConfig} from './config/Session';
 import {corsConfig} from './config/Cors';
-import {UsersRouter} from './routes/users/routes';
-import {PropertiesRouter} from './routes/properties/property-routes';
+import {UsersRouter} from './routes/users';
+import {PropertiesRouter} from './routes/properties';
 import {Logger} from './generic/Logger';
 
 dotenv.config();

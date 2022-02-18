@@ -1,22 +1,30 @@
 import {Router} from 'express';
 import {body, validationResult} from 'express-validator';
-import {Transporter} from 'nodemailer';
-import SMTPTransport from 'nodemailer/lib/smtp-transport';
-import npmlog from 'npmlog';
-import {formatRegistrationResponse} from './helpers/registration-format';
 import {
   RegistrationStatus,
 } from '../../services/registration/enum/registration-status';
-import {
-  registrationRegister,
-} from '../../services/registration/registration-register';
-import {passwordEncode} from '../../services/password/encode-password';
+import {Logger} from '../../generic/Logger';
+import {Response} from 'express-serve-static-core';
 
-export const registerRoute = (
-    logger: npmlog.Logger,
+export const configureRegisterRoute = (
+    logger: Logger,
     router: Router,
-    salt: string,
-    transporter: Transporter<SMTPTransport.SentMessageInfo>,
+    encodePassword: {
+        (password: string)
+            : Promise<string>;
+    },
+    registerUser: {
+        (email: string,
+         firstName: string,
+         lastName: string,
+         hashedPassword: string)
+            : Promise<RegistrationStatus>;
+    },
+    formatRegistrationResponse: {
+        (res: Response,
+         httpStatus: number,
+         registrationStatus: RegistrationStatus): void;
+        },
 ) => {
   router.post(
       '/register',
@@ -48,11 +56,9 @@ export const registerRoute = (
 
         const {email, firstname, lastname, password} = req.body;
 
-        const hashedPassword = await passwordEncode(salt, password);
+        const hashedPassword = await encodePassword(password);
 
-        const registrationStatus = await registrationRegister(
-            logger,
-            transporter,
+        const registrationStatus = await registerUser(
             email,
             firstname,
             lastname,

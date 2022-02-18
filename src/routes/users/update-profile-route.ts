@@ -1,12 +1,16 @@
 import {Router} from 'express';
-import {isLoggedIn} from '../../config/Auth';
 import {body, validationResult} from 'express-validator';
-import npmlog from 'npmlog';
-import {userProfileUpdate} from '../../services/user-profile/profile-update';
-import {getLoggingPrefix} from '../../config/Logger';
+import {UserProfileDto} from '../../dto/UserProfileDto';
+import {isLoggedIn} from '../../config/Auth';
+import {Logger} from '../../generic/Logger';
 
-export const profileUpdateRoute = (
-    logger: npmlog.Logger, router: Router,
+export const configureUpdateProfileRoute = (
+    logger: Logger,
+    router: Router,
+    updateUserProfile: {
+        (profile: UserProfileDto)
+            : Promise<UserProfileDto>;
+        },
 ) => {
   router.patch('/profile', isLoggedIn,
       body('email',
@@ -19,12 +23,12 @@ export const profileUpdateRoute = (
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
           logger.info(
-              getLoggingPrefix(), 'Bad request: %j', errors.array(),
+              `Bad request: ${JSON.stringify(errors.array())}`,
           );
           return res.status(400).json({errors: errors.array()});
         }
 
-        const updatedProfile = await userProfileUpdate(req.body);
+        const updatedProfile = await updateUserProfile(req.body);
 
         return res.status(200).json(updatedProfile);
       });

@@ -3,7 +3,7 @@ import {isLoggedIn} from '../../config/Auth';
 import {getProperty} from '../../services/properties';
 import {Logger} from '../../generic/Logger';
 
-export const getPropertyRoute = (
+export const makeGetPropertyRoute = (
     logger: Logger,
     router: Router,
 ) => {
@@ -17,7 +17,7 @@ export const getPropertyRoute = (
               .status(propertyContainer.status)
               .json(propertyContainer.data);
         case 403:
-          logger.info(getLoggingPrefix(),
+          logger.info(
               // @ts-ignore
               // eslint-disable-next-line max-len
               `Unauthorized access prevented: {"username":"${req.user.email}"} {"property.id":"${req.params.id}"}`);
@@ -25,7 +25,7 @@ export const getPropertyRoute = (
               .status(propertyContainer.status)
               .json(propertyContainer.data);
         case 404:
-          logger.info(getLoggingPrefix(),
+          logger.info(
               // @ts-ignore
               // eslint-disable-next-line max-len
               `Data not found: {"username":"${req.user.email}"} {"property.id":"${req.params.id}"}`);
@@ -33,14 +33,14 @@ export const getPropertyRoute = (
               .status(propertyContainer.status)
               .json({error: 'No data found'});
         default:
-          logger.error(getLoggingPrefix(),
-              'Unrecognized status: %j', propertyContainer.status);
+          logger.error(
+              `Unrecognized status: ${propertyContainer.status}`);
           return res
               .status(500)
               .json({error: 'An undefined error has occurred'});
       }
     } catch (err) {
-      logger.error(getLoggingPrefix(), 'Error has occurred: %j', err.message);
+      logger.error(`Error has occurred: ${err.message}`);
       return res.status(500).json({error: 'An error has occurred'});
     }
   });

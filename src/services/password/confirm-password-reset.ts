@@ -11,7 +11,6 @@ export const makeConfirmPasswordReset = (
 ) => {
   return async function confirmPasswordReset(
       token: string,
-      salt: string,
       password: string,
   ): Promise<PasswordResetStatus> {
     const foundToken: HydratedDocument<PasswordResetToken> =

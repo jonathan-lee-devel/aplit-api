@@ -1,16 +1,26 @@
 import {Router} from 'express';
-import {Transporter} from 'nodemailer';
-import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import {body, validationResult} from 'express-validator';
+import {PropertyDto} from '../../dto/PropertyDto';
+import {StatusContainerDto} from '../../dto/StatusContainerDto';
+import {User} from '../../models/User';
 import {isLoggedIn} from '../../config/Auth';
-import {verifyEmail} from '../../services/email/verify-email';
-import {createProperty} from '../../services/properties';
 import {Logger} from '../../generic/Logger';
 
-export const postPropertyRoute = (
+export const makePostPropertyRoute = (
     logger: Logger,
     router: Router,
-    transporter: Transporter<SMTPTransport.SentMessageInfo>,
+    verifyEmail: {
+        (emailToVerify: string)
+            : boolean;
+        },
+    sendMail: {
+        (addressTo: string, subject: string, text: string)
+        : Promise<boolean>;
+    },
+    createProperty: {
+        (title: string, tenants: string[], createdBy: User, admin: User)
+            : Promise<StatusContainerDto<PropertyDto>>;
+        },
 ) => {
   router.post('/create',
       body('title', 'Title must be of length 5-25 characters')
@@ -30,15 +40,13 @@ export const postPropertyRoute = (
       async (req, res, _) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-          logger.info(getLoggingPrefix(), 'Bad request: %j', errors.array());
+          logger.info(`Bad request: ${JSON.stringify(errors.array())}`);
           return res.status(400).json({errors: errors.array()});
         }
 
         const {title, tenants} = req.body;
 
         const propertyContainer = await createProperty(
-            logger,
-            transporter,
             title,
             tenants,
             // @ts-ignore
@@ -53,7 +61,7 @@ export const postPropertyRoute = (
               .json(propertyContainer.data);
         }
         logger.error(
-            getLoggingPrefix(), 'Error has occurred while creating property',
+            'Error has occurred while creating property',
         );
         return res.status(500).json({message: 'An error has occurred'});
       },

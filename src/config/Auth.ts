@@ -13,7 +13,7 @@ const logger = loggerConfig();
  * @return {NextFunction} call to next function
  */
 export const isLoggedIn = (
-    req: Request, res: Response, next: NextFunction
+    req: Request, res: Response, next: NextFunction,
 ) => {
   if (req.isAuthenticated()) {
     return next();

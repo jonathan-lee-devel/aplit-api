@@ -1,17 +1,25 @@
 import {Router} from 'express';
 import {body, validationResult} from 'express-validator';
-import npmlog from 'npmlog';
-import {
-  passwordResetConfirm,
-} from '../../services/password/confirm-password-reset';
+import {Response} from 'express-serve-static-core';
 import {
   PasswordResetStatus,
 } from '../../services/password/enum/password-reset-status';
-import {formatPasswordResetResponse} from './helpers/password-reset-format';
-import {getLoggingPrefix} from '../../config/Logger';
+import {Logger} from '../../generic/Logger';
 
-export const passwordResetConfirmRoute = (
-    logger: npmlog.Logger, router: Router, salt: string,
+export const configureConfirmPasswordResetRoute = (
+    logger: Logger,
+    router: Router,
+    confirmPasswordReset: {
+        (token: string,
+         password: string)
+            : Promise<PasswordResetStatus>;
+        },
+    formatPasswordResetResponse: {
+        (res: Response,
+         httpStatus: number,
+         passwordResetStatus: PasswordResetStatus)
+            : void;
+        },
 ) => {
   router.post('/password/reset/confirm',
       body('token').exists(),
@@ -32,7 +40,7 @@ export const passwordResetConfirmRoute = (
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
           logger.info(
-              getLoggingPrefix(), 'Bad request: %j', errors.array(),
+              `Bad request: ${JSON.stringify(errors.array())}`,
           );
           return res.status(400).json({errors: errors.array()});
         }
@@ -40,7 +48,7 @@ export const passwordResetConfirmRoute = (
         const {token, password} = req.body;
 
         const passwordResetStatus =
-          await passwordResetConfirm(token, salt, password);
+          await confirmPasswordReset(token, password);
 
         switch (passwordResetStatus) {
           case PasswordResetStatus.SUCCESS:
