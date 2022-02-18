@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "main": "dist/app.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "prebuild": "eslint -c .eslintrc.js --fix",
     "build": "tsc",
