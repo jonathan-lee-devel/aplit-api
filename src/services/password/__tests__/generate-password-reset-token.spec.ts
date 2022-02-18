@@ -1,7 +1,4 @@
-import dotenv from 'dotenv';
 import {makeGeneratePasswordResetToken} from '../generate-password-reset-token';
-
-dotenv.config();
 
 beforeAll(() => {
 });
