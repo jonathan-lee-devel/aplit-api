@@ -1,13 +1,7 @@
 #!/usr/bin/env groovy
 
-def bob = "bob/bob -r \${WORKSPACE}/cicd/precodereview/ruleset2.0.yaml"
-
 pipeline {
-    agent {
-        node {
-            label SLAVE
-        }
-    }
+    agent any
 
     stages {
         stage('Cleaning Git Repo') {
@@ -61,3 +55,4 @@ pipeline {
         }
     }
 }
+
