@@ -13,21 +13,9 @@ pipeline {
         }
         stage('Build RPT Services') {
             steps {
-                sh "${bob} clean-up"
-                sh "${bob} set-env-variables"
-                sh "${bob} build-services"
+                sh "echo 'HERE'"
             }
         }
-        stage('Running Express Tests') {
-            steps {
-                sh "${bob} express-test"
-            }
-        }
-       stage('Running Angular Tests') {
-           steps {
-               sh "${bob} angular-test"
-           }
-       }
        stage('Express SonarQube Analysis') {
             environment {
                 TOKEN = sh(script: 'curl -X POST -u admin:admin --data "name=test-token" http://localhost:9000/api/user_tokens/generate | jq .token', returnStdout: true)
@@ -50,7 +38,6 @@ pipeline {
     }
     post {
         always {
-            sh "${bob} clean-up"
             cleanWs()
         }
     }
