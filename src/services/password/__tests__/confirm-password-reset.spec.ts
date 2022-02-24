@@ -20,7 +20,7 @@ describe('Confirm password reset', () => {
   it('When confirmPasswordReset and no token Then invalid token',
       async () => {
         const passwordResetTokenModel = {
-          findOne: (value: any): any => {
+          findOne: (_: any): any => {
             return null;
           },
         };
@@ -40,12 +40,12 @@ describe('Confirm password reset', () => {
       async () => {
         const token = 'token';
         const passwordResetTokenModel = {
-          findOne: async (value: any) => {
+          findOne: async (_: any) => {
             return token;
           },
         };
         const userModel = {
-          findOne: async (value: any): Promise<any> => {
+          findOne: async (_: any): Promise<any> => {
             return null;
           },
         };

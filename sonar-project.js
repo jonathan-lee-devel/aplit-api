@@ -7,9 +7,9 @@ sonarqubeScanner(
         'sonar.tests': 'src',
         'sonar.inclusions': '**',
         'sonar.test.inclusions':
-        'src/**/*.spec.js,src/**/*.spec.jsx,src/**/*.test.js,src/**/*.test.jsx',
+        'src/**/*.spec.ts,src/**/*.spec.tsx,src/**/*.test.ts,src/**/*.test.tsx',
         'sonar.javascript.lcov.reportPaths': 'coverage/lcov.info',
-        'sonar.login': '43c5bdd93e62af907da4c61b83dfd4116129212e',
+        'sonar.login': '7e0906f86ddc29d048f2ad4dec7dfb15ef25f185',
       },
     },
     () => {},
