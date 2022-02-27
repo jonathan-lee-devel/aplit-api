@@ -1,3 +1,6 @@
+/**
+ * Enum used to represent status of password reset.
+ */
 export enum PasswordResetStatus {
   // eslint-disable-next-line no-unused-vars
   AWAITING_EMAIL_VERIFICATION,

@@ -9,9 +9,19 @@ import {
   DEFAULT_EXPIRY_TIME_MINUTES,
   DEFAULT_TOKEN_SIZE,
 } from '../../config/Token';
-import {PasswordResetToken, PasswordResetTokenModel} from '../../models/PasswordResetToken';
+import {PasswordResetToken, PasswordResetTokenModel}
+  from '../../models/PasswordResetToken';
 import {Logger} from '../../generic/Logger';
 
+/**
+ * Maker-function to register user.
+ *
+ * @param {Logger} logger used for logging
+ * @param {Function} sendMail used to send mail
+ * @param {Function} generateRegistrationVerificationToken used for token
+ * @param {Function} generatePasswordResetToken used to generate token
+ * @return {Function} function to register user
+ */
 export const makeRegisterUser = (
     logger: Logger,
     sendMail: {
@@ -27,6 +37,15 @@ export const makeRegisterUser = (
           : Promise<PasswordResetToken>;
       },
 ) => {
+  /**
+  * Function to register user.
+   *
+   * @param {string} email email of user to register
+   * @param {string} firstName first name of user to register
+   * @param {string} lastName last name of user to register
+   * @param {string} hashedPassword hashed password for user to register
+   * @return {Promise<RegistrationStatus>} status of the registration attempt
+  */
   return async function registerUser(
       email: string,
       firstName: string,
@@ -82,6 +101,12 @@ export const makeRegisterUser = (
   };
 };
 
+/**
+ * Helper function used to handle case of existing user.
+ *
+ * @param {string} email email for which case is to be checked
+ * @return {Promise<boolean>} flag to indicate if user existed
+ */
 const handleExistingUser = async (email: string): Promise<boolean> => {
   const existingUser: HydratedDocument<User> = await UserModel.findOne({
     email,

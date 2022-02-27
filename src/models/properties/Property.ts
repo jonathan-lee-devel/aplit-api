@@ -2,7 +2,9 @@ import {model, Schema} from 'mongoose';
 import {User} from '../User';
 import {ObjectID} from 'bson';
 
-
+/**
+ * Used to represent a single property.
+ */
 export interface Property {
   id: string;
   title: string;

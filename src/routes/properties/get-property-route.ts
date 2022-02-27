@@ -3,7 +3,13 @@ import {isLoggedIn} from '../../config/Auth';
 import {getProperty} from '../../services/properties';
 import {Logger} from '../../generic/Logger';
 
-export const makeGetPropertyRoute = (
+/**
+ * Configure GET property route.
+ *
+ * @param {Logger} logger used for logging
+ * @param {Router} router used for routing
+ */
+export const configureGetPropertyRoute = (
     logger: Logger,
     router: Router,
 ) => {

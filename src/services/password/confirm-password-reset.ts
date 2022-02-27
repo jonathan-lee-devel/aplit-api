@@ -3,11 +3,26 @@ import {HydratedDocument} from 'mongoose';
 import {PasswordResetToken} from '../../models/PasswordResetToken';
 import {User} from '../../models/User';
 
+/**
+ * Maker-function for confirming password reset.
+ *
+ * @param {PasswordResetTokenModel} passwordResetTokenModel token model
+ * @param {UserModel} userModel user model
+ * @param {Function} encodePassword used to encode password
+ * @return {Function} function for confirming password reset
+ */
 export const makeConfirmPasswordReset = (
     passwordResetTokenModel: any,
     userModel: any,
     encodePassword: { (password: string): Promise<string>; },
 ) => {
+  /**
+   * Function for confirming password reset.
+   *
+   * @param {string} token token presented to attempt to confirm password reset
+   * @param {string} password presented to be used to confirm password reset
+   * @return {Promise<PasswordResetStatus>} password reset status on attempt
+   */
   return async function confirmPasswordReset(
       token: string,
       password: string,

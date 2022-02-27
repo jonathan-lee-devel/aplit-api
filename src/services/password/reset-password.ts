@@ -11,6 +11,14 @@ import {
 } from '../../config/Token';
 import {Logger} from '../../generic/Logger';
 
+/**
+ * Maker-function to reset password.
+ *
+ * @param {Logger} logger used for logging
+ * @param {Function} generatePasswordResetToken used to generate token
+ * @param {Function} sendMail used to send mail
+ * @return {Function} function used to reset password
+ */
 export const makeResetPassword = (
     logger: Logger,
     generatePasswordResetToken: {
@@ -25,6 +33,12 @@ export const makeResetPassword = (
       ): Promise<boolean>;
       },
 ) => {
+  /**
+   * Function used to reset password.
+   *
+   * @param {string} email email for which password is to be reset
+   * @return {Promise<PasswordResetStatus>} status of password reset attempt
+   */
   return async function resetPassword(
       email: string,
   ): Promise<PasswordResetStatus> {

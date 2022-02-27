@@ -1,3 +1,6 @@
+/**
+ * Enum used to represent status of a registration.
+ */
 export enum RegistrationStatus {
   // eslint-disable-next-line no-unused-vars
   AWAITING_EMAIL_VERIFICATION,

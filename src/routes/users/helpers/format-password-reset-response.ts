@@ -3,7 +3,19 @@ import {
   PasswordResetStatus,
 } from '../../../services/password/enum/password-reset-status';
 
+/**
+ * Maker-function for format password reset response function.
+ *
+ * @return {Function} format password reset response function
+ */
 export const makeFormatPasswordResetResponse = () => {
+  /**
+   * Helper function to format password reset responses.
+   *
+   * @param {Response} res object used to send response
+   * @param {number} httpStatus HTTP status used for response
+   * @param {PasswordResetStatus} passwordResetStatus status of the reset
+   */
   return function formatPasswordResetResponse(
       res: Response,
       httpStatus: number,
@@ -12,7 +24,7 @@ export const makeFormatPasswordResetResponse = () => {
     res
         .status(httpStatus)
         .json({
-          password_reset_status: PasswordResetStatus[passwordResetStatus]
+          password_reset_status: PasswordResetStatus[passwordResetStatus],
         });
   };
 };

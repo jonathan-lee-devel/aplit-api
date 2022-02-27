@@ -6,7 +6,16 @@ import {User} from '../../models/User';
 import {isLoggedIn} from '../../config/Auth';
 import {Logger} from '../../generic/Logger';
 
-export const makePostPropertyRoute = (
+/**
+ * Configure POST property route.
+ *
+ * @param {Logger} logger used for logging
+ * @param {Router} router used for routing
+ * @param {Function} verifyEmail used to verify e-mail address input
+ * @param {Function} sendMail used to send e-mail
+ * @param {Function} createProperty used to create property
+ */
+export const configurePostPropertyRoute = (
     logger: Logger,
     router: Router,
     verifyEmail: {

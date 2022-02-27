@@ -2,6 +2,9 @@ import {model, Schema} from 'mongoose';
 import {ObjectID} from 'bson';
 import {User} from './User';
 
+/**
+ * Used to represent a password reset token.
+ */
 export interface PasswordResetToken {
   value: string;
   expiryDate: Date;

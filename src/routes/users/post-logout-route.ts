@@ -1,7 +1,13 @@
 import {Router} from 'express';
 import {Logger} from '../../generic/Logger';
 
-export const configureLogoutRoute = (
+/**
+ * Configure POST logout route.
+ *
+ * @param {Logger} logger used for logging
+ * @param {Router} router used for routing
+ */
+export const configurePostLogoutRoute = (
     logger: Logger,
     router: Router,
 ) => {

@@ -1,13 +1,13 @@
 import express from 'express';
-import {configureRegisterRoute} from './register';
-import {configureLoginRoute} from './login-route';
-import {configureLogoutRoute} from './logout-route';
-import {configureConfirmPasswordResetRoute}
-  from './confirm-password-reset-route';
-import {configureResetPasswordReset} from './reset-password-route';
-import {configureProfileRoute} from './profile-route';
-import {configureUpdateProfileRoute} from './update-profile-route';
-import {configureConfirmRegistrationRoute} from './confirm-registration-route';
+import {configureRegisterRoute} from './post-register';
+import {configurePostLoginRoute} from './post-login-route';
+import {configurePostLogoutRoute} from './post-logout-route';
+import {configurePostConfirmPasswordResetRoute}
+  from './post-confirm-password-reset-route';
+import {configurePostResetPassword} from './post-reset-password-route';
+import {configureGetProfileRoute} from './get-profile-route';
+import {configurePatchUpdateProfileRoute} from './patch-update-profile-route';
+import {configureGetConfirmRegistrationRoute} from './get-confirm-registration-route';
 import {confirmRegistration, registerUser} from '../../services/registration';
 import {confirmPasswordReset, encodePassword, resetPassword}
   from '../../services/password';
@@ -26,13 +26,13 @@ const formatRegistrationResponse = makeFormatRegistrationResponse();
 
 const formatPasswordResetResponse = makeFormatPasswordResetResponse();
 
-configureConfirmRegistrationRoute(
+configureGetConfirmRegistrationRoute(
     logger,
     router,
     confirmRegistration,
     formatRegistrationResponse,
 );
-configureLoginRoute(logger, router);
+configurePostLoginRoute(logger, router);
 configureRegisterRoute(
     logger,
     router,
@@ -40,27 +40,27 @@ configureRegisterRoute(
     registerUser,
     formatRegistrationResponse,
 );
-configureConfirmPasswordResetRoute(
+configurePostConfirmPasswordResetRoute(
     logger,
     router,
     confirmPasswordReset,
     formatPasswordResetResponse,
 );
-configureConfirmRegistrationRoute(
+configureGetConfirmRegistrationRoute(
     logger,
     router,
     confirmRegistration,
     formatRegistrationResponse,
 );
-configureResetPasswordReset(
+configurePostResetPassword(
     logger,
     router,
     resetPassword,
     formatPasswordResetResponse,
 );
-configureLoginRoute(logger, router);
-configureLogoutRoute(logger, router);
-configureProfileRoute(logger, router, getUserProfile);
-configureUpdateProfileRoute(logger, router, updateUserProfile);
+configurePostLoginRoute(logger, router);
+configurePostLogoutRoute(logger, router);
+configureGetProfileRoute(logger, router, getUserProfile);
+configurePatchUpdateProfileRoute(logger, router, updateUserProfile);
 
 export {router as UsersRouter};

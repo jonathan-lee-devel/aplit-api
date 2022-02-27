@@ -2,6 +2,9 @@ import {model, Schema} from 'mongoose';
 import {ObjectID} from 'bson';
 import {User} from './User';
 
+/**
+ * Used to represent a registration verification token.
+ */
 export interface RegistrationVerificationToken {
   value: string;
   expiryDate: Date;

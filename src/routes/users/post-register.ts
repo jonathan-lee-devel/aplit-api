@@ -6,6 +6,15 @@ import {
 import {Logger} from '../../generic/Logger';
 import {Response} from 'express-serve-static-core';
 
+/**
+ * Configure POST register route.
+ *
+ * @param {Logger} logger used for logging
+ * @param {Router} router used for routing
+ * @param {Function} encodePassword used to encode password
+ * @param {Function} registerUser used to register user
+ * @param {Function} formatRegistrationResponse used to format response
+ */
 export const configureRegisterRoute = (
     logger: Logger,
     router: Router,

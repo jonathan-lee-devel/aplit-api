@@ -5,7 +5,15 @@ import {Logger} from '../../generic/Logger';
 import {PasswordResetStatus}
   from '../../services/password/enum/password-reset-status';
 
-export const configureResetPasswordReset = (
+/**
+ * Configure POST reset password.
+ *
+ * @param {Logger} logger used for logging
+ * @param {Router} router used for routing
+ * @param {Function} resetPassword used to reset password
+ * @param {Function} formatPasswordResetResponse used to format response
+ */
+export const configurePostResetPassword = (
     logger: Logger,
     router: Router,
     resetPassword: {

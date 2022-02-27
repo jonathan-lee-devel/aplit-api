@@ -6,7 +6,18 @@ import {
 } from '../../models/RegistrationVerificationToken';
 import {User, UserModel} from '../../models/User';
 
+/**
+ * Maker-function to confirm registration.
+ *
+ * @return {Function} function used to confirm registration
+ */
 export const makeConfirmRegistration = () => {
+  /**
+   * Function used to confirm registration.
+   *
+   * @param {string} token presented to confirm registration
+   * @return {Promise<RegistrationStatus>} status of the confirmation attempt
+   */
   return async function confirmRegistration(
       token: string,
   ): Promise<RegistrationStatus> {

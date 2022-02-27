@@ -2,7 +2,13 @@ import {Router} from 'express';
 import passport from 'passport';
 import {Logger} from '../../generic/Logger';
 
-export const configureLoginRoute = (
+/**
+ * Configure POST login route.
+ *
+ * @param {Logger} logger used for logging
+ * @param {Router} router used for routing
+ */
+export const configurePostLoginRoute = (
     logger: Logger,
     router: Router,
 ) => {

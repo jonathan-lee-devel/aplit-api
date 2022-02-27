@@ -6,7 +6,15 @@ import {
 } from '../../services/password/enum/password-reset-status';
 import {Logger} from '../../generic/Logger';
 
-export const configureConfirmPasswordResetRoute = (
+/**
+ * Configure POST confirm password reset route.
+ *
+ * @param {Logger} logger used for logging
+ * @param {Router} router used for routing
+ * @param {Function} confirmPasswordReset used to confirm password reset
+ * @param {Function} formatPasswordResetResponse used to format response
+ */
+export const configurePostConfirmPasswordResetRoute = (
     logger: Logger,
     router: Router,
     confirmPasswordReset: {

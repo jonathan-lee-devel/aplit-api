@@ -3,7 +3,18 @@ import {PropertyDto} from '../../dto/PropertyDto';
 import {User} from '../../models/User';
 import {PropertyModel} from '../../models/properties/Property';
 
+/**
+ * Maker-function for get property.
+ *
+ * @return {Function} function to get property
+ */
 export const makeGetProperty = () => {
+  /**
+   * Function to get property.
+   *
+   * @param {User} user user which is attempting to get property
+   * @param {string} id of the property to get
+   */
   return async function getProperty(
       user: User, id: string,
   ): Promise<StatusContainerDto<PropertyDto>> {

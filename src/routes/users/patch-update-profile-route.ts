@@ -4,7 +4,14 @@ import {UserProfileDto} from '../../dto/UserProfileDto';
 import {isLoggedIn} from '../../config/Auth';
 import {Logger} from '../../generic/Logger';
 
-export const configureUpdateProfileRoute = (
+/**
+ * Configure PATCH update profile route.
+ *
+ * @param {Logger} logger used for logging
+ * @param {Router} router used for routing
+ * @param {Function} updateUserProfile used to update user profile
+ */
+export const configurePatchUpdateProfileRoute = (
     logger: Logger,
     router: Router,
     updateUserProfile: {

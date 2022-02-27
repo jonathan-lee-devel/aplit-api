@@ -4,7 +4,14 @@ import {isLoggedIn} from '../../config/Auth';
 import {UserProfileDto} from '../../dto/UserProfileDto';
 import {Logger} from '../../generic/Logger';
 
-export const configureProfileRoute = (
+/**
+ * Configure GET profile route.
+ *
+ * @param {Logger} logger used for logging
+ * @param {Router} router used for routing
+ * @param {Function} getUserProfile used to get user profile
+ */
+export const configureGetProfileRoute = (
     logger: Logger,
     router: Router,
     getUserProfile: {

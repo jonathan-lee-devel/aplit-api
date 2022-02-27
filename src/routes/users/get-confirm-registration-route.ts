@@ -6,7 +6,15 @@ import {
 import {Logger} from '../../generic/Logger';
 import {Response} from 'express-serve-static-core';
 
-export const configureConfirmRegistrationRoute = (
+/**
+ * Configure GET confirm registration route.
+ *
+ * @param {Logger} logger used for logging
+ * @param {Router} router used for routing
+ * @param {Function} confirmRegistration used to confirm registration
+ * @param {Function} formatRegistrationResponse used to format response
+ */
+export const configureGetConfirmRegistrationRoute = (
     logger: Logger,
     router: Router,
     confirmRegistration: {

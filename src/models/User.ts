@@ -3,6 +3,9 @@ import {RegistrationVerificationToken} from './RegistrationVerificationToken';
 import {ObjectID} from 'bson';
 import {PasswordResetToken} from './PasswordResetToken';
 
+/**
+ * Used to represent a user.
+ */
 export interface User {
   email: string;
   firstName: string;
