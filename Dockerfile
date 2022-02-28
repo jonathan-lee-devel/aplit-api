@@ -12,4 +12,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD [ "node", "dist/bin/www.js" ]
+CMD [ "node", "--es-module-specifier-resolution=node", "dist/bin/www.js" ]
