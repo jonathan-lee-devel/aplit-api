@@ -2,13 +2,13 @@ import {makeSendMail} from '../send-mail';
 import {Logger} from '../../../generic/Logger';
 
 jest.mock('nodemailer');
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 const sendMailMock = jest.fn();
-nodemailer.createTransport.mockReturnValue({'sendMail': sendMailMock});
+// nodemailer.createTransport.mockReturnValue({'sendMail': sendMailMock});
 
 beforeEach( () => {
   sendMailMock.mockClear();
-  nodemailer.createTransport.mockClear();
+  // nodemailer.createTransport.mockClear();
 });
 
 describe('send mail', () => {

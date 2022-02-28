@@ -1,4 +1,5 @@
-import {model, Schema} from 'mongoose';
+import mongoose from 'mongoose';
+const {model, Schema} = mongoose;
 import {RegistrationVerificationToken} from './RegistrationVerificationToken';
 import {ObjectID} from 'bson';
 import {PasswordResetToken} from './PasswordResetToken';

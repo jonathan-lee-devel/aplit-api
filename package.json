@@ -1,14 +1,14 @@
 {
-  "name": "split-node",
+  "name": "split-api",
   "version": "0.0.0",
   "private": true,
   "main": "dist/app.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
-    "prebuild": "eslint -c .eslintrc.js --fix",
+    "prebuild": "eslint -c .eslintrc.cjs --fix",
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "node dist/bin/www.js",
+    "start": "node --es-module-specifier-resolution=node dist/bin/www.js",
     "test": "ENV_FILE=./.env.test jest",
     "test:unit": "ENV_FILE=./.env.test jest",
     "sonar": "node sonar-project.js"

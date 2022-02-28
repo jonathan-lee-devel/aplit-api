@@ -1,4 +1,5 @@
-import {connect} from 'mongoose';
+import mongoose from 'mongoose';
+const {connect} = mongoose;
 import {Logger} from '../generic/Logger';
 
 export const databaseConfig = (logger: Logger) => {

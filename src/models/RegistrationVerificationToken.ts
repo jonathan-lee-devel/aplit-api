@@ -1,4 +1,5 @@
-import {model, Schema} from 'mongoose';
+import mongoose from 'mongoose';
+const {model, Schema} = mongoose;
 import {ObjectID} from 'bson';
 import {User} from './User';
 
