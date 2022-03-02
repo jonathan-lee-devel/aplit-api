@@ -11,3 +11,7 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       EMAIL_USER: ${EMAIL_USER}
       EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+  database:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
