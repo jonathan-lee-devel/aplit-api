@@ -1,11 +1,13 @@
 import express from 'express';
 import {configureGetPropertyRoute} from './get-property-route';
 import {configurePostPropertyRoute} from './post-property-route';
-import {sendMail, verifyEmail} from '../../services/email';
+import {verifyEmail} from '../../services/email';
 import {createProperty} from '../../services/properties';
 import {loggerConfig} from '../../config/Logger';
+import {mailerConfig} from '../../config/Mail';
 
 const logger = loggerConfig();
+const mailer = mailerConfig();
 
 // eslint-disable-next-line new-cap
 const router = express.Router();
@@ -15,7 +17,7 @@ configurePostPropertyRoute(
     logger,
     router,
     verifyEmail,
-    sendMail,
+    mailer,
     createProperty,
 );
 

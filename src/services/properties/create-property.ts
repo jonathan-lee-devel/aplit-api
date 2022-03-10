@@ -1,22 +1,21 @@
-import {Transporter} from 'nodemailer';
-import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import {User} from '../../models/User';
 import {Property, PropertyModel} from '../../models/properties/Property';
 import {PropertyDto} from '../../dto/PropertyDto';
 import {StatusContainerDto} from '../../dto/StatusContainerDto';
 import {Logger} from '../../generic/Logger';
+import {Mailer} from '../../generic/Mailer';
 
 /**
  * Maker-function for the function to create properties.
  *
  * @param {Logger} logger used when creating properties
- * @param {Transporter} transporter used to send emails
+ * @param {Mailer} mailer used to send emails
  * @param {Function} generateId used to generate IDs
  * @return {Function} function to create properties
  */
 export const makeCreateProperty = (
     logger: Logger,
-    transporter: Transporter<SMTPTransport.SentMessageInfo>,
+    mailer: Mailer,
     generateId: Function,
 ) => {
   /**

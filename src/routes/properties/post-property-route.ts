@@ -5,6 +5,7 @@ import {StatusContainerDto} from '../../dto/StatusContainerDto';
 import {User} from '../../models/User';
 import {isLoggedIn} from '../../config/Auth';
 import {Logger} from '../../generic/Logger';
+import {Mailer} from '../../generic/Mailer';
 
 /**
  * Configure POST property route.
@@ -12,7 +13,7 @@ import {Logger} from '../../generic/Logger';
  * @param {Logger} logger used for logging
  * @param {Router} router used for routing
  * @param {Function} verifyEmail used to verify e-mail address input
- * @param {Function} sendMail used to send e-mail
+ * @param {Mailer} mailer used to send e-mail
  * @param {Function} createProperty used to create property
  */
 export const configurePostPropertyRoute = (
@@ -22,10 +23,7 @@ export const configurePostPropertyRoute = (
         (emailToVerify: string)
             : boolean;
         },
-    sendMail: {
-        (addressTo: string, subject: string, text: string)
-        : Promise<boolean>;
-    },
+    mailer: Mailer,
     createProperty: {
         (title: string, tenants: string[], createdBy: User, admin: User)
             : Promise<StatusContainerDto<PropertyDto>>;

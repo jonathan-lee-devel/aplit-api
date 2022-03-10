@@ -2,17 +2,17 @@ import {makeGetProperty} from './get-property';
 import {makeCreateProperty} from './create-property';
 import {makeDeleteProperty} from './delete-property';
 import {loggerConfig} from '../../config/Logger';
-import {transporterConfig} from '../../config/Mail';
 import {generateId} from '../id';
+import {mailerConfig} from '../../config/Mail';
 
 const logger = loggerConfig();
-const transporter = transporterConfig();
+const mailer = mailerConfig();
 
 export const getProperty = makeGetProperty();
 
 export const createProperty = makeCreateProperty(
     logger,
-    transporter,
+    mailer,
     generateId,
 );
 

@@ -1,8 +1,5 @@
-import nodemailer, {Transporter} from 'nodemailer';
-import SMTPTransport from 'nodemailer/lib/smtp-transport';
-
-// eslint-disable-next-line max-len
-console.log(`auth:{ user:${process.env.EMAIL_USER}, pass:${process.env.EMAIL_PASSWORD} }`);
+import nodemailer from 'nodemailer';
+import {Mailer} from '../generic/Mailer';
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -12,7 +9,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const transporterConfig =
-    (): Transporter<SMTPTransport.SentMessageInfo> => {
-      return transporter;
-    };
+export const mailerConfig = (): Mailer => {
+  return new Mailer(transporter);
+};

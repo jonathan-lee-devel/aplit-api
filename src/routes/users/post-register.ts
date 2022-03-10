@@ -15,7 +15,7 @@ import {Response} from 'express-serve-static-core';
  * @param {Function} registerUser used to register user
  * @param {Function} formatRegistrationResponse used to format response
  */
-export const configureRegisterRoute = (
+export const configurePostRegisterRoute = (
     logger: Logger,
     router: Router,
     encodePassword: {

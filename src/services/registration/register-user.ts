@@ -1,4 +1,4 @@
-import {AnyKeys, AnyObject, HydratedDocument} from 'mongoose';
+import {HydratedDocument} from 'mongoose';
 import {RegistrationStatus} from './enum/registration-status';
 import {User, UserModel} from '../../models/User';
 import {
@@ -12,22 +12,20 @@ import {
 import {PasswordResetToken, PasswordResetTokenModel}
   from '../../models/PasswordResetToken';
 import {Logger} from '../../generic/Logger';
+import {Mailer} from '../../generic/Mailer';
 
 /**
  * Maker-function to register user.
  *
  * @param {Logger} logger used for logging
- * @param {Function} sendMail used to send mail
+ * @param {Mailer} mailer used to send mail
  * @param {Function} generateRegistrationVerificationToken used for token
  * @param {Function} generatePasswordResetToken used to generate token
  * @return {Function} function to register user
  */
 export const makeRegisterUser = (
     logger: Logger,
-    sendMail: {
-      (addressTo: string, subject: string, text: string)
-          : Promise<boolean>;
-      },
+    mailer: Mailer,
     generateRegistrationVerificationToken: {
       (tokenSize: number, expiryTimeMinutes: number)
           : Promise<RegistrationVerificationToken>;
@@ -91,11 +89,8 @@ export const makeRegisterUser = (
     passwordResetVerificationTokenDocument.user = newUser;
     await passwordResetVerificationTokenDocument.save();
 
-    sendMail(
-        email,
-        'Registration Confirmation',
-        `Please click the following link to verify your account: http://localhost:3000/users/register/confirm?token=${registrationVerificationTokenDocument.value}`,
-    );
+    mailer.sendMail(email, 'Registration Confirmation',
+        `<h4>Please click the following link to verify your account: <a href="http://localhost:3000/users/register/confirm?token=${registrationVerificationTokenDocument.value}">Verify Account</a></h4>`);
 
     return RegistrationStatus.AWAITING_EMAIL_VERIFICATION;
   };

@@ -1,5 +1,5 @@
 import express from 'express';
-import {configureRegisterRoute} from './post-register';
+import {configurePostRegisterRoute} from './post-register';
 import {configurePostLoginRoute} from './post-login-route';
 import {configurePostLogoutRoute} from './post-logout-route';
 import {configurePostConfirmPasswordResetRoute}
@@ -7,7 +7,8 @@ import {configurePostConfirmPasswordResetRoute}
 import {configurePostResetPassword} from './post-reset-password-route';
 import {configureGetProfileRoute} from './get-profile-route';
 import {configurePatchUpdateProfileRoute} from './patch-update-profile-route';
-import {configureGetConfirmRegistrationRoute} from './get-confirm-registration-route';
+import {configureGetConfirmRegistrationRoute}
+  from './get-confirm-registration-route';
 import {confirmRegistration, registerUser} from '../../services/registration';
 import {confirmPasswordReset, encodePassword, resetPassword}
   from '../../services/password';
@@ -33,7 +34,7 @@ configureGetConfirmRegistrationRoute(
     formatRegistrationResponse,
 );
 configurePostLoginRoute(logger, router);
-configureRegisterRoute(
+configurePostRegisterRoute(
     logger,
     router,
     encodePassword,

@@ -1,7 +1,6 @@
 import createError from 'http-errors';
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
 import helmet from 'helmet';
 import {passportConfig} from './config/Passport';
 import {interceptAndLogAuthError} from './config/Auth';
@@ -12,10 +11,7 @@ import {UsersRouter} from './routes/users';
 import {PropertiesRouter} from './routes/properties';
 import {Logger} from './generic/Logger';
 
-dotenv.config();
-
 const logger = new Logger();
-logger.info('Test');
 
 const app = express();
 databaseConfig(logger);
