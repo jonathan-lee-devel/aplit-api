@@ -90,7 +90,7 @@ export const makeRegisterUser = (
     await passwordResetVerificationTokenDocument.save();
 
     mailer.sendMail(email, 'Registration Confirmation',
-        `<h4>Please click the following link to verify your account: <a href="http://localhost:3000/users/register/confirm?token=${registrationVerificationTokenDocument.value}">Verify Account</a></h4>`);
+        `<h4>Please click the following link to verify your account: <a href="http://${process.env.BACK_END_URL}/users/register/confirm?token=${registrationVerificationTokenDocument.value}">Verify Account</a></h4>`);
 
     return RegistrationStatus.AWAITING_EMAIL_VERIFICATION;
   };

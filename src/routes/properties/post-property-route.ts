@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import {body, validationResult} from 'express-validator';
-import {PropertyDto} from '../../dto/PropertyDto';
+import {PropertyDto} from '../../dto/properties/PropertyDto';
 import {StatusContainerDto} from '../../dto/StatusContainerDto';
 import {User} from '../../models/User';
 import {isLoggedIn} from '../../config/Auth';

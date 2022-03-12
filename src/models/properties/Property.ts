@@ -9,7 +9,7 @@ import {ObjectID} from 'bson';
 export interface Property {
   id: string;
   title: string;
-  tenants: string[];
+  tenantEmails: string[];
   createdBy: User;
   admin: User;
 }
@@ -25,7 +25,7 @@ const schema = new Schema<Property>({
     required: true,
     unique: false,
   },
-  tenants: {
+  tenantEmails: {
     type: [String],
     required: true,
     unique: false,

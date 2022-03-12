@@ -1,5 +1,5 @@
 import {StatusContainerDto} from '../../dto/StatusContainerDto';
-import {PropertyDto} from '../../dto/PropertyDto';
+import {PropertyDto} from '../../dto/properties/PropertyDto';
 import {PropertyModel} from '../../models/properties/Property';
 import {Logger} from '../../generic/Logger';
 
@@ -34,6 +34,7 @@ export const makeDeleteProperty = (
 
     return {
       status: 204,
+      // @ts-ignore
       data: property,
     };
   };

@@ -1,5 +1,5 @@
 import {StatusContainerDto} from '../../dto/StatusContainerDto';
-import {PropertyDto} from '../../dto/PropertyDto';
+import {PropertyDto} from '../../dto/properties/PropertyDto';
 import {User} from '../../models/User';
 import {PropertyModel} from '../../models/properties/Property';
 
