@@ -31,11 +31,17 @@ export const makeGetProperty = () => {
       };
     }
 
-    if (property.tenants.includes(user.email) ||
+    if (property.tenantEmails.includes(user.email) ||
         property.admin.email === user.email) {
       return {
         status: 200,
-        data: property,
+        data: {
+          id: property.id,
+          admin: property.admin.email,
+          createdBy: property.createdBy.email,
+          tenantEmails: property.tenantEmails,
+          title: property.title,
+        },
       };
     } else {
       return {

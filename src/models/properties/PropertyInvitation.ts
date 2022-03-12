@@ -1,8 +1,9 @@
+import mongoose from 'mongoose';
+const {model, Schema} = mongoose;
+
 /**
  * Used to represent an invitation to a property.
  */
-import {model, Schema} from 'mongoose';
-
 export interface PropertyInvitation {
     id: string;
     propertyId: string;
