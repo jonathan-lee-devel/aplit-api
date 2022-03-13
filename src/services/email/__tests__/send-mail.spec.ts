@@ -1,21 +1,17 @@
 import {makeSendMail} from '../send-mail';
-import {Logger} from '../../../generic/Logger';
 
 jest.mock('nodemailer');
 import nodemailer from 'nodemailer';
-const sendMailMock = jest.fn();
-// nodemailer.createTransport.mockReturnValue({'sendMail': sendMailMock});
 
-beforeEach( () => {
-  sendMailMock.mockClear();
-  // nodemailer.createTransport.mockClear();
-});
+const logger = {
+  info: () => {},
+  warn: () => {},
+  error: () => {},
+};
 
 describe('send mail', () => {
-  it('When make sendMail then sendMail',
+  it('When make sendMail Then sendMail',
       async () => {
-        const logger = new Logger();
-
         const sendMail = makeSendMail(
             logger,
             nodemailer.createTransport({}, {}),
@@ -23,5 +19,25 @@ describe('send mail', () => {
 
         expect(sendMail).not.toBeNull();
         expect(sendMail).toBeInstanceOf(Function);
+      });
+  it('When sendMail Then transporter sendMail',
+      async () => {
+        const mockSendMail = jest.fn(() => true);
+        const transporter = {
+          sendMail: mockSendMail,
+        };
+        const sendMail = makeSendMail(
+            logger,
+            // @ts-ignore
+            transporter,
+        );
+
+        await sendMail(
+            'addressTo',
+            'subject',
+            'text',
+        );
+
+        expect(mockSendMail).toBeCalledTimes(1);
       });
 });
