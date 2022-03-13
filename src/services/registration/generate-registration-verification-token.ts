@@ -1,6 +1,6 @@
 import {
   RegistrationVerificationToken,
-} from '../../models/RegistrationVerificationToken';
+} from '../../models/registration/RegistrationVerificationToken';
 import {randomBytes} from 'crypto';
 import {addMinutes} from 'date-fns';
 

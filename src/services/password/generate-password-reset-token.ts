@@ -1,4 +1,4 @@
-import {PasswordResetToken} from '../../models/PasswordResetToken';
+import {PasswordResetToken} from '../../models/password/PasswordResetToken';
 import {randomBytes} from 'crypto';
 import {addMinutes} from 'date-fns';
 

@@ -4,7 +4,7 @@ import {User, UserModel} from '../../models/User';
 import {
   PasswordResetToken,
   PasswordResetTokenModel,
-} from '../../models/PasswordResetToken';
+} from '../../models/password/PasswordResetToken';
 import {
   DEFAULT_EXPIRY_TIME_MINUTES,
   DEFAULT_TOKEN_SIZE,
@@ -64,7 +64,7 @@ export const makeResetPassword = (
 
     mailer.sendMail(email, 'Password Reset',
         // eslint-disable-next-line max-len
-        `<h4>Please click the following link to reset your password: ${process.env.FRONT_END_URL}/password/reset/confirm?token=${passwordResetTokenDocument.value}</h4>`)
+        `<h4>Please click the following link to reset your password: ${process.env.FRONT_END_URL}/password/reset/confirm?token=${passwordResetTokenDocument.value}</h4>`);
 
     return PasswordResetStatus.AWAITING_EMAIL_VERIFICATION;
   };

@@ -3,7 +3,8 @@ import {makeResetPassword} from './reset-password';
 import {makeConfirmPasswordReset} from './confirm-password-reset';
 import {makeGeneratePasswordResetToken} from './generate-password-reset-token';
 import {makeGenerateSalt} from './wrapper/generate-salt';
-import {PasswordResetTokenModel} from '../../models/PasswordResetToken';
+import {PasswordResetTokenModel}
+  from '../../models/password/PasswordResetToken';
 import {UserModel} from '../../models/User';
 import {loggerConfig} from '../../config/Logger';
 import {mailerConfig} from '../../config/Mail';

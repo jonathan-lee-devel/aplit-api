@@ -1,6 +1,6 @@
 import {PasswordResetStatus} from './enum/password-reset-status';
 import {HydratedDocument} from 'mongoose';
-import {PasswordResetToken} from '../../models/PasswordResetToken';
+import {PasswordResetToken} from '../../models/password/PasswordResetToken';
 import {User} from '../../models/User';
 
 /**

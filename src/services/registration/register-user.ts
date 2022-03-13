@@ -4,13 +4,13 @@ import {User, UserModel} from '../../models/User';
 import {
   RegistrationVerificationToken,
   RegistrationVerificationTokenModel,
-} from '../../models/RegistrationVerificationToken';
+} from '../../models/registration/RegistrationVerificationToken';
 import {
   DEFAULT_EXPIRY_TIME_MINUTES,
   DEFAULT_TOKEN_SIZE,
 } from '../../config/Token';
 import {PasswordResetToken, PasswordResetTokenModel}
-  from '../../models/PasswordResetToken';
+  from '../../models/password/PasswordResetToken';
 import {Logger} from '../../generic/Logger';
 import {Mailer} from '../../generic/Mailer';
 

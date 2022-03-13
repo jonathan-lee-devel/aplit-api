@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 const {model, Schema} = mongoose;
+import {ObjectID} from 'bson';
+import {PropertyInvitationToken} from './PropertyInvitationToken';
 
 /**
  * Used to represent an invitation to a property.
@@ -10,7 +12,7 @@ export interface PropertyInvitation {
     inviteeEmail: string;
     inviterEmail: string;
     accepted: false;
-    expiryDate: Date,
+    propertyInvitationToken: PropertyInvitationToken;
 }
 
 const schema = new Schema<PropertyInvitation>({
@@ -39,10 +41,10 @@ const schema = new Schema<PropertyInvitation>({
     required: true,
     unique: false,
   },
-  expiryDate: {
-    type: Date,
+  propertyInvitationToken: {
+    type: ObjectID,
     required: true,
-    unique: false,
+    unique: true,
   },
 });
 

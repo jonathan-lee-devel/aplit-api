@@ -1,18 +1,18 @@
 import mongoose from 'mongoose';
 const {model, Schema} = mongoose;
 import {ObjectID} from 'bson';
-import {User} from './User';
+import {User} from '../User';
 
 /**
- * Used to represent a password reset token.
+ * Used to represent a registration verification token.
  */
-export interface PasswordResetToken {
+export interface RegistrationVerificationToken {
   value: string;
   expiryDate: Date;
   user: User;
 }
 
-const schema = new Schema<PasswordResetToken>({
+const schema = new Schema<RegistrationVerificationToken>({
   value: {
     type: String,
     required: true,
@@ -30,5 +30,5 @@ const schema = new Schema<PasswordResetToken>({
   },
 });
 
-export const PasswordResetTokenModel =
-  model<PasswordResetToken>('PasswordResetToken', schema);
+export const RegistrationVerificationTokenModel =
+  model<RegistrationVerificationToken>('RegistrationVerificationToken', schema);

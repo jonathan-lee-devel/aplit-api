@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
 const {model, Schema} = mongoose;
-import {RegistrationVerificationToken} from './RegistrationVerificationToken';
+import {RegistrationVerificationToken}
+  from './registration/RegistrationVerificationToken';
 import {ObjectID} from 'bson';
-import {PasswordResetToken} from './PasswordResetToken';
+import {PasswordResetToken} from './password/PasswordResetToken';
 
 /**
  * Used to represent a user.

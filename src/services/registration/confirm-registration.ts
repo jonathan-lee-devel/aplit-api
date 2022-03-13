@@ -3,7 +3,7 @@ import {HydratedDocument} from 'mongoose';
 import {
   RegistrationVerificationToken,
   RegistrationVerificationTokenModel,
-} from '../../models/RegistrationVerificationToken';
+} from '../../models/registration/RegistrationVerificationToken';
 import {User, UserModel} from '../../models/User';
 
 /**
