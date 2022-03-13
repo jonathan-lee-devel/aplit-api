@@ -1,17 +1,20 @@
 import {RegistrationStatus} from './enum/registration-status';
-import {HydratedDocument} from 'mongoose';
+import {HydratedDocument, Model} from 'mongoose';
 import {
   RegistrationVerificationToken,
   RegistrationVerificationTokenModel,
 } from '../../models/registration/RegistrationVerificationToken';
-import {User, UserModel} from '../../models/User';
+import {User} from '../../models/User';
 
 /**
  * Maker-function to confirm registration.
  *
+ * @param {Model<User>} UserModel user model
  * @return {Function} function used to confirm registration
  */
-export const makeConfirmRegistration = () => {
+export const makeConfirmRegistration = (
+    UserModel: Model<User>,
+) => {
   /**
    * Function used to confirm registration.
    *

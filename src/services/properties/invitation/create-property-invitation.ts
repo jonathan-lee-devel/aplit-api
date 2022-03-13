@@ -16,7 +16,7 @@ import {Model} from 'mongoose';
  * @param {Mailer} mailer used to send emails
  * @param {Function} generateId used to generated IDs
  * @param {Function} generatePropertyInvitationToken used to generate tokens
- * @param {Model<PropertyInvitation>} propertyInvitationModel model used
+ * @param {Model<PropertyInvitation>} PropertyInvitationModel model used
  * @return {Function} function to create property invitations
  */
 export const makeCreatePropertyInvitation = (
@@ -24,7 +24,7 @@ export const makeCreatePropertyInvitation = (
     mailer: Mailer,
     generateId: Function,
     generatePropertyInvitationToken: Function,
-    propertyInvitationModel: Model<PropertyInvitation>,
+    PropertyInvitationModel: Model<PropertyInvitation>,
 ) => {
   /**
    * Function to create property invitations.
@@ -53,8 +53,7 @@ export const makeCreatePropertyInvitation = (
     };
 
     try {
-      // eslint-disable-next-line new-cap
-      await new propertyInvitationModel(propertyInvitation).save();
+      await new PropertyInvitationModel(propertyInvitation).save();
       mailer.sendMail(inviteeEmail, 'Split Invitation',
           // eslint-disable-next-line max-len
           `<h4>${inviterEmail} has invited you to manage your shared living space</h4>

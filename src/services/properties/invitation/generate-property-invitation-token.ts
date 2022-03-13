@@ -8,11 +8,11 @@ import {Model} from 'mongoose';
 /**
  * Maker-function to generate property invitation token.
  *
- * @param {Model<Property>} propertyModel property model
+ * @param {Model<Property>} PropertyModel property model
  * @return {Function} function to generate property invitation token
  */
 export const makeGeneratePropertyInvitationToken = (
-    propertyModel: Model<Property>,
+    PropertyModel: Model<Property>,
 ) => {
   /**
    * Function to generate property invitation token.
@@ -27,7 +27,7 @@ export const makeGeneratePropertyInvitationToken = (
       expiryTimeDays: number,
       propertyId: string,
   ): Promise<PropertyInvitationToken> {
-    const property = await propertyModel.findOne({id: propertyId});
+    const property = await PropertyModel.findOne({id: propertyId});
 
     return {
       value: randomBytes(tokenSize).toString('hex'),
