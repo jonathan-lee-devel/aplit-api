@@ -11,6 +11,7 @@ describe('Confirm password reset', () => {
         const passwordResetTokenModel = {};
         const userModel = {};
         const confirmPasswordReset = makeConfirmPasswordReset(
+            // @ts-ignore
             passwordResetTokenModel,
             userModel,
             encodePassword);
@@ -26,6 +27,7 @@ describe('Confirm password reset', () => {
         };
         const userModel = {};
         const confirmPasswordReset = makeConfirmPasswordReset(
+            // @ts-ignore
             passwordResetTokenModel,
             userModel,
             encodePassword);
@@ -50,6 +52,7 @@ describe('Confirm password reset', () => {
           },
         };
         const confirmPasswordReset = makeConfirmPasswordReset(
+            // @ts-ignore
             passwordResetTokenModel,
             userModel,
             encodePassword,

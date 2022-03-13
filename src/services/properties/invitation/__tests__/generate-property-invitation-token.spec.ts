@@ -7,15 +7,19 @@ describe('Generate property invitation token', () => {
   // eslint-disable-next-line max-len
   it('When makeGeneratePropertyInvitationToken Then generatePropertyInvitationToken',
       async () => {
+        const propertyModel = {};
         const generatePropertyInvitationToken =
-            makeGeneratePropertyInvitationToken();
+        // @ts-ignore
+            makeGeneratePropertyInvitationToken(propertyModel);
         expect(generatePropertyInvitationToken).not.toBeNull();
         expect(generatePropertyInvitationToken).toBeInstanceOf(Function);
       });
   it('When generatePropertyInvitationToken Then token of given length',
       async () => {
+        const propertyModel = {};
         const generatePropertyInvitationToken =
-          makeGeneratePropertyInvitationToken();
+        // @ts-ignore
+          makeGeneratePropertyInvitationToken(propertyModel);
         const token = await generatePropertyInvitationToken(
             DEFAULT_TOKEN_SIZE,
             DEFAULT_EXPIRY_TIME_DAYS,
@@ -27,8 +31,10 @@ describe('Generate property invitation token', () => {
       });
   it('When generatePropertyInvitationToken Then token not expired',
       async () => {
+        const propertyModel = {};
         const generatePropertyInvitationToken =
-          makeGeneratePropertyInvitationToken();
+        // @ts-ignore
+          makeGeneratePropertyInvitationToken(propertyModel);
         const token = await generatePropertyInvitationToken(
             DEFAULT_TOKEN_SIZE,
             DEFAULT_EXPIRY_TIME_DAYS,
