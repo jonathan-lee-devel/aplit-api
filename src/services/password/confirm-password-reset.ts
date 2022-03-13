@@ -6,13 +6,13 @@ import {User} from '../../models/User';
 /**
  * Maker-function for confirming password reset.
  *
- * @param {PasswordResetTokenModel} passwordResetTokenModel token model
+ * @param {Model<PasswordResetToken>} passwordResetTokenModel token model
  * @param {Model<User>} userModel user model
  * @param {Function} encodePassword used to encode password
  * @return {Function} function for confirming password reset
  */
 export const makeConfirmPasswordReset = (
-    passwordResetTokenModel: any,
+    passwordResetTokenModel: Model<PasswordResetToken>,
     userModel: Model<User>,
     encodePassword: { (password: string): Promise<string>; },
 ) => {
