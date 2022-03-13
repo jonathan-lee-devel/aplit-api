@@ -28,7 +28,7 @@ export const makeGeneratePropertyInvitationToken = () => {
     return {
       value: randomBytes(tokenSize).toString('hex'),
       expiryDate: addDays(new Date(), expiryTimeDays),
-      property: property.id,
+      property: property._id,
     };
   };
 };

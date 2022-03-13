@@ -17,7 +17,12 @@ export const getProperty = makeGetProperty();
 export const generatePropertyInvitationToken =
     makeGeneratePropertyInvitationToken();
 
-export const createPropertyInvitation = makeCreatePropertyInvitation();
+export const createPropertyInvitation = makeCreatePropertyInvitation(
+    logger,
+    mailer,
+    generateId,
+    generatePropertyInvitationToken,
+);
 
 export const createProperty = makeCreateProperty(
     logger,

@@ -8,7 +8,7 @@ import {Mailer} from '../../generic/Mailer';
 /**
  * Maker-function for the function to create properties.
  *
- * @param {Logger} logger used when creating properties
+ * @param {Logger} logger used for logging
  * @param {Mailer} mailer used to send emails
  * @param {Function} generateId used to generate IDs
  * @param {Function} createPropertyInvitation used to create property invitation
@@ -47,6 +47,13 @@ export const makeCreateProperty = (
 
     try {
       await new PropertyModel(property).save();
+      for (const tenantEmail of tenantEmails) {
+        await createPropertyInvitation(
+            property.id,
+            createdBy.email,
+            tenantEmail,
+        );
+      }
     } catch (err) {
       logger.error(`An error has occurred: ${err.message}`);
       return {
