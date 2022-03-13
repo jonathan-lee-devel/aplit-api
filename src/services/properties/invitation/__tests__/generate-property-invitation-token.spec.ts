@@ -16,7 +16,13 @@ describe('Generate property invitation token', () => {
       });
   it('When generatePropertyInvitationToken Then token of given length',
       async () => {
-        const propertyModel = {};
+        const propertyModel = {
+          findOne: () => {
+            return {
+              _id: '12345',
+            };
+          },
+        };
         const generatePropertyInvitationToken =
         // @ts-ignore
           makeGeneratePropertyInvitationToken(propertyModel);
@@ -31,7 +37,13 @@ describe('Generate property invitation token', () => {
       });
   it('When generatePropertyInvitationToken Then token not expired',
       async () => {
-        const propertyModel = {};
+        const propertyModel = {
+          findOne: () => {
+            return {
+              _id: '12345',
+            };
+          },
+        };
         const generatePropertyInvitationToken =
         // @ts-ignore
           makeGeneratePropertyInvitationToken(propertyModel);
