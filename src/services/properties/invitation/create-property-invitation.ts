@@ -1,12 +1,13 @@
 import {Logger} from '../../../generic/Logger';
 import {Mailer} from '../../../generic/Mailer';
-import {PropertyInvitation, PropertyInvitationModel}
+import {PropertyInvitation}
   from '../../../models/properties/invitation/PropertyInvitation';
 import {DEFAULT_EXPIRY_TIME_DAYS, DEFAULT_TOKEN_SIZE}
   from '../../../config/Token';
 import {StatusContainerDto} from '../../../dto/StatusContainerDto';
 import {PropertyInvitationDto}
   from '../../../dto/properties/PropertyInvitationDto';
+import {Model} from 'mongoose';
 
 /**
  * Maker-function for the function to create property invitations.
@@ -15,6 +16,7 @@ import {PropertyInvitationDto}
  * @param {Mailer} mailer used to send emails
  * @param {Function} generateId used to generated IDs
  * @param {Function} generatePropertyInvitationToken used to generate tokens
+ * @param {Model<PropertyInvitation>} propertyInvitationModel model used
  * @return {Function} function to create property invitations
  */
 export const makeCreatePropertyInvitation = (
@@ -22,6 +24,7 @@ export const makeCreatePropertyInvitation = (
     mailer: Mailer,
     generateId: Function,
     generatePropertyInvitationToken: Function,
+    propertyInvitationModel: Model<PropertyInvitation>,
 ) => {
   /**
    * Function to create property invitations.
@@ -50,11 +53,12 @@ export const makeCreatePropertyInvitation = (
     };
 
     try {
-      await new PropertyInvitationModel(propertyInvitation).save();
+      // eslint-disable-next-line new-cap
+      await new propertyInvitationModel(propertyInvitation).save();
       mailer.sendMail(inviteeEmail, 'Split Invitation',
           // eslint-disable-next-line max-len
-          `<h4>${inviterEmail} has invited you to manage your shared living space</h4>`);
-
+          `<h4>${inviterEmail} has invited you to manage your shared living space</h4>
+                        <h5>Please click the following link to accept: https://${process.env.BACK_END_URL}/properties/invitation/${propertyInvitation.propertyInvitationToken.value}</h5>`);
     } catch (err) {
       logger.error(`An error has occurred: ${err.message}`);
       return {
