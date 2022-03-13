@@ -1,4 +1,4 @@
-import sonarqubeScanner from 'sonarqube-scanner';
+const sonarqubeScanner = require('sonarqube-scanner');
 sonarqubeScanner(
     {
       serverUrl: 'http://localhost:9000',
@@ -9,7 +9,7 @@ sonarqubeScanner(
         'sonar.test.inclusions':
         'src/**/*.spec.ts,src/**/*.spec.tsx,src/**/*.test.ts,src/**/*.test.tsx',
         'sonar.javascript.lcov.reportPaths': 'coverage/lcov.info',
-        'sonar.login': '7e0906f86ddc29d048f2ad4dec7dfb15ef25f185',
+        'sonar.login': '2983efcb7d2b8754a6fe7e12080503cea0b5eb1d',
       },
     },
     () => {},
