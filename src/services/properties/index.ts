@@ -10,6 +10,7 @@ import {makeCreatePropertyInvitation}
   from './invitation/create-property-invitation';
 import {PropertyInvitationModel}
   from '../../models/properties/invitation/PropertyInvitation';
+import {PropertyModel} from '../../models/properties/Property';
 
 const logger = loggerConfig();
 const mailer = mailerConfig();
@@ -17,7 +18,7 @@ const mailer = mailerConfig();
 export const getProperty = makeGetProperty();
 
 export const generatePropertyInvitationToken =
-    makeGeneratePropertyInvitationToken();
+    makeGeneratePropertyInvitationToken(PropertyModel);
 
 export const createPropertyInvitation = makeCreatePropertyInvitation(
     logger,
