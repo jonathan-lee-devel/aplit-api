@@ -94,8 +94,7 @@ describe('Confirm password reset', () => {
   it('When confirmPasswordReset and expired token Then verification expired',
       async () => {
         const token = 'token';
-        const nonExpiredDate = new Date();
-        nonExpiredDate.setDate(addDays(nonExpiredDate, 14).getDate());
+        const nonExpiredDate = addDays(new Date(), 14);
         const passwordResetTokenModel = {
           findOne: async (_: any) => {
             return {
