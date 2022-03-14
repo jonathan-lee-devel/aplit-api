@@ -1,5 +1,6 @@
 import {makeConfirmPasswordReset} from '../confirm-password-reset';
 import {PasswordResetStatus} from '../enum/password-reset-status';
+import {addDays} from 'date-fns';
 
 const encodePassword = async (password: string) => {
   return password;
@@ -62,5 +63,64 @@ describe('Confirm password reset', () => {
             await confirmPasswordReset(token, password);
         expect(confirmPasswordResetStatus)
             .toBe(PasswordResetStatus.FAILURE);
+      });
+  it('When confirmPasswordReset and expired token Then verification expired',
+      async () => {
+        const token = 'token';
+        const passwordResetTokenModel = {
+          findOne: async (_: any) => {
+            return {
+              expiryDate: new Date(),
+            };
+          },
+        };
+        const userModel = {
+          findOne: async (_: any): Promise<any> => {
+            return {};
+          },
+        };
+        const confirmPasswordReset = makeConfirmPasswordReset(
+            // @ts-ignore
+            passwordResetTokenModel,
+            userModel,
+            encodePassword,
+        );
+        const password = 'password';
+        const confirmPasswordResetStatus =
+              await confirmPasswordReset(token, password);
+        expect(confirmPasswordResetStatus)
+            .toBe(PasswordResetStatus.EMAIL_VERIFICATION_EXPIRED);
+      });
+  it('When confirmPasswordReset and expired token Then verification expired',
+      async () => {
+        const token = 'token';
+        const nonExpiredDate = new Date();
+        nonExpiredDate.setDate(addDays(nonExpiredDate, 14).getDate());
+        const passwordResetTokenModel = {
+          findOne: async (_: any) => {
+            return {
+              expiryDate: nonExpiredDate,
+              save: async () => {},
+            };
+          },
+        };
+        const userModel = {
+          findOne: async (_: any): Promise<any> => {
+            return {
+              save: async () => {},
+            };
+          },
+        };
+        const confirmPasswordReset = makeConfirmPasswordReset(
+            // @ts-ignore
+            passwordResetTokenModel,
+            userModel,
+            encodePassword,
+        );
+        const password = 'password';
+        const confirmPasswordResetStatus =
+                await confirmPasswordReset(token, password);
+        expect(confirmPasswordResetStatus)
+            .toBe(PasswordResetStatus.SUCCESS);
       });
 });

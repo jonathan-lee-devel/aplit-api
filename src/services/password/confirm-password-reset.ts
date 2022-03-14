@@ -7,13 +7,13 @@ import {User} from '../../models/User';
  * Maker-function for confirming password reset.
  *
  * @param {Model<PasswordResetToken>} passwordResetTokenModel token model
- * @param {Model<User>} userModel user model
+ * @param {Model<User>} UserModel user model
  * @param {Function} encodePassword used to encode password
  * @return {Function} function for confirming password reset
  */
 export const makeConfirmPasswordReset = (
     passwordResetTokenModel: Model<PasswordResetToken>,
-    userModel: Model<User>,
+    UserModel: Model<User>,
     encodePassword: { (password: string): Promise<string>; },
 ) => {
   /**
@@ -35,7 +35,7 @@ export const makeConfirmPasswordReset = (
     }
 
     const user: HydratedDocument<User> =
-        await userModel.findOne({value: token});
+        await UserModel.findOne({value: token});
 
     if (!user) {
       return PasswordResetStatus.FAILURE;
