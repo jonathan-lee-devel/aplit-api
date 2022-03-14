@@ -9,8 +9,7 @@
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node --es-module-specifier-resolution=node dist/bin/www.js",
-    "test": "ENV_FILE=./.env.test jest",
-    "test:unit": "ENV_FILE=./.env.test jest",
+    "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
     "sonar": "node sonar-project.cjs"
   },
   "jestSonar": {

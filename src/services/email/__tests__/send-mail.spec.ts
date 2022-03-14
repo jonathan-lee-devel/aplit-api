@@ -1,4 +1,5 @@
 import {makeSendMail} from '../send-mail';
+import {jest} from '@jest/globals';
 
 jest.mock('nodemailer');
 import nodemailer from 'nodemailer';
