@@ -1,8 +1,4 @@
 import {makeSendMail} from '../send-mail';
-import {jest} from '@jest/globals';
-
-jest.mock('nodemailer');
-import nodemailer from 'nodemailer';
 
 const logger = {
   info: () => {},
@@ -15,7 +11,8 @@ describe('send mail', () => {
       async () => {
         const sendMail = makeSendMail(
             logger,
-            nodemailer.createTransport({}, {}),
+            // @ts-ignore
+            {},
         );
 
         expect(sendMail).not.toBeNull();
@@ -23,9 +20,11 @@ describe('send mail', () => {
       });
   it('When sendMail Then transporter sendMail',
       async () => {
-        const mockSendMail = jest.fn(() => true);
+        let wasTransporterSendMailCalled = false;
         const transporter = {
-          sendMail: mockSendMail,
+          sendMail: () => {
+            wasTransporterSendMailCalled = true;
+          },
         };
         const sendMail = makeSendMail(
             logger,
@@ -39,6 +38,6 @@ describe('send mail', () => {
             'text',
         );
 
-        expect(mockSendMail).toBeCalledTimes(1);
+        expect(wasTransporterSendMailCalled).toBeTruthy();
       });
 });
