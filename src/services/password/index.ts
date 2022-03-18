@@ -19,6 +19,8 @@ export const resetPassword = makeResetPassword(
     logger,
     generatePasswordResetToken,
     mailer,
+    UserModel,
+    PasswordResetTokenModel,
 );
 export const confirmPasswordReset = makeConfirmPasswordReset(
     PasswordResetTokenModel,

@@ -1,9 +1,8 @@
 import {PasswordResetStatus} from './enum/password-reset-status';
-import {HydratedDocument} from 'mongoose';
-import {User, UserModel} from '../../models/User';
+import {HydratedDocument, Model} from 'mongoose';
+import {User} from '../../models/User';
 import {
   PasswordResetToken,
-  PasswordResetTokenModel,
 } from '../../models/password/PasswordResetToken';
 import {
   DEFAULT_EXPIRY_TIME_MINUTES,
@@ -18,6 +17,8 @@ import {Mailer} from '../../generic/Mailer';
  * @param {Logger} logger used for logging
  * @param {Function} generatePasswordResetToken used to generate token
  * @param {Mailer} mailer used to send mail
+ * @param {Model<User>} UserModel user model
+ * @param {Model<PasswordResetTokenModel>} PasswordResetTokenModel token model
  * @return {Function} function used to reset password
  */
 export const makeResetPassword = (
@@ -28,6 +29,8 @@ export const makeResetPassword = (
       ): Promise<PasswordResetToken>;
       },
     mailer: Mailer,
+    UserModel: Model<User>,
+    PasswordResetTokenModel: Model<PasswordResetToken>,
 ) => {
   /**
    * Function used to reset password.
@@ -48,7 +51,7 @@ export const makeResetPassword = (
         await PasswordResetTokenModel.findOne({user: existingUser});
 
     if (!passwordResetTokenDocument) {
-      console.error('Password reset token does not exist for user');
+      logger.error('Password reset token does not exist for user');
       return PasswordResetStatus.AWAITING_EMAIL_VERIFICATION;
     }
 
