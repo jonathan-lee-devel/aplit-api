@@ -6,10 +6,6 @@ import {generateId} from '../id';
 import {mailerConfig} from '../../config/Mail';
 import {makeGeneratePropertyInvitationToken}
   from './invitation/generate-property-invitation-token';
-import {makeCreatePropertyInvitation}
-  from './invitation/create-property-invitation';
-import {PropertyInvitationModel}
-  from '../../models/properties/invitation/PropertyInvitation';
 import {PropertyModel} from '../../models/properties/Property';
 
 const logger = loggerConfig();
@@ -20,19 +16,12 @@ export const getProperty = makeGetProperty();
 export const generatePropertyInvitationToken =
     makeGeneratePropertyInvitationToken(PropertyModel);
 
-export const createPropertyInvitation = makeCreatePropertyInvitation(
-    logger,
-    mailer,
-    generateId,
-    generatePropertyInvitationToken,
-    PropertyInvitationModel,
-);
-
 export const createProperty = makeCreateProperty(
     logger,
     mailer,
     generateId,
-    createPropertyInvitation,
+    PropertyModel,
+    async () => {},
 );
 
 export const deleteProperty = makeDeleteProperty(

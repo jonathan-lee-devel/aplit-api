@@ -7,6 +7,7 @@ services:
       - '80:3000'
     environment:
       SESSION_SECRET: ${SESSION_SECRET}
+      BACK_END_URL: ${BACK_END_URL}
       FRONT_END_URL: ${FRONT_END_URL}
       DATABASE_URL: ${DATABASE_URL}
       EMAIL_USER: ${EMAIL_USER}

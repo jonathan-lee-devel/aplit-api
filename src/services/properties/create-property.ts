@@ -1,9 +1,10 @@
 import {User} from '../../models/User';
-import {Property, PropertyModel} from '../../models/properties/Property';
+import {Property} from '../../models/properties/Property';
 import {PropertyDto} from '../../dto/properties/PropertyDto';
 import {StatusContainerDto} from '../../dto/StatusContainerDto';
 import {Logger} from '../../generic/Logger';
 import {Mailer} from '../../generic/Mailer';
+import {Model} from 'mongoose';
 
 /**
  * Maker-function for the function to create properties.
@@ -11,6 +12,7 @@ import {Mailer} from '../../generic/Mailer';
  * @param {Logger} logger used for logging
  * @param {Mailer} mailer used to send emails
  * @param {Function} generateId used to generate IDs
+ * @param {Model<Property>} PropertyModel used to create properties in database
  * @param {Function} createPropertyInvitation used to create property invitation
  * @return {Function} function to create properties
  */
@@ -18,6 +20,7 @@ export const makeCreateProperty = (
     logger: Logger,
     mailer: Mailer,
     generateId: Function,
+    PropertyModel: Model<Property>,
     createPropertyInvitation: Function,
 ) => {
   /**
