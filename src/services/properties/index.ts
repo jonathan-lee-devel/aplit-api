@@ -39,7 +39,6 @@ export const sendPropertyInvitation = makeSendPropertyInvitation(
 
 export const createProperty = makeCreateProperty(
     logger,
-    mailer,
     generateId,
     PropertyModel,
     createPropertyInvitation,
