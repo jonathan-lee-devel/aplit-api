@@ -10,7 +10,6 @@ import {Model} from 'mongoose';
  * Maker-function for the function to create properties.
  *
  * @param {Logger} logger used for logging
- * @param {Mailer} mailer used to send emails
  * @param {Function} generateId used to generate IDs
  * @param {Model<Property>} PropertyModel used to create properties in database
  * @param {Function} createPropertyInvitation used to create property invitation
@@ -19,7 +18,6 @@ import {Model} from 'mongoose';
  */
 export const makeCreateProperty = (
     logger: Logger,
-    mailer: Mailer,
     generateId: Function,
     PropertyModel: Model<Property>,
     createPropertyInvitation: Function,
