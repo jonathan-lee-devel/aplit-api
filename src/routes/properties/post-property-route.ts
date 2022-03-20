@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import {body, validationResult} from 'express-validator';
-import {PropertyDto} from '../../dto/properties/PropertyDto';
-import {StatusContainerDto} from '../../dto/StatusContainerDto';
+import {PropertyDto} from '../../data/dto/properties/PropertyDto';
+import {StatusDataContainer} from '../../data/StatusDataContainer';
 import {User} from '../../models/User';
 import {isLoggedIn} from '../../config/Auth';
 import {Logger} from '../../generic/Logger';
@@ -26,7 +26,7 @@ export const configurePostPropertyRoute = (
     mailer: Mailer,
     createProperty: {
         (title: string, tenants: string[], createdBy: User, admin: User)
-            : Promise<StatusContainerDto<PropertyDto>>;
+            : Promise<StatusDataContainer<PropertyDto>>;
         },
 ) => {
   router.post('/create',

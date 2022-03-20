@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import {body, validationResult} from 'express-validator';
-import {UserProfileDto} from '../../dto/UserProfileDto';
+import {UserProfileDto} from '../../data/dto/UserProfileDto';
 import {isLoggedIn} from '../../config/Auth';
 import {Logger} from '../../generic/Logger';
 

@@ -1,5 +1,5 @@
-import {StatusContainerDto} from '../../dto/StatusContainerDto';
-import {PropertyDto} from '../../dto/properties/PropertyDto';
+import {StatusDataContainer} from '../../data/StatusDataContainer';
+import {PropertyDto} from '../../data/dto/properties/PropertyDto';
 import {User} from '../../models/User';
 import {PropertyModel} from '../../models/properties/Property';
 
@@ -17,7 +17,7 @@ export const makeGetProperty = () => {
    */
   return async function getProperty(
       user: User, id: string,
-  ): Promise<StatusContainerDto<PropertyDto>> {
+  ): Promise<StatusDataContainer<PropertyDto>> {
     const property = await PropertyModel.findOne({id: id},
         {
           _id: 0,

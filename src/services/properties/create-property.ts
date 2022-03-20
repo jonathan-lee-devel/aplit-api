@@ -1,7 +1,7 @@
 import {User} from '../../models/User';
 import {Property} from '../../models/properties/Property';
-import {PropertyDto} from '../../dto/properties/PropertyDto';
-import {StatusContainerDto} from '../../dto/StatusContainerDto';
+import {PropertyDto} from '../../data/dto/properties/PropertyDto';
+import {StatusDataContainer} from '../../data/StatusDataContainer';
 import {Logger} from '../../generic/Logger';
 import {Mailer} from '../../generic/Mailer';
 import {Model} from 'mongoose';
@@ -14,6 +14,7 @@ import {Model} from 'mongoose';
  * @param {Function} generateId used to generate IDs
  * @param {Model<Property>} PropertyModel used to create properties in database
  * @param {Function} createPropertyInvitation used to create property invitation
+ * @param {Function} sendPropertyInvitation used to send property invitation
  * @return {Function} function to create properties
  */
 export const makeCreateProperty = (
@@ -22,6 +23,7 @@ export const makeCreateProperty = (
     generateId: Function,
     PropertyModel: Model<Property>,
     createPropertyInvitation: Function,
+    sendPropertyInvitation: Function,
 ) => {
   /**
    * Used to create properties.
@@ -38,7 +40,7 @@ export const makeCreateProperty = (
       tenantEmails: string[],
       createdBy: User,
       admin: User,
-  ): Promise<StatusContainerDto<PropertyDto>> {
+  ): Promise<StatusDataContainer<PropertyDto>> {
     const id = await generateId(logger);
     const property: Property = {
       id,
@@ -51,11 +53,20 @@ export const makeCreateProperty = (
     try {
       await new PropertyModel(property).save();
       for (const tenantEmail of tenantEmails) {
-        await createPropertyInvitation(
-            property.id,
-            createdBy.email,
-            tenantEmail,
-        );
+        const propertyInvitationContainer =
+            await createPropertyInvitation(
+                property.id,
+                createdBy.email,
+                tenantEmail,
+            );
+
+        if (propertyInvitationContainer.status === 201) {
+          sendPropertyInvitation(
+              propertyInvitationContainer.data.propertyInvitationToken.value,
+              createdBy.email,
+              tenantEmail,
+          );
+        }
       }
     } catch (err) {
       logger.error(`An error has occurred: ${err.message}`);

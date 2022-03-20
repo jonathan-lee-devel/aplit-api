@@ -1,4 +1,4 @@
-import {UserProfileDto} from '../../dto/UserProfileDto';
+import {UserProfileDto} from '../../data/dto/UserProfileDto';
 import {HydratedDocument} from 'mongoose';
 import {User, UserModel} from '../../models/User';
 

@@ -1,5 +1,5 @@
-import {StatusContainerDto} from '../../dto/StatusContainerDto';
-import {PropertyDto} from '../../dto/properties/PropertyDto';
+import {StatusDataContainer} from '../../data/StatusDataContainer';
+import {PropertyDto} from '../../data/dto/properties/PropertyDto';
 import {PropertyModel} from '../../models/properties/Property';
 import {Logger} from '../../generic/Logger';
 
@@ -16,11 +16,11 @@ export const makeDeleteProperty = (
    * Used to delete properties.
    *
    * @param {string} id of the property to delete
-   * @return {Promise<StatusContainerDto<PropertyDto>>} property deleted
+   * @return {Promise<StatusDataContainer<PropertyDto>>} property deleted
    */
   return async function deleteProperty(
       id: string,
-  ): Promise<StatusContainerDto<PropertyDto>> {
+  ): Promise<StatusDataContainer<PropertyDto>> {
     const property = await PropertyModel.findOne({id});
     try {
       await PropertyModel.deleteOne({id});

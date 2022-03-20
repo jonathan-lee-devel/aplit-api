@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import {Property} from '../Property';
-import {ObjectID} from 'bson';
 const {model, Schema} = mongoose;
+import {ObjectID} from 'bson';
+import {Property} from '../Property';
 
 /**
  * Used to represent a property invitation token.
