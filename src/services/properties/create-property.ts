@@ -3,7 +3,6 @@ import {Property} from '../../models/properties/Property';
 import {PropertyDto} from '../../data/dto/properties/PropertyDto';
 import {StatusDataContainer} from '../../data/StatusDataContainer';
 import {Logger} from '../../generic/Logger';
-import {Mailer} from '../../generic/Mailer';
 import {Model} from 'mongoose';
 
 /**
@@ -12,16 +11,14 @@ import {Model} from 'mongoose';
  * @param {Logger} logger used for logging
  * @param {Function} generateId used to generate IDs
  * @param {Model<Property>} PropertyModel used to create properties in database
- * @param {Function} createPropertyInvitation used to create property invitation
- * @param {Function} sendPropertyInvitation used to send property invitation
+ * @param {Function} inviteToProperty used to invite tenants
  * @return {Function} function to create properties
  */
 export const makeCreateProperty = (
     logger: Logger,
     generateId: Function,
     PropertyModel: Model<Property>,
-    createPropertyInvitation: Function,
-    sendPropertyInvitation: Function,
+    inviteToProperty: Function,
 ) => {
   /**
    * Used to create properties.
@@ -51,20 +48,11 @@ export const makeCreateProperty = (
     try {
       await new PropertyModel(property).save();
       for (const tenantEmail of tenantEmails) {
-        const propertyInvitationContainer =
-            await createPropertyInvitation(
-                property.id,
-                createdBy.email,
-                tenantEmail,
-            );
-
-        if (propertyInvitationContainer.status === 201) {
-          sendPropertyInvitation(
-              propertyInvitationContainer.data.propertyInvitationToken.value,
-              createdBy.email,
-              tenantEmail,
-          );
-        }
+        inviteToProperty(
+            property.id,
+            createdBy.email,
+            tenantEmail,
+        );
       }
     } catch (err) {
       logger.error(`An error has occurred: ${err.message}`);
