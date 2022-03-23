@@ -34,8 +34,13 @@ export const makeDeleteProperty = (
 
     return {
       status: 204,
-      // @ts-ignore
-      data: property,
+      data: {
+        id: property.id,
+        title: property.title,
+        tenantEmails: property.tenantEmails,
+        createdBy: property.createdBy.email,
+        admin: property.admin.email,
+      },
     };
   };
 };
