@@ -15,7 +15,7 @@ import {PropertyInvitationModel}
   from '../../models/properties/invitation/PropertyInvitation';
 import {makeSendPropertyInvitation}
   from './invitation/send-property-invitation';
-import {makeInviteToProperty} from "./invite-to-property";
+import {makeInviteToProperty} from './invite-to-property';
 
 const logger = loggerConfig();
 const mailer = mailerConfig();
@@ -25,7 +25,7 @@ export const getProperty = makeGetProperty();
 export const generatePropertyInvitationToken =
     makeGeneratePropertyInvitationToken(PropertyModel);
 
-export const createPropertyInvitation = makeCreatePropertyInvitation(
+const createPropertyInvitation = makeCreatePropertyInvitation(
     logger,
     generateId,
     generatePropertyInvitationToken,
@@ -33,7 +33,7 @@ export const createPropertyInvitation = makeCreatePropertyInvitation(
     PropertyInvitationModel,
 );
 
-export const sendPropertyInvitation = makeSendPropertyInvitation(
+const sendPropertyInvitation = makeSendPropertyInvitation(
     logger,
     mailer,
 );
@@ -48,7 +48,7 @@ export const createProperty = makeCreateProperty(
     logger,
     generateId,
     PropertyModel,
-    inviteToProperty
+    inviteToProperty,
 );
 
 export const deleteProperty = makeDeleteProperty(
