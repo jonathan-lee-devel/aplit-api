@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import {Logger} from '../../generic/Logger';
+import {generateIdFunctionType} from './index';
 
 /**
  * Maker-function for the function to generate IDs.
@@ -9,7 +10,7 @@ import {Logger} from '../../generic/Logger';
  */
 export const makeGenerateId = (
     logger: Logger,
-) => {
+): generateIdFunctionType => {
   /**
    * Function to generate IDs.
    *
