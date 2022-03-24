@@ -7,12 +7,16 @@ import {PropertyInvitationToken}
 import {DEFAULT_EXPIRY_TIME_DAYS, DEFAULT_TOKEN_SIZE}
   from '../../../config/Token';
 import {StatusDataContainer} from '../../../data/StatusDataContainer';
-import {CreatePropertyInvitationFunction} from '../index';
+import {
+  CreatePropertyInvitationFunction,
+  GeneratePropertyInvitationTokenFunction,
+} from '../index';
+import {GenerateIdFunction} from '../../id';
 
 export const makeCreatePropertyInvitation = (
     logger: Logger,
-    generateId: Function,
-    generatePropertyInvitationToken: Function,
+    generateId: GenerateIdFunction,
+    generatePropertyInvitationToken: GeneratePropertyInvitationTokenFunction,
     PropertyInvitationTokenModel: Model<PropertyInvitationToken>,
     PropertyInvitationModel: Model<PropertyInvitation>,
 ): CreatePropertyInvitationFunction => {
@@ -22,7 +26,7 @@ export const makeCreatePropertyInvitation = (
       inviterEmail: string,
   ): Promise<StatusDataContainer<PropertyInvitation>> {
     const propertyInvitation: PropertyInvitation = {
-      id: await generateId(logger),
+      id: await generateId(),
       propertyId: propertyId,
       inviteeEmail: inviteeEmail,
       inviterEmail: inviterEmail,

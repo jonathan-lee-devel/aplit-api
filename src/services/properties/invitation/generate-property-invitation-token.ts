@@ -10,7 +10,7 @@ import {GeneratePropertyInvitationTokenFunction} from '../index';
  * Maker-function to generate property invitation token.
  *
  * @param {Model<Property>} PropertyModel property model
- * @return {Function} function to generate property invitation token
+ * @return {GeneratePropertyInvitationTokenFunction} function to generate token
  */
 export const makeGeneratePropertyInvitationToken = (
     PropertyModel: Model<Property>,

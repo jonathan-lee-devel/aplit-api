@@ -2,7 +2,7 @@ import {StatusDataContainer} from '../../data/StatusDataContainer';
 import {PropertyDto} from '../../data/dto/properties/PropertyDto';
 import {PropertyModel} from '../../models/properties/Property';
 import {Logger} from '../../generic/Logger';
-import {DeletePropertyFunction} from "./index";
+import {DeletePropertyFunction} from './index';
 
 /**
  * Maker-function for the function to delete properties.
