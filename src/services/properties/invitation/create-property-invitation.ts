@@ -7,6 +7,7 @@ import {PropertyInvitationToken}
 import {DEFAULT_EXPIRY_TIME_DAYS, DEFAULT_TOKEN_SIZE}
   from '../../../config/Token';
 import {StatusDataContainer} from '../../../data/StatusDataContainer';
+import {CreatePropertyInvitationFunction} from '../index';
 
 export const makeCreatePropertyInvitation = (
     logger: Logger,
@@ -14,7 +15,7 @@ export const makeCreatePropertyInvitation = (
     generatePropertyInvitationToken: Function,
     PropertyInvitationTokenModel: Model<PropertyInvitationToken>,
     PropertyInvitationModel: Model<PropertyInvitation>,
-) => {
+): CreatePropertyInvitationFunction => {
   return async function createPropertyInvitation(
       propertyId: string,
       inviteeEmail: string,

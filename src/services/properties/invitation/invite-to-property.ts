@@ -1,10 +1,15 @@
-import {Logger} from '../../generic/Logger';
+import {Logger} from '../../../generic/Logger';
+import {
+  CreatePropertyInvitationFunction,
+  InviteToPropertyFunction,
+  SendPropertyInvitationFunction,
+} from '../index';
 
 export const makeInviteToProperty = (
     logger: Logger,
-    createPropertyInvitation: Function,
-    sendPropertyInvitation: Function,
-) => {
+    createPropertyInvitation: CreatePropertyInvitationFunction,
+    sendPropertyInvitation: SendPropertyInvitationFunction,
+): InviteToPropertyFunction => {
   return async function inviteToProperty(
       propertyId: string,
       inviterEmail: string,

@@ -4,6 +4,7 @@ import {randomBytes} from 'crypto';
 import {addDays} from 'date-fns';
 import {Property} from '../../../models/properties/Property';
 import {Model} from 'mongoose';
+import {GeneratePropertyInvitationTokenFunction} from '../index';
 
 /**
  * Maker-function to generate property invitation token.
@@ -13,7 +14,7 @@ import {Model} from 'mongoose';
  */
 export const makeGeneratePropertyInvitationToken = (
     PropertyModel: Model<Property>,
-) => {
+): GeneratePropertyInvitationTokenFunction => {
   /**
    * Function to generate property invitation token.
    *

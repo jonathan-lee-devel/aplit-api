@@ -1,10 +1,11 @@
 import {Logger} from '../../../generic/Logger';
 import {Mailer} from '../../../generic/Mailer';
+import {SendPropertyInvitationFunction} from '../index';
 
 export const makeSendPropertyInvitation = (
     logger: Logger,
     mailer: Mailer,
-) => {
+): SendPropertyInvitationFunction => {
   return async function sendPropertyInvitation(
       propertyInvitationTokenValue: string,
       inviterEmail: string,

@@ -9,22 +9,40 @@ import {makeGeneratePropertyInvitationToken}
 import {PropertyModel} from '../../models/properties/Property';
 import {makeCreatePropertyInvitation}
   from './invitation/create-property-invitation';
-import {PropertyInvitationTokenModel}
+import {PropertyInvitationToken, PropertyInvitationTokenModel}
   from '../../models/properties/invitation/PropertyInvitationToken';
-import {PropertyInvitationModel}
+import {PropertyInvitation, PropertyInvitationModel}
   from '../../models/properties/invitation/PropertyInvitation';
 import {makeSendPropertyInvitation}
   from './invitation/send-property-invitation';
-import {makeInviteToProperty} from './invite-to-property';
+import {makeInviteToProperty} from './invitation/invite-to-property';
+import {User} from '../../models/User';
+import {StatusDataContainer} from '../../data/StatusDataContainer';
+import {PropertyDto} from '../../data/dto/properties/PropertyDto';
 
 const logger = loggerConfig();
 const mailer = mailerConfig();
 
+export type GetPropertyFunction = (
+    user: User,
+    id: string
+) => Promise<StatusDataContainer<PropertyDto>>;
 export const getProperty = makeGetProperty();
 
+export type GeneratePropertyInvitationTokenFunction = (
+    tokenSize: number,
+    expiryTimeDays: number,
+    propertyId: string,
+) => Promise<PropertyInvitationToken>;
 export const generatePropertyInvitationToken =
     makeGeneratePropertyInvitationToken(PropertyModel);
 
+
+export type CreatePropertyInvitationFunction = (
+    propertyId: string,
+    inviteeEmail: string,
+    inviterEmail: string,
+) => Promise<StatusDataContainer<PropertyInvitation>>;
 const createPropertyInvitation = makeCreatePropertyInvitation(
     logger,
     generateId,
@@ -33,17 +51,33 @@ const createPropertyInvitation = makeCreatePropertyInvitation(
     PropertyInvitationModel,
 );
 
+export type SendPropertyInvitationFunction = (
+    propertyInvitationTokenValue: string,
+    inviterEmail: string,
+    inviteeEmail: string,
+) => void;
 const sendPropertyInvitation = makeSendPropertyInvitation(
     logger,
     mailer,
 );
 
+export type InviteToPropertyFunction = (
+    propertyId: string,
+    inviterEmail: string,
+    inviteeEmail: string)
+    => void;
 export const inviteToProperty = makeInviteToProperty(
     logger,
     createPropertyInvitation,
     sendPropertyInvitation,
 );
 
+export type CreatePropertyFunction = (
+    title: string,
+    tenantEmails: string[],
+    createdBy: User,
+    admin: User,
+) => Promise<StatusDataContainer<PropertyDto>>;
 export const createProperty = makeCreateProperty(
     logger,
     generateId,
@@ -51,6 +85,9 @@ export const createProperty = makeCreateProperty(
     inviteToProperty,
 );
 
+export type DeletePropertyFunction = (
+    id: string,
+) => Promise<StatusDataContainer<PropertyDto>>;
 export const deleteProperty = makeDeleteProperty(
     logger,
 );

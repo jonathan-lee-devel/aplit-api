@@ -2,13 +2,14 @@ import {StatusDataContainer} from '../../data/StatusDataContainer';
 import {PropertyDto} from '../../data/dto/properties/PropertyDto';
 import {User} from '../../models/User';
 import {PropertyModel} from '../../models/properties/Property';
+import {GetPropertyFunction} from './index';
 
 /**
  * Maker-function for get property.
  *
  * @return {Function} function to get property
  */
-export const makeGetProperty = () => {
+export const makeGetProperty = (): GetPropertyFunction => {
   /**
    * Function to get property.
    *

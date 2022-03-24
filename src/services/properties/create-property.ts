@@ -4,23 +4,24 @@ import {PropertyDto} from '../../data/dto/properties/PropertyDto';
 import {StatusDataContainer} from '../../data/StatusDataContainer';
 import {Logger} from '../../generic/Logger';
 import {Model} from 'mongoose';
-import {generateIdFunctionType} from '../id';
+import {GenerateIdFunction} from '../id';
+import {CreatePropertyFunction, InviteToPropertyFunction} from './index';
 
 /**
  * Maker-function for the function to create properties.
  *
  * @param {Logger} logger used for logging
- * @param {generateIdFunctionType} generateId used to generate IDs
+ * @param {GenerateIdFunction} generateId used to generate IDs
  * @param {Model<Property>} PropertyModel used to create properties in database
- * @param {Function} inviteToProperty used to invite tenants
+ * @param {InviteToPropertyFunction} inviteToProperty used to invite tenants
  * @return {Function} function to create properties
  */
 export const makeCreateProperty = (
     logger: Logger,
-    generateId: generateIdFunctionType,
+    generateId: GenerateIdFunction,
     PropertyModel: Model<Property>,
-    inviteToProperty: Function,
-) => {
+    inviteToProperty: InviteToPropertyFunction,
+): CreatePropertyFunction => {
   /**
    * Used to create properties.
    *
