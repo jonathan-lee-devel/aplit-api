@@ -5,11 +5,27 @@ import {
   SendPropertyInvitationFunction,
 } from '../index';
 
+/**
+ * Maker-function to invite to property.
+ *
+ * @param {Logger} logger used for logging
+ * @param {CreatePropertyInvitationFunction} createPropertyInvitation to invite
+ * @param {SendPropertyInvitationFunction} sendPropertyInvitation to send
+ * @return {InviteToPropertyFunction} function to invite to property
+ */
 export const makeInviteToProperty = (
     logger: Logger,
     createPropertyInvitation: CreatePropertyInvitationFunction,
     sendPropertyInvitation: SendPropertyInvitationFunction,
 ): InviteToPropertyFunction => {
+  /**
+   * Function to invite to property.
+   *
+   * @param {string} propertyId id of property
+   * @param {string} inviterEmail tenant inviting
+   * @param {string} inviteeEmail tenant being invited
+   * @return {void}
+   */
   return async function inviteToProperty(
       propertyId: string,
       inviterEmail: string,
