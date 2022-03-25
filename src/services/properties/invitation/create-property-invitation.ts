@@ -13,6 +13,16 @@ import {
 } from '../index';
 import {GenerateIdFunction} from '../../id';
 
+/**
+ * Maker-function to create a property invitation.
+ *
+ * @param {Logger} logger used for logging
+ * @param {GenerateIdFunction} generateId used to generate ID
+ * @param {GeneratePropertyInvitationTokenFunction} generatePropertyInvitationToken used to generate token
+ * @param {Model<PropertyInvitationToken>} PropertyInvitationTokenModel for db
+ * @param {Model<PropertyInvitation>} PropertyInvitationModel for db
+ * @return {CreatePropertyInvitationFunction} to create property invitation
+ */
 export const makeCreatePropertyInvitation = (
     logger: Logger,
     generateId: GenerateIdFunction,
@@ -20,6 +30,14 @@ export const makeCreatePropertyInvitation = (
     PropertyInvitationTokenModel: Model<PropertyInvitationToken>,
     PropertyInvitationModel: Model<PropertyInvitation>,
 ): CreatePropertyInvitationFunction => {
+  /**
+   * Function to create a property invitation.
+   *
+   * @param {string} propertyId id of property
+   * @param {string} inviteeEmail tenant being invited
+   * @param {string} inviterEmail tenant inviting
+   * @return {Promise<StatusDataContainer<PropertyInvitation>>} invitation
+   */
   return async function createPropertyInvitation(
       propertyId: string,
       inviteeEmail: string,
