@@ -8,7 +8,7 @@ import {SendMailFunction} from './index';
  *
  * @param {Logger} logger used for logging
  * @param {Transporter} transporter used to send mail
- * @return {Function} function for sending mail
+ * @return {SendMailFunction} function for sending mail
  */
 export const makeSendMail = (
     logger: Logger,
