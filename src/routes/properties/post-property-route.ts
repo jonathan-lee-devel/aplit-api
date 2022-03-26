@@ -5,25 +5,22 @@ import {StatusDataContainer} from '../../data/StatusDataContainer';
 import {User} from '../../models/User';
 import {isLoggedIn} from '../../config/Auth';
 import {Logger} from '../../generic/Logger';
-import {Mailer} from '../../generic/Mailer';
+import {SendMailFunction, VerifyEmailFunction} from '../../services/email';
 
 /**
  * Configure POST property route.
  *
  * @param {Logger} logger used for logging
  * @param {Router} router used for routing
- * @param {Function} verifyEmail used to verify e-mail address input
- * @param {Mailer} mailer used to send e-mail
+ * @param {VerifyEmailFunction} verifyEmail used to verify e-mail address input
+ * @param {SendMailFunction} sendMail used to send e-mail
  * @param {Function} createProperty used to create property
  */
 export const configurePostPropertyRoute = (
     logger: Logger,
     router: Router,
-    verifyEmail: {
-        (emailToVerify: string)
-            : boolean;
-        },
-    mailer: Mailer,
+    verifyEmail: VerifyEmailFunction,
+    sendMail: SendMailFunction,
     createProperty: {
         (title: string, tenants: string[], createdBy: User, admin: User)
             : Promise<StatusDataContainer<PropertyDto>>;

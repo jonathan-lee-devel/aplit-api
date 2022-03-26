@@ -1,5 +1,4 @@
 import nodemailer from 'nodemailer';
-import {Mailer} from '../generic/Mailer';
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -9,6 +8,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const mailerConfig = (): Mailer => {
-  return new Mailer(transporter);
+export const transporterConfig = () => {
+  return transporter;
 };

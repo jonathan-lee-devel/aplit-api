@@ -9,14 +9,14 @@ import {
   DEFAULT_TOKEN_SIZE,
 } from '../../config/Token';
 import {Logger} from '../../generic/Logger';
-import {Mailer} from '../../generic/Mailer';
+import {SendMailFunction} from '../email';
 
 /**
  * Maker-function to reset password.
  *
  * @param {Logger} logger used for logging
  * @param {Function} generatePasswordResetToken used to generate token
- * @param {Mailer} mailer used to send mail
+ * @param {SendMailFunction} sendMail used to send mail
  * @param {Model<User>} UserModel user model
  * @param {Model<PasswordResetTokenModel>} PasswordResetTokenModel token model
  * @return {Function} function used to reset password
@@ -28,7 +28,7 @@ export const makeResetPassword = (
        expiryTimeMinutes: number
       ): Promise<PasswordResetToken>;
       },
-    mailer: Mailer,
+    sendMail: SendMailFunction,
     UserModel: Model<User>,
     PasswordResetTokenModel: Model<PasswordResetToken>,
 ) => {
@@ -65,7 +65,7 @@ export const makeResetPassword = (
 
     await passwordResetTokenDocument.save();
 
-    mailer.sendMail(email, 'Password Reset',
+    sendMail(email, 'Password Reset',
         // eslint-disable-next-line max-len
         `<h4>Please click the following link to reset your password: ${process.env.FRONT_END_URL}/password/reset/confirm?token=${passwordResetTokenDocument.value}</h4>`);
 

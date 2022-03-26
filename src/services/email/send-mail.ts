@@ -1,6 +1,7 @@
 import {Transporter} from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import {Logger} from '../../generic/Logger';
+import {SendMailFunction} from './index';
 
 /**
  * Maker-function for sending email.
@@ -12,26 +13,26 @@ import {Logger} from '../../generic/Logger';
 export const makeSendMail = (
     logger: Logger,
     transporter: Transporter<SMTPTransport.SentMessageInfo>,
-) => {
+): SendMailFunction => {
   /**
    * Function to send mail.
    *
    * @param {string} addressTo address to send mail to
    * @param {string} subject subject of mail to send
-   * @param {string} text inner content of the mail to send
+   * @param {string} html inner content of the mail to send
    * @return {Promise<boolean>} success flag for sending mail
    */
   return async function sendMail(
       addressTo: string,
       subject: string,
-      text: string,
+      html: string,
   ): Promise<boolean> {
     await transporter.sendMail(
         {
           from: process.env.EMAIL_USER,
           to: addressTo,
           subject,
-          text,
+          html,
         },
         (err, info) => {
           if (err) {

@@ -1,17 +1,17 @@
 import {Logger} from '../../../generic/Logger';
-import {Mailer} from '../../../generic/Mailer';
 import {SendPropertyInvitationFunction} from '../index';
+import {SendMailFunction} from '../../email';
 
 export const makeSendPropertyInvitation = (
     logger: Logger,
-    mailer: Mailer,
+    sendMail: SendMailFunction,
 ): SendPropertyInvitationFunction => {
   return async function sendPropertyInvitation(
       propertyInvitationTokenValue: string,
       inviterEmail: string,
       inviteeEmail: string,
   ) {
-    mailer.sendMail(
+    sendMail(
         inviteeEmail,
         'Split Property Invitation',
         // eslint-disable-next-line max-len

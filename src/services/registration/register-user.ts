@@ -12,20 +12,20 @@ import {
 import {PasswordResetToken, PasswordResetTokenModel}
   from '../../models/password/PasswordResetToken';
 import {Logger} from '../../generic/Logger';
-import {Mailer} from '../../generic/Mailer';
+import {SendMailFunction} from '../email';
 
 /**
  * Maker-function to register user.
  *
  * @param {Logger} logger used for logging
- * @param {Mailer} mailer used to send mail
+ * @param {SendMailFunction} sendMail used to send mail
  * @param {Function} generateRegistrationVerificationToken used for token
  * @param {Function} generatePasswordResetToken used to generate token
  * @return {Function} function to register user
  */
 export const makeRegisterUser = (
     logger: Logger,
-    mailer: Mailer,
+    sendMail: SendMailFunction,
     generateRegistrationVerificationToken: {
       (tokenSize: number, expiryTimeMinutes: number)
           : Promise<RegistrationVerificationToken>;
@@ -89,7 +89,7 @@ export const makeRegisterUser = (
     passwordResetVerificationTokenDocument.user = newUser;
     await passwordResetVerificationTokenDocument.save();
 
-    mailer.sendMail(email, 'Registration Confirmation',
+    sendMail(email, 'Registration Confirmation',
         // eslint-disable-next-line max-len
         `<h4>Please click the following link to verify your account: <a href="${process.env.BACK_END_URL}/users/register/confirm?token=${registrationVerificationTokenDocument.value}">Verify Account</a></h4>`);
 

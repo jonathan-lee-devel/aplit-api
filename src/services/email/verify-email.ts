@@ -1,9 +1,11 @@
+import {VerifyEmailFunction} from './index';
+
 /**
  * Maker-function for verifying email.
  *
  * @return {Function} function for verifying email
  */
-export const makeVerifyEmail = () => {
+export const makeVerifyEmail = (): VerifyEmailFunction => {
   /**
    * Function for verifying email.
    *
