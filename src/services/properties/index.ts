@@ -24,7 +24,7 @@ import {makeConfirmPropertyInvitation} from
   './invitation/confirm-property-invitation';
 import {makeGetPropertyIdFromInvitationToken} from
   './invitation/get-property-id-from-invitation-token';
-import {sendMail} from "../email";
+import {sendMail} from '../email';
 
 const logger = loggerConfig();
 
