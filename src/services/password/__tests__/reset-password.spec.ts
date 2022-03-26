@@ -10,9 +10,7 @@ const logger = {
 describe('Reset password', () => {
   it('When makeResetPassword Then resetPassword',
       async () => {
-        const mailer = {
-          sendMail: () => {},
-        };
+        const sendMail = () => {};
 
         const userModel = {};
         const passwordResetTokenModel = {};
@@ -21,7 +19,7 @@ describe('Reset password', () => {
             logger,
             // @ts-ignore
             () => {},
-            mailer,
+            sendMail,
             userModel,
             passwordResetTokenModel,
         );
@@ -31,9 +29,7 @@ describe('Reset password', () => {
       });
   it('When resetPassword and no user Then awaiting verification',
       async () => {
-        const mailer = {
-          sendMail: () => {},
-        };
+        const sendMail = () => {};
 
         const userModel = {
           findOne: (): any => undefined,
@@ -44,7 +40,7 @@ describe('Reset password', () => {
             logger,
             // @ts-ignore
             () => {},
-            mailer,
+            sendMail,
             userModel,
             passwordResetTokenModel,
         );
@@ -59,9 +55,7 @@ describe('Reset password', () => {
       async () => {
         let isErrorLogged = false;
 
-        const mailer = {
-          sendMail: () => {},
-        };
+        const sendMail = () => {};
 
         const userModel = {
           findOne: (_: any): any => {
@@ -81,7 +75,7 @@ describe('Reset password', () => {
             },
             // @ts-ignore
             () => {},
-            mailer,
+            sendMail,
             userModel,
             passwordResetTokenModel,
         );
@@ -93,9 +87,7 @@ describe('Reset password', () => {
       });
   it('When resetPassword and no token Then awaiting verification',
       async () => {
-        const mailer = {
-          sendMail: () => {},
-        };
+        const sendMail = () => {};
 
         const userModel = {
           findOne: (): any => {
@@ -110,7 +102,7 @@ describe('Reset password', () => {
             logger,
             // @ts-ignore
             () => {},
-            mailer,
+            sendMail,
             userModel,
             passwordResetTokenModel,
         );
@@ -123,9 +115,7 @@ describe('Reset password', () => {
       });
   it('When resetPassword and no token Then generate password reset token',
       async () => {
-        const mailer = {
-          sendMail: () => {},
-        };
+        const sendMail = () => {};
 
         const userModel = {
           findOne: (): any => {
@@ -151,7 +141,7 @@ describe('Reset password', () => {
                 expiryDate: new Date(),
               };
             },
-            mailer,
+            sendMail,
             userModel,
             passwordResetTokenModel,
         );
@@ -164,10 +154,8 @@ describe('Reset password', () => {
   it('When resetPassword and no token Then send mail',
       async () => {
         let isSendMailCalled = false;
-        const mailer = {
-          sendMail: () => {
-            isSendMailCalled = true;
-          },
+        const sendMail = () => {
+          isSendMailCalled = true;
         };
 
         const userModel = {
@@ -192,7 +180,7 @@ describe('Reset password', () => {
                 expiryDate: new Date(),
               };
             },
-            mailer,
+            sendMail,
             userModel,
             passwordResetTokenModel,
         );
@@ -204,9 +192,7 @@ describe('Reset password', () => {
       });
   it('When resetPassword and no token Then return awaiting email verification',
       async () => {
-        const mailer = {
-          sendMail: () => {},
-        };
+        const sendMail = () => {};
 
         const userModel = {
           findOne: (): any => {
@@ -230,7 +216,7 @@ describe('Reset password', () => {
                 expiryDate: new Date(),
               };
             },
-            mailer,
+            sendMail,
             userModel,
             passwordResetTokenModel,
         );
