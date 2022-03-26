@@ -7,10 +7,9 @@ import {PasswordResetTokenModel}
   from '../../models/password/PasswordResetToken';
 import {UserModel} from '../../models/User';
 import {loggerConfig} from '../../config/Logger';
-import {mailerConfig} from '../../config/Mail';
+import {sendMail} from '../email';
 
 const logger = loggerConfig();
-const mailer = mailerConfig();
 
 export const generateSalt = makeGenerateSalt();
 export const generatePasswordResetToken = makeGeneratePasswordResetToken();
@@ -18,7 +17,7 @@ export const encodePassword = makeEncodePassword(await generateSalt());
 export const resetPassword = makeResetPassword(
     logger,
     generatePasswordResetToken,
-    mailer,
+    sendMail,
     UserModel,
     PasswordResetTokenModel,
 );

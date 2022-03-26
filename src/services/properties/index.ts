@@ -3,7 +3,6 @@ import {makeCreateProperty} from './create-property';
 import {makeDeleteProperty} from './delete-property';
 import {loggerConfig} from '../../config/Logger';
 import {generateId} from '../id';
-import {mailerConfig} from '../../config/Mail';
 import {makeGeneratePropertyInvitationToken}
   from './invitation/generate-property-invitation-token';
 import {PropertyModel} from '../../models/properties/Property';
@@ -25,9 +24,9 @@ import {makeConfirmPropertyInvitation} from
   './invitation/confirm-property-invitation';
 import {makeGetPropertyIdFromInvitationToken} from
   './invitation/get-property-id-from-invitation-token';
+import {sendMail} from "../email";
 
 const logger = loggerConfig();
-const mailer = mailerConfig();
 
 export type GetPropertyFunction = (
     user: User,
@@ -64,7 +63,7 @@ export type SendPropertyInvitationFunction = (
 ) => void;
 const sendPropertyInvitation = makeSendPropertyInvitation(
     logger,
-    mailer,
+    sendMail,
 );
 
 export type InviteToPropertyFunction = (

@@ -1,7 +1,7 @@
 import express from 'express';
 import {configureGetPropertyRoute} from './get-property-route';
 import {configurePostPropertyRoute} from './post-property-route';
-import {verifyEmail} from '../../services/email';
+import {sendMail, verifyEmail} from '../../services/email';
 import {
   confirmPropertyInvitation,
   createProperty,
@@ -9,7 +9,6 @@ import {
 } from
   '../../services/properties';
 import {loggerConfig} from '../../config/Logger';
-import {mailerConfig} from '../../config/Mail';
 import {configureGetConfirmPropertyInvitationRoute} from
   './invitation/get-confirm-property-invitation-route';
 import {makeFormatPropertyInvitationResponse} from
@@ -19,7 +18,6 @@ import {PropertyInvitationStatus} from
   '../../services/properties/enum/invitation/property-invitation-status';
 
 const logger = loggerConfig();
-const mailer = mailerConfig();
 
 // eslint-disable-next-line new-cap
 const router = express.Router();
@@ -36,7 +34,7 @@ configurePostPropertyRoute(
     logger,
     router,
     verifyEmail,
-    mailer,
+    sendMail,
     createProperty,
 );
 configureGetConfirmPropertyInvitationRoute(
