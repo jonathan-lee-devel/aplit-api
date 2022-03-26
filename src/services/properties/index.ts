@@ -19,6 +19,12 @@ import {makeInviteToProperty} from './invitation/invite-to-property';
 import {User} from '../../models/User';
 import {StatusDataContainer} from '../../data/StatusDataContainer';
 import {PropertyDto} from '../../data/dto/properties/PropertyDto';
+import {PropertyInvitationStatus} from
+  './enum/invitation/property-invitation-status';
+import {makeConfirmPropertyInvitation} from
+  './invitation/confirm-property-invitation';
+import {makeGetPropertyIdFromInvitationToken} from
+  './invitation/get-property-id-from-invitation-token';
 
 const logger = loggerConfig();
 const mailer = mailerConfig();
@@ -91,3 +97,22 @@ export type DeletePropertyFunction = (
 export const deleteProperty = makeDeleteProperty(
     logger,
 );
+
+export type ConfirmPropertyInvitationFunction = (
+    tokenValue: string,
+) => Promise<PropertyInvitationStatus>;
+export const confirmPropertyInvitation = makeConfirmPropertyInvitation(
+    logger,
+    PropertyInvitationTokenModel,
+    PropertyInvitationModel,
+);
+
+export type GetPropertyIdFromInvitationTokenFunction = (
+    tokenValue: string,
+) => Promise<string>;
+export const getPropertyIdFromInvitationToken =
+    makeGetPropertyIdFromInvitationToken(
+        logger,
+        PropertyInvitationTokenModel,
+        PropertyInvitationModel,
+    );

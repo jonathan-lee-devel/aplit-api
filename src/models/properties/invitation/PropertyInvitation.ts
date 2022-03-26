@@ -11,7 +11,7 @@ export interface PropertyInvitation {
     propertyId: string;
     inviteeEmail: string;
     inviterEmail: string;
-    accepted: false;
+    accepted: boolean;
     propertyInvitationToken: PropertyInvitationToken;
 }
 
