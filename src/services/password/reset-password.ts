@@ -10,28 +10,28 @@ import {
 } from '../../config/Token';
 import {Logger} from '../../generic/Logger';
 import {SendMailFunction} from '../email';
+import {
+  GeneratePasswordResetTokenFunction,
+  ResetPasswordFunction,
+} from './index';
 
 /**
  * Maker-function to reset password.
  *
  * @param {Logger} logger used for logging
- * @param {Function} generatePasswordResetToken used to generate token
+ * @param {GeneratePasswordResetTokenFunction} generatePasswordResetToken
  * @param {SendMailFunction} sendMail used to send mail
  * @param {Model<User>} UserModel user model
  * @param {Model<PasswordResetTokenModel>} PasswordResetTokenModel token model
- * @return {Function} function used to reset password
+ * @return {ResetPasswordFunction} function used to reset password
  */
 export const makeResetPassword = (
     logger: Logger,
-    generatePasswordResetToken: {
-      (tokenSize: number,
-       expiryTimeMinutes: number
-      ): Promise<PasswordResetToken>;
-      },
+    generatePasswordResetToken: GeneratePasswordResetTokenFunction,
     sendMail: SendMailFunction,
     UserModel: Model<User>,
     PasswordResetTokenModel: Model<PasswordResetToken>,
-) => {
+): ResetPasswordFunction => {
   /**
    * Function used to reset password.
    *

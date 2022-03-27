@@ -2,20 +2,21 @@ import {PasswordResetStatus} from './enum/password-reset-status';
 import {HydratedDocument, Model} from 'mongoose';
 import {PasswordResetToken} from '../../models/password/PasswordResetToken';
 import {User} from '../../models/User';
+import {ConfirmPasswordResetFunction, EncodePasswordFunction} from './index';
 
 /**
  * Maker-function for confirming password reset.
  *
  * @param {Model<PasswordResetToken>} passwordResetTokenModel token model
  * @param {Model<User>} UserModel user model
- * @param {Function} encodePassword used to encode password
- * @return {Function} function for confirming password reset
+ * @param {EncodePasswordFunction} encodePassword used to encode password
+ * @return {ConfirmPasswordResetFunction} function for confirming password reset
  */
 export const makeConfirmPasswordReset = (
     passwordResetTokenModel: Model<PasswordResetToken>,
     UserModel: Model<User>,
-    encodePassword: { (password: string): Promise<string>; },
-) => {
+    encodePassword: EncodePasswordFunction,
+): ConfirmPasswordResetFunction => {
   /**
    * Function for confirming password reset.
    *

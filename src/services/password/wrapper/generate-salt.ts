@@ -1,11 +1,12 @@
 import bcrypt from 'bcrypt';
+import {GenerateSaltFunction} from '../index';
 
 /**
  * Maker-function for generate salt wrapper function.
  *
- * @return {Function} wrapper function for generating salt
+ * @return {GenerateSaltFunction} wrapper function for generating salt
  */
-export const makeGenerateSalt = () => {
+export const makeGenerateSalt = (): GenerateSaltFunction => {
   /**
    * Wrapper function for generating salt.
    *

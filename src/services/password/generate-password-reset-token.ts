@@ -1,13 +1,15 @@
 import {PasswordResetToken} from '../../models/password/PasswordResetToken';
 import {randomBytes} from 'crypto';
 import {addMinutes} from 'date-fns';
+import {GeneratePasswordResetTokenFunction} from './index';
 
 /**
  * Maker-function to generate password reset token.
  *
- * @return {Function} function to generate password reset token
+ * @return {GeneratePasswordResetTokenFunction} to generate password reset token
  */
-export const makeGeneratePasswordResetToken = () => {
+export const makeGeneratePasswordResetToken = (
+): GeneratePasswordResetTokenFunction => {
   /**
    * Function to generate password reset token.
    *

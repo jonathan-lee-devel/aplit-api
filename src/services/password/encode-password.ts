@@ -1,12 +1,15 @@
 import bcrypt from 'bcrypt';
+import {EncodePasswordFunction} from './index';
 
 /**
  * Maker-function to encode password.
  *
  * @param {string} salt used to hash password
- * @return {Function} function to encode password
+ * @return {EncodePasswordFunction} function to encode password
  */
-export const makeEncodePassword = (salt: string) => {
+export const makeEncodePassword = (
+    salt: string,
+): EncodePasswordFunction => {
   /**
    * Function to encode password.
    *
