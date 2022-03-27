@@ -1,18 +1,20 @@
 import {Transporter} from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import {Logger} from '../../generic/Logger';
-import {SendMailFunction} from './index';
+import {SendMailCallbackFunction, SendMailFunction} from './index';
 
 /**
  * Maker-function for sending email.
  *
  * @param {Logger} logger used for logging
  * @param {Transporter} transporter used to send mail
+ * @param {SendMailCallbackFunction} sendMailCallback
  * @return {SendMailFunction} function for sending mail
  */
 export const makeSendMail = (
     logger: Logger,
     transporter: Transporter<SMTPTransport.SentMessageInfo>,
+    sendMailCallback: SendMailCallbackFunction,
 ): SendMailFunction => {
   /**
    * Function to send mail.
@@ -34,16 +36,7 @@ export const makeSendMail = (
           subject,
           html,
         },
-        (err, info) => {
-          if (err) {
-            console.error(err);
-            return false;
-          }
-          logger.info(
-              `E-mail sent to ${addressTo} with response: ${info.response}`,
-          );
-          return true;
-        },
+        sendMailCallback,
     );
 
     return false;

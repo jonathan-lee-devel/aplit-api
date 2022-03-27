@@ -15,6 +15,7 @@ describe('send mail', () => {
             logger,
             // @ts-ignore
             {},
+            () => {},
         );
 
         expect(sendMail).not.toBeNull();
@@ -32,6 +33,7 @@ describe('send mail', () => {
             logger,
             // @ts-ignore
             transporter,
+            () => {},
         );
 
         await sendMail(
