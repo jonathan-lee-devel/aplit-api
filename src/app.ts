@@ -9,9 +9,9 @@ import {expressSessionConfig} from './config/Session';
 import {corsConfig} from './config/Cors';
 import {UsersRouter} from './routes/users';
 import {PropertiesRouter} from './routes/properties';
-import {Logger} from './generic/Logger';
+import {loggerConfig} from './config/Logger';
 
-const logger = new Logger();
+const logger = loggerConfig();
 
 const app = express();
 databaseConfig(logger);
