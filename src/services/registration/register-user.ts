@@ -2,39 +2,39 @@ import {HydratedDocument} from 'mongoose';
 import {RegistrationStatus} from './enum/registration-status';
 import {User, UserModel} from '../../models/User';
 import {
-  RegistrationVerificationToken,
   RegistrationVerificationTokenModel,
 } from '../../models/registration/RegistrationVerificationToken';
 import {
   DEFAULT_EXPIRY_TIME_MINUTES,
   DEFAULT_TOKEN_SIZE,
 } from '../../config/Token';
-import {PasswordResetToken, PasswordResetTokenModel}
+import {PasswordResetTokenModel}
   from '../../models/password/PasswordResetToken';
 import {Logger} from '../../generic/Logger';
 import {SendMailFunction} from '../email';
+import {
+  GenerateRegistrationVerificationTokenFunction,
+  RegisterUserFunction}
+  from './index';
+import {GeneratePasswordResetTokenFunction} from '../password';
 
 /**
  * Maker-function to register user.
  *
  * @param {Logger} logger used for logging
  * @param {SendMailFunction} sendMail used to send mail
- * @param {Function} generateRegistrationVerificationToken used for token
- * @param {Function} generatePasswordResetToken used to generate token
- * @return {Function} function to register user
+ * @param {GenerateRegistrationVerificationTokenFunction} generateRegistrationVerificationToken
+ * @param {GeneratePasswordResetTokenFunction} generatePasswordResetToken
+ * @return {RegisterUserFunction} function to register user
  */
 export const makeRegisterUser = (
     logger: Logger,
     sendMail: SendMailFunction,
-    generateRegistrationVerificationToken: {
-      (tokenSize: number, expiryTimeMinutes: number)
-          : Promise<RegistrationVerificationToken>;
-      },
-    generatePasswordResetToken: {
-      (tokenSize: number, expiryTimeMinutes: number)
-          : Promise<PasswordResetToken>;
-      },
-) => {
+    generateRegistrationVerificationToken
+        : GenerateRegistrationVerificationTokenFunction,
+    generatePasswordResetToken
+        : GeneratePasswordResetTokenFunction,
+): RegisterUserFunction => {
   /**
   * Function to register user.
    *

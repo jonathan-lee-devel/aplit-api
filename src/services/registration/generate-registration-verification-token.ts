@@ -3,13 +3,15 @@ import {
 } from '../../models/registration/RegistrationVerificationToken';
 import {randomBytes} from 'crypto';
 import {addMinutes} from 'date-fns';
+import {GenerateRegistrationVerificationTokenFunction} from './index';
 
 /**
  * Maker-function to generate registration verification token.
  *
  * @return {Function} function to generate registration verification token
  */
-export const makeGenerateRegistrationVerificationToken = () => {
+export const makeGenerateRegistrationVerificationToken = (
+): GenerateRegistrationVerificationTokenFunction => {
   /**
    * Function to generate registration verification token.
    *

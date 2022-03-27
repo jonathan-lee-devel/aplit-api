@@ -5,16 +5,17 @@ import {
   RegistrationVerificationTokenModel,
 } from '../../models/registration/RegistrationVerificationToken';
 import {User} from '../../models/User';
+import {ConfirmRegistrationFunction} from './index';
 
 /**
  * Maker-function to confirm registration.
  *
  * @param {Model<User>} UserModel user model
- * @return {Function} function used to confirm registration
+ * @return {ConfirmRegistrationFunction} function used to confirm registration
  */
 export const makeConfirmRegistration = (
     UserModel: Model<User>,
-) => {
+): ConfirmRegistrationFunction => {
   /**
    * Function used to confirm registration.
    *
