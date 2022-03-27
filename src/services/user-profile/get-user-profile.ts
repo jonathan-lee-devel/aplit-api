@@ -1,13 +1,14 @@
 import {UserProfileDto} from '../../data/dto/UserProfileDto';
 import {User, UserModel} from '../../models/User';
 import {HydratedDocument} from 'mongoose';
+import {GetUserProfileFunction} from './index';
 
 /**
  * Maker-function for get user profile.
  *
- * @return {Function} function to get user profile
+ * @return {GetUserProfileFunction} function to get user profile
  */
-export const makeGetUserProfile = () => {
+export const makeGetUserProfile = (): GetUserProfileFunction => {
   /**
    * Function to get user profile.
    *

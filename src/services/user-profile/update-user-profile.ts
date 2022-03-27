@@ -1,13 +1,14 @@
 import {UserProfileDto} from '../../data/dto/UserProfileDto';
 import {HydratedDocument} from 'mongoose';
 import {User, UserModel} from '../../models/User';
+import {UpdateUserProfileFunction} from './index';
 
 /**
  * Maker-function to update user profile.
  *
- * @return {Function} function to update user profile
+ * @return {UpdateUserProfileFunction} function to update user profile
  */
-export const makeUpdateUserProfile = () => {
+export const makeUpdateUserProfile = (): UpdateUserProfileFunction => {
   /**
    * Function to update user profile.
    *
