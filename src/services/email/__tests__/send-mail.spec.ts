@@ -1,10 +1,12 @@
 import {makeSendMail} from '../send-mail';
+import {Logger} from '../../../generic/Logger';
 
-const logger = {
+const innerLogger = {
   info: () => {},
   warn: () => {},
   error: () => {},
 };
+const logger = new Logger(innerLogger);
 
 describe('send mail', () => {
   it('When make sendMail Then sendMail',

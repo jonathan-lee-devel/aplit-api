@@ -1,22 +1,32 @@
-import logger from 'npmlog';
 import getCallerFile from 'get-caller-file';
-
-logger.prefixStyle = {
-  bold: true,
-};
 
 /**
  * Generic logger used to allow for different
  * logging libraries to be used without major refactor.
  */
 export class Logger {
+  private logger: {
+    info: (prefix: string, message: string) => void,
+    warn: (prefix: string, message: string) => void,
+    error: (prefix: string, message: string) => void,
+  };
+
+  /**
+   * Basic constructor.
+   *
+   * @param {any} logger used to do actual logging
+   */
+  constructor(logger: any) {
+    this.logger = logger;
+  }
+
   /**
    * Used to log info messages.
    *
    * @param {string} message to be logged
   */
   info(message: string): void {
-    logger.info(Logger.getLoggingPrefix(), message);
+    this.logger.info(Logger.getLoggingPrefix(), message);
   }
 
   /**
@@ -25,7 +35,7 @@ export class Logger {
    * @param {string} message to be logged
   */
   warn(message: string): void {
-    logger.error(Logger.getLoggingPrefix(), message);
+    this.logger.warn(Logger.getLoggingPrefix(), message);
   }
 
   /**
@@ -34,7 +44,7 @@ export class Logger {
    * @param {string} message to be logged
   */
   error(message: string): void {
-    logger.error(Logger.getLoggingPrefix(), message);
+    this.logger.error(Logger.getLoggingPrefix(), message);
   }
 
   /**

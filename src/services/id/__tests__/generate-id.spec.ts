@@ -1,10 +1,12 @@
 import {makeGenerateId} from '../generate-id';
+import {Logger} from '../../../generic/Logger';
 
-const logger = {
+const innerLogger = {
   info: () => {},
   warn: () => {},
   error: () => {},
 };
+const logger = new Logger(innerLogger);
 
 describe('generate ID', () => {
   it('When make generateId Then generateId',

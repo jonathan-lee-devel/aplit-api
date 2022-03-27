@@ -1,11 +1,13 @@
 import {makeResetPassword} from '../reset-password';
 import {PasswordResetStatus} from '../enum/password-reset-status';
+import {Logger} from '../../../generic/Logger';
 
-const logger = {
+const innerLogger = {
   info: () => {},
   warn: () => {},
   error: () => {},
 };
+const logger = new Logger(innerLogger);
 
 describe('Reset password', () => {
   it('When makeResetPassword Then resetPassword',
