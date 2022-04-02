@@ -4,29 +4,22 @@ import {
   RegistrationStatus,
 } from '../../services/registration/enum/registration-status';
 import {Logger} from '../../generic/Logger';
-import {Response} from 'express-serve-static-core';
+import {ConfirmRegistrationFunction} from '../../services/registration';
+import {FormatRegistrationResponseFunction} from './index';
 
 /**
  * Configure GET confirm registration route.
  *
  * @param {Logger} logger used for logging
  * @param {Router} router used for routing
- * @param {Function} confirmRegistration used to confirm registration
- * @param {Function} formatRegistrationResponse used to format response
+ * @param {ConfirmRegistrationFunction} confirmRegistration
+ * @param {FormatRegistrationResponseFunction} formatRegistrationResponse
  */
 export const configureGetConfirmRegistrationRoute = (
     logger: Logger,
     router: Router,
-    confirmRegistration: {
-      (token: string)
-          : Promise<RegistrationStatus>;
-      },
-    formatRegistrationResponse: {
-      (res: Response,
-       httpStatus: number,
-       registrationStatus: RegistrationStatus)
-          : void;
-      },
+    confirmRegistration: ConfirmRegistrationFunction,
+    formatRegistrationResponse: FormatRegistrationResponseFunction,
 ) => {
   router.get('/register/confirm', query('token').exists(), async (req, res) => {
     const errors = validationResult(req);

@@ -1,33 +1,25 @@
 import {Router} from 'express';
 import {body, validationResult} from 'express-validator';
-import {Response} from 'express-serve-static-core';
 import {
   PasswordResetStatus,
 } from '../../services/password/enum/password-reset-status';
 import {Logger} from '../../generic/Logger';
+import {ConfirmPasswordResetFunction} from '../../services/password';
+import {FormatPasswordResetResponseFunction} from './index';
 
 /**
  * Configure POST confirm password reset route.
  *
  * @param {Logger} logger used for logging
  * @param {Router} router used for routing
- * @param {Function} confirmPasswordReset used to confirm password reset
- * @param {Function} formatPasswordResetResponse used to format response
+ * @param {ConfirmPasswordResetFunction} confirmPasswordReset
+ * @param {FormatPasswordResetResponseFunction} formatPasswordResetResponse
  */
 export const configurePostConfirmPasswordResetRoute = (
     logger: Logger,
     router: Router,
-    confirmPasswordReset: {
-        (token: string,
-         password: string)
-            : Promise<PasswordResetStatus>;
-        },
-    formatPasswordResetResponse: {
-        (res: Response,
-         httpStatus: number,
-         passwordResetStatus: PasswordResetStatus)
-            : void;
-        },
+    confirmPasswordReset: ConfirmPasswordResetFunction,
+    formatPasswordResetResponse: FormatPasswordResetResponseFunction,
 ) => {
   router.post('/password/reset/confirm',
       body('token').exists(),

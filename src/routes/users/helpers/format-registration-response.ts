@@ -2,13 +2,15 @@ import {Response} from 'express-serve-static-core';
 import {
   RegistrationStatus,
 } from '../../../services/registration/enum/registration-status';
+import {FormatRegistrationResponseFunction} from '../index';
 
 /**
  * Maker-function for format registration response function.
  *
  * @return {Function} format registration response function
  */
-export const makeFormatRegistrationResponse = () => {
+export const makeFormatRegistrationResponse = ()
+    : FormatRegistrationResponseFunction => {
   /**
    * Format registration response function.
    *

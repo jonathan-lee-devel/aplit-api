@@ -2,13 +2,15 @@ import {Response} from 'express-serve-static-core';
 import {
   PasswordResetStatus,
 } from '../../../services/password/enum/password-reset-status';
+import {FormatPasswordResetResponseFunction} from '../index';
 
 /**
  * Maker-function for format password reset response function.
  *
  * @return {Function} format password reset response function
  */
-export const makeFormatPasswordResetResponse = () => {
+export const makeFormatPasswordResetResponse = ()
+    : FormatPasswordResetResponseFunction => {
   /**
    * Helper function to format password reset responses.
    *

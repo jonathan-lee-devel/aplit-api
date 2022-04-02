@@ -18,13 +18,28 @@ import {makeFormatRegistrationResponse}
 import {makeFormatPasswordResetResponse}
   from './helpers/format-password-reset-response';
 import {loggerConfig} from '../../config/Logger';
+import {Response} from 'express-serve-static-core';
+import {RegistrationStatus}
+  from '../../services/registration/enum/registration-status';
+import {PasswordResetStatus}
+  from '../../services/password/enum/password-reset-status';
 
 const logger = loggerConfig();
 // eslint-disable-next-line new-cap
 const router = express.Router();
 
+export type FormatRegistrationResponseFunction = (
+    res: Response,
+    httpStatus: number,
+    registrationStatus: RegistrationStatus,
+) => void;
 const formatRegistrationResponse = makeFormatRegistrationResponse();
 
+export type FormatPasswordResetResponseFunction = (
+    res: Response,
+    httpStatus: number,
+    passwordResetStatus: PasswordResetStatus,
+) => void;
 const formatPasswordResetResponse = makeFormatPasswordResetResponse();
 
 configureGetConfirmRegistrationRoute(
