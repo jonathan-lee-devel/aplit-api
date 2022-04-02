@@ -91,7 +91,7 @@ export const makeRegisterUser = (
 
     sendMail(email, 'Registration Confirmation',
         // eslint-disable-next-line max-len
-        `<h4>Please click the following link to verify your account: <a href="${process.env.BACK_END_URL}/users/register/confirm?token=${registrationVerificationTokenDocument.value}">Verify Account</a></h4>`);
+        `<h4>Please click the following link to verify your account: <a href="${process.env.FRONT_END_URL}/register/verify/${registrationVerificationTokenDocument.value}">Verify Account</a></h4>`);
 
     return RegistrationStatus.AWAITING_EMAIL_VERIFICATION;
   };
