@@ -7,7 +7,7 @@ import {loggerConfig} from '../../config/Logger';
 import {UserModel} from '../../models/User';
 import {sendMail} from '../email';
 import {RegistrationStatus} from './enum/registration-status';
-import {RegistrationVerificationToken} from
+import {RegistrationVerificationToken, RegistrationVerificationTokenModel} from
   '../../models/registration/RegistrationVerificationToken';
 
 const logger = loggerConfig();
@@ -23,6 +23,7 @@ export type ConfirmRegistrationFunction = (
     token: string,
 ) => Promise<RegistrationStatus>;
 export const confirmRegistration = makeConfirmRegistration(
+    RegistrationVerificationTokenModel,
     UserModel,
 );
 

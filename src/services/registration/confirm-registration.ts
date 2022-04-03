@@ -2,7 +2,6 @@ import {RegistrationStatus} from './enum/registration-status';
 import {HydratedDocument, Model} from 'mongoose';
 import {
   RegistrationVerificationToken,
-  RegistrationVerificationTokenModel,
 } from '../../models/registration/RegistrationVerificationToken';
 import {User} from '../../models/User';
 import {ConfirmRegistrationFunction} from './index';
@@ -10,10 +9,12 @@ import {ConfirmRegistrationFunction} from './index';
 /**
  * Maker-function to confirm registration.
  *
+ * @param {Model<RegistrationVerificationToken>} RegistrationVerificationTokenModel
  * @param {Model<User>} UserModel user model
  * @return {ConfirmRegistrationFunction} function used to confirm registration
  */
 export const makeConfirmRegistration = (
+    RegistrationVerificationTokenModel: Model<RegistrationVerificationToken>,
     UserModel: Model<User>,
 ): ConfirmRegistrationFunction => {
   /**
