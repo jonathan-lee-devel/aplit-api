@@ -1,39 +1,36 @@
-import {HydratedDocument} from 'mongoose';
+import {Model} from 'mongoose';
 import {RegistrationStatus} from './enum/registration-status';
-import {User, UserModel} from '../../models/User';
-import {
-  RegistrationVerificationTokenModel,
-} from '../../models/registration/RegistrationVerificationToken';
-import {
-  DEFAULT_EXPIRY_TIME_MINUTES,
-  DEFAULT_TOKEN_SIZE,
-} from '../../config/Token';
-import {PasswordResetTokenModel}
-  from '../../models/password/PasswordResetToken';
+import {User} from '../../models/User';
 import {Logger} from '../../generic/Logger';
 import {SendMailFunction} from '../email';
 import {
-  GenerateRegistrationVerificationTokenFunction,
-  RegisterUserFunction}
+  GenerateAndPersistExpiredPasswordResetVerificationToken,
+  GenerateAndPersistRegistrationVerificationTokenFunction,
+  HandleExistingUserFunction,
+  RegisterUserFunction,
+}
   from './index';
-import {GeneratePasswordResetTokenFunction} from '../password';
 
 /**
  * Maker-function to register user.
  *
  * @param {Logger} logger used for logging
+ * @param {HandleExistingUserFunction} handleExistingUser
+ * @param {GenerateAndPersistRegistrationVerificationTokenFunction} generateAndPersistRegistrationVerificationToken
+ * @param {GenerateAndPersistExpiredPasswordResetVerificationToken} generateAndPersistExpiredPasswordResetVerificationToken
  * @param {SendMailFunction} sendMail used to send mail
- * @param {GenerateRegistrationVerificationTokenFunction} generateRegistrationVerificationToken
- * @param {GeneratePasswordResetTokenFunction} generatePasswordResetToken
+ * @param {Model<User>} UserModel user model
  * @return {RegisterUserFunction} function to register user
  */
 export const makeRegisterUser = (
     logger: Logger,
+    handleExistingUser: HandleExistingUserFunction,
+    generateAndPersistRegistrationVerificationToken
+        : GenerateAndPersistRegistrationVerificationTokenFunction,
+    generateAndPersistExpiredPasswordResetVerificationToken
+    : GenerateAndPersistExpiredPasswordResetVerificationToken,
     sendMail: SendMailFunction,
-    generateRegistrationVerificationToken
-        : GenerateRegistrationVerificationTokenFunction,
-    generatePasswordResetToken
-        : GeneratePasswordResetTokenFunction,
+    UserModel: Model<User>,
 ): RegisterUserFunction => {
   /**
   * Function to register user.
@@ -55,26 +52,15 @@ export const makeRegisterUser = (
     }
 
     const registrationVerificationTokenDocument =
-        await new RegistrationVerificationTokenModel(
-            await generateRegistrationVerificationToken(
-                DEFAULT_TOKEN_SIZE,
-                DEFAULT_EXPIRY_TIME_MINUTES,
-            ),
-        ).save();
+        await generateAndPersistRegistrationVerificationToken();
 
-    // Generate an expired token to satisfy user requirement
     const passwordResetVerificationTokenDocument =
-        await new PasswordResetTokenModel(
-            await generatePasswordResetToken(
-                DEFAULT_TOKEN_SIZE,
-                0,
-            ),
-        ).save();
+        await generateAndPersistExpiredPasswordResetVerificationToken();
 
     const newUser = new UserModel({
       email,
-      firstName: firstName,
-      lastName: lastName,
+      firstName,
+      lastName,
       password: hashedPassword,
       emailVerified: false,
       registrationVerificationToken: registrationVerificationTokenDocument.id,
@@ -83,38 +69,18 @@ export const makeRegisterUser = (
 
     await newUser.save();
 
+    // @ts-ignore
     registrationVerificationTokenDocument.user = newUser;
     await registrationVerificationTokenDocument.save();
 
+    // @ts-ignore
     passwordResetVerificationTokenDocument.user = newUser;
     await passwordResetVerificationTokenDocument.save();
 
     sendMail(email, 'Registration Confirmation',
-        // eslint-disable-next-line max-len
+        // @ts-ignore
         `<h4>Please click the following link to verify your account: <a href="${process.env.FRONT_END_URL}/register/verify/${registrationVerificationTokenDocument.value}">Verify Account</a></h4>`);
 
     return RegistrationStatus.AWAITING_EMAIL_VERIFICATION;
   };
-};
-
-/**
- * Helper function used to handle case of existing user.
- *
- * @param {string} email email for which case is to be checked
- * @return {Promise<boolean>} flag to indicate if user existed
- */
-const handleExistingUser = async (email: string): Promise<boolean> => {
-  const existingUser: HydratedDocument<User> = await UserModel.findOne({
-    email,
-  });
-
-  if (existingUser) {
-    if (existingUser.emailVerified) {
-      return false;
-    } else {
-      await UserModel.findByIdAndDelete(existingUser.id);
-    }
-  }
-
-  return true;
 };

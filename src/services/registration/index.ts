@@ -9,6 +9,16 @@ import {sendMail} from '../email';
 import {RegistrationStatus} from './enum/registration-status';
 import {RegistrationVerificationToken, RegistrationVerificationTokenModel} from
   '../../models/registration/RegistrationVerificationToken';
+import {Document} from 'mongoose';
+import {
+  makeGenerateAndPersistRegistrationVerificationToken,
+} from './helpers/generate-and-persist-registration-verification-token';
+import {PasswordResetToken, PasswordResetTokenModel}
+  from '../../models/password/PasswordResetToken';
+import {
+  makeGenerateAndPersistExpiredPasswordResetVerificationToken,
+} from './helpers/generate-and-persist-password-reset-verification-token';
+import {makeHandleExistingUser} from './helpers/handle-existing-user';
 
 const logger = loggerConfig();
 
@@ -27,6 +37,27 @@ export const confirmRegistration = makeConfirmRegistration(
     UserModel,
 );
 
+export type GenerateAndPersistRegistrationVerificationTokenFunction = (
+) => Promise<Document<any, any, RegistrationVerificationToken>>;
+const generateAndPersistRegistrationVerificationToken =
+    makeGenerateAndPersistRegistrationVerificationToken(
+        RegistrationVerificationTokenModel,
+        generateRegistrationVerificationToken,
+    );
+
+export type GenerateAndPersistExpiredPasswordResetVerificationToken = (
+) => Promise<Document<any, any, PasswordResetToken>>;
+const generateAndPersistExpiredPasswordResetVerificationToken =
+    makeGenerateAndPersistExpiredPasswordResetVerificationToken(
+        PasswordResetTokenModel,
+        generatePasswordResetToken,
+    );
+
+export type HandleExistingUserFunction = (
+    email: string,
+) => Promise<boolean>;
+const handleExistingUser = makeHandleExistingUser(UserModel);
+
 export type RegisterUserFunction = (
     email: string,
     firstName: string,
@@ -35,7 +66,9 @@ export type RegisterUserFunction = (
 ) => Promise<RegistrationStatus>;
 export const registerUser = makeRegisterUser(
     logger,
+    handleExistingUser,
+    generateAndPersistRegistrationVerificationToken,
+    generateAndPersistExpiredPasswordResetVerificationToken,
     sendMail,
-    generateRegistrationVerificationToken,
-    generatePasswordResetToken,
+    UserModel,
 );
