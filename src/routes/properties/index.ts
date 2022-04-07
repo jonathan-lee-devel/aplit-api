@@ -16,6 +16,8 @@ import {makeFormatPropertyInvitationResponse} from
 import {Response} from 'express-serve-static-core';
 import {PropertyInvitationStatus} from
   '../../services/properties/enum/invitation/property-invitation-status';
+import {configureGetPropertiesForUserAsAdminRoute} from "./get-property-for-user-as-admin-route";
+import {configureGetPropertiesForUserAsTenantRoute} from "./get-property-for-user-as-tenant-route";
 
 const logger = loggerConfig();
 
@@ -43,6 +45,14 @@ configureGetConfirmPropertyInvitationRoute(
     confirmPropertyInvitation,
     getPropertyIdFromInvitationToken,
     formatPropertyInvitationResponse,
+);
+configureGetPropertiesForUserAsAdminRoute(
+    logger,
+    router,
+);
+configureGetPropertiesForUserAsTenantRoute(
+    logger,
+    router,
 );
 
 export {router as PropertiesRouter};

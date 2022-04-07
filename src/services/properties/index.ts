@@ -25,6 +25,8 @@ import {makeConfirmPropertyInvitation} from
 import {makeGetPropertyIdFromInvitationToken} from
   './invitation/get-property-id-from-invitation-token';
 import {sendMail} from '../email';
+import {makeGetPropertiesForUserAsAdmin} from './get-properties-for-user-as-admin';
+import {makeGetPropertiesForUserAsTenant} from "./get-properties-for-user-as-tenant";
 
 const logger = loggerConfig();
 
@@ -115,3 +117,15 @@ export const getPropertyIdFromInvitationToken =
         PropertyInvitationTokenModel,
         PropertyInvitationModel,
     );
+
+export type GetPropertiesForUserAsAdminFunction = (
+    user: User
+) => Promise<StatusDataContainer<PropertyDto[]>>;
+export const getPropertiesForUserAsAdmin =
+    makeGetPropertiesForUserAsAdmin(PropertyModel);
+
+export type GetPropertiesForUserAsTenantFunction = (
+    user: User,
+) => Promise<StatusDataContainer<PropertyDto[]>>;
+export const getPropertiesForUserAsTenant =
+    makeGetPropertiesForUserAsTenant(PropertyModel);
