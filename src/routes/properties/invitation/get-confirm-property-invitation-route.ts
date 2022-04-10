@@ -52,17 +52,14 @@ export const configureGetConfirmPropertyInvitationRoute = (
 
         switch (propertyInvitationStatus) {
           case PropertyInvitationStatus.SUCCESS:
-            return res.redirect(
-                `${process.env.FRONT_END_URL}/property/view/${propertyId}`,
-            );
           case PropertyInvitationStatus.INVALID_TOKEN:
           case PropertyInvitationStatus.EMAIL_VERIFICATION_EXPIRED:
             return formatPropertyInvitationResponse(
-                res, 400, propertyInvitationStatus,
+                res, 200, propertyInvitationStatus, propertyId,
             );
           default:
             return formatPropertyInvitationResponse(
-                res, 500, propertyInvitationStatus,
+                res, 500, propertyInvitationStatus, propertyId,
             );
         }
       });

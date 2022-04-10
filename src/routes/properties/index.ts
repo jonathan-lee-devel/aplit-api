@@ -16,8 +16,10 @@ import {makeFormatPropertyInvitationResponse} from
 import {Response} from 'express-serve-static-core';
 import {PropertyInvitationStatus} from
   '../../services/properties/enum/invitation/property-invitation-status';
-import {configureGetPropertiesForUserAsAdminRoute} from "./get-property-for-user-as-admin-route";
-import {configureGetPropertiesForUserAsTenantRoute} from "./get-property-for-user-as-tenant-route";
+import {configureGetPropertiesForUserAsAdminRoute} from
+  './get-property-for-user-as-admin-route';
+import {configureGetPropertiesForUserAsTenantRoute} from
+  './get-property-for-user-as-tenant-route';
 
 const logger = loggerConfig();
 
@@ -28,6 +30,7 @@ export type FormatPropertyInvitationResponseFunction = (
     res: Response,
     httpStatus: number,
     propertyInvitationStatus: PropertyInvitationStatus,
+    propertyId: string,
 ) => void;
 const formatPropertyInvitationResponse = makeFormatPropertyInvitationResponse();
 

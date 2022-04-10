@@ -9,12 +9,14 @@ export const makeFormatPropertyInvitationResponse = ()
       res: Response,
       httpStatus: number,
       propertyInvitationStatus: PropertyInvitationStatus,
+      propertyId: string,
   ) {
     res
         .status(httpStatus)
         .json({
           property_invitation_status:
               PropertyInvitationStatus[propertyInvitationStatus],
+          property_id: propertyId,
         });
   };
 };

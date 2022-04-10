@@ -17,7 +17,7 @@ export const makeSendPropertyInvitation = (
         // eslint-disable-next-line max-len
         `<h2>${inviterEmail} has invited you to manage a shared living space</h2>
 <h3>Please click the following link to accept:
-<a href="${process.env.BACK_END_URL}/properties/invitations/confirm?token=${propertyInvitationTokenValue}">Accept</a></h3>`,
+<a href="${process.env.FRONT_END_URL}/property/invitation/verify/${propertyInvitationTokenValue}">Accept</a></h3>`,
     );
   };
 };
