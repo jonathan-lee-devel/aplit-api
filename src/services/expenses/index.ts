@@ -9,6 +9,7 @@ import {PropertyModel} from '../../models/properties/Property';
 import {ExpenseModel} from '../../models/expenses/Expense';
 import {makeGetExpense} from './get-expense';
 import {ExpenseFrequency} from './enum/expense-frequency';
+import {makeGetExpensesForProperty} from "./get-expenses-for-property";
 
 const logger = loggerConfig();
 
@@ -32,6 +33,17 @@ export type CreateExpenseFunction = (
 export const createExpense = makeCreateExpense(
     logger,
     generateId,
+    PropertyModel,
+    UserModel,
+    ExpenseModel,
+);
+
+export type GetExpensesForPropertyFunction = (
+    propertyId: string,
+    user: User,
+) => Promise<StatusDataContainer<ExpenseDto[]>>;
+export const getExpensesForProperty = makeGetExpensesForProperty(
+    logger,
     PropertyModel,
     UserModel,
     ExpenseModel,

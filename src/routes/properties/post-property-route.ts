@@ -2,7 +2,7 @@ import {Router} from 'express';
 import {body, validationResult} from 'express-validator';
 import {isLoggedIn} from '../../config/Auth';
 import {Logger} from '../../generic/Logger';
-import {SendMailFunction, VerifyEmailFunction} from '../../services/email';
+import {VerifyEmailFunction} from '../../services/email';
 import {CreatePropertyFunction} from '../../services/properties';
 
 /**

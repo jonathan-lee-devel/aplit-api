@@ -6,6 +6,7 @@ import {Model} from 'mongoose';
 import {Expense} from '../../models/expenses/Expense';
 import {Property} from '../../models/properties/Property';
 import {Logger} from '../../generic/Logger';
+import {SystemUser} from '../../config/SystemUser';
 
 export const makeGetExpense = (
     logger: Logger,
@@ -37,14 +38,16 @@ export const makeGetExpense = (
           __v: 0,
         });
 
-    const expensePropertyUser = await UserModel.findOne({_id: expenseProperty.admin},
-        {
-          _id: 0,
-          __v: 0,
-        });
+    const expensePropertyUser = await UserModel
+        .findOne({_id: expenseProperty.admin},
+            {
+              _id: 0,
+              __v: 0,
+            });
 
     if (expenseProperty.tenantEmails.includes(user.email) ||
-        expensePropertyUser.email === user.email) {
+        expensePropertyUser.email === user.email ||
+        SystemUser.email === user.email) {
       return {
         status: 200,
         data: {
