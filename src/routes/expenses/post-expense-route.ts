@@ -5,6 +5,7 @@ import {isLoggedIn} from '../../config/Auth';
 import {CreateExpenseFunction} from '../../services/expenses';
 import Dinero from 'dinero.js';
 import {ExpenseFrequency} from '../../services/expenses/enum/expense-frequency';
+import {isAfter} from 'date-fns';
 
 export const configurePostExpenseRoute = (
     logger: Logger,
@@ -20,6 +21,28 @@ export const configurePostExpenseRoute = (
       body('frequency', 'Must be a valid frequency')
           .exists()
           .isInt({min: ExpenseFrequency.ONCE, max: ExpenseFrequency.YEARLY}),
+      body('startDate', 'Must be a valid start date')
+          .exists()
+          .custom((input, {req}) => {
+            try {
+              const startDate = new Date(input);
+              const endDate = new Date(req.body.endDate);
+
+              return isAfter(endDate, startDate);
+            } catch (err) {
+              return false;
+            }
+          }),
+      body('endDate', 'Must be a valid end date')
+          .exists()
+          .custom((input) => {
+            try {
+              const date = new Date(input);
+              return isAfter(date, new Date());
+            } catch (err) {
+              return false;
+            }
+          }),
       isLoggedIn,
       async (req, res, _) => {
         const errors = validationResult(req);
@@ -28,7 +51,7 @@ export const configurePostExpenseRoute = (
           return res.status(400).json({errors: errors.array()});
         }
 
-        const {propertyId, amount, frequency} = req.body;
+        const {propertyId, amount, frequency, startDate, endDate} = req.body;
 
         // eslint-disable-next-line new-cap
         const dineroAmount = Dinero({amount, currency: 'EUR', precision: 2});
@@ -37,6 +60,8 @@ export const configurePostExpenseRoute = (
             propertyId,
             dineroAmount,
             frequency,
+            startDate,
+            endDate,
             // @ts-ignore
             req.user,
         );

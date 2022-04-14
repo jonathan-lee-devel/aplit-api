@@ -5,7 +5,7 @@ import {GetExpensesForPropertyFunction} from './index';
 import {Property} from '../../models/properties/Property';
 import {Logger} from '../../generic/Logger';
 import {ExpenseDto} from '../../data/dto/expenses/ExpenseDto';
-import {SystemUser} from "../../config/SystemUser";
+import {SystemUser} from '../../config/SystemUser';
 
 export const makeGetExpensesForProperty = (
     logger: Logger,
@@ -41,6 +41,8 @@ export const makeGetExpensesForProperty = (
         propertyId,
         amount: expense.amount,
         frequency: expense.frequency,
+        startDate: expense.startDate,
+        endDate: expense.endDate,
         createdBy: expense.createdBy.email,
       });
     }

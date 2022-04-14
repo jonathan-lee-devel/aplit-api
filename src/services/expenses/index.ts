@@ -28,6 +28,8 @@ export type CreateExpenseFunction = (
     propertyId: string,
     amount: Dinero,
     frequency: ExpenseFrequency,
+    startDate: Date,
+    endDate: Date,
     user: User,
 ) => Promise<StatusDataContainer<ExpenseDto>>;
 export const createExpense = makeCreateExpense(

@@ -19,6 +19,8 @@ export const makeCreateExpense = (
       propertyId: string,
       amount: Dinero,
       frequency: ExpenseFrequency,
+      startDate: Date,
+      endDate: Date,
       user: User,
   ) {
     const property = await PropertyModel.findOne({id: propertyId},
@@ -47,6 +49,8 @@ export const makeCreateExpense = (
       id,
       property,
       frequency,
+      startDate,
+      endDate,
       amount: amount.toFormat(),
       createdBy: user,
     };
@@ -67,6 +71,8 @@ export const makeCreateExpense = (
         id,
         frequency: frequency,
         amount: amount.toFormat(),
+        startDate,
+        endDate,
         propertyId,
         createdBy: user.email,
       },

@@ -54,6 +54,8 @@ export const makeGetExpense = (
           id: expense.id,
           amount: expense.amount,
           frequency: expense.frequency,
+          startDate: expense.startDate,
+          endDate: expense.endDate,
           createdBy: user.email,
           propertyId: expenseProperty.id,
         },
