@@ -10,6 +10,7 @@ import {corsConfig} from './config/Cors';
 import {UsersRouter} from './routes/users';
 import {PropertiesRouter} from './routes/properties';
 import {loggerConfig} from './config/Logger';
+import {ExpensesRouter} from "./routes/expenses";
 
 const logger = loggerConfig();
 
@@ -29,6 +30,7 @@ app.use(interceptAndLogAuthError);
 
 app.use('/users', UsersRouter);
 app.use('/properties', PropertiesRouter);
+app.use('/expenses', ExpensesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

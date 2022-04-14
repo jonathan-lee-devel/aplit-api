@@ -1,15 +1,19 @@
 import {StatusDataContainer} from '../../data/StatusDataContainer';
 import {PropertyDto} from '../../data/dto/properties/PropertyDto';
 import {User} from '../../models/User';
-import {PropertyModel} from '../../models/properties/Property';
+import {Property} from '../../models/properties/Property';
 import {GetPropertyFunction} from './index';
+import {Model} from 'mongoose';
 
 /**
  * Maker-function for get property.
  *
+ * @param {Model<Property>} PropertyModel
  * @return {Function} function to get property
  */
-export const makeGetProperty = (): GetPropertyFunction => {
+export const makeGetProperty = (
+    PropertyModel: Model<Property>,
+): GetPropertyFunction => {
   /**
    * Function to get property.
    *
@@ -44,11 +48,10 @@ export const makeGetProperty = (): GetPropertyFunction => {
           title: property.title,
         },
       };
-    } else {
-      return {
-        status: 403,
-        data: undefined,
-      };
     }
+    return {
+      status: 403,
+      data: undefined,
+    };
   };
 };

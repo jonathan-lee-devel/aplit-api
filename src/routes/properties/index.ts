@@ -1,7 +1,7 @@
 import express from 'express';
 import {configureGetPropertyRoute} from './get-property-route';
 import {configurePostPropertyRoute} from './post-property-route';
-import {sendMail, verifyEmail} from '../../services/email';
+import {verifyEmail} from '../../services/email';
 import {
   confirmPropertyInvitation,
   createProperty,
@@ -39,7 +39,6 @@ configurePostPropertyRoute(
     logger,
     router,
     verifyEmail,
-    sendMail,
     createProperty,
 );
 configureGetConfirmPropertyInvitationRoute(

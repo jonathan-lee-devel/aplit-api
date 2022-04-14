@@ -1,11 +1,9 @@
 import {Router} from 'express';
 import {body, validationResult} from 'express-validator';
-import {PropertyDto} from '../../data/dto/properties/PropertyDto';
-import {StatusDataContainer} from '../../data/StatusDataContainer';
-import {User} from '../../models/User';
 import {isLoggedIn} from '../../config/Auth';
 import {Logger} from '../../generic/Logger';
 import {SendMailFunction, VerifyEmailFunction} from '../../services/email';
+import {CreatePropertyFunction} from '../../services/properties';
 
 /**
  * Configure POST property route.
@@ -13,18 +11,13 @@ import {SendMailFunction, VerifyEmailFunction} from '../../services/email';
  * @param {Logger} logger used for logging
  * @param {Router} router used for routing
  * @param {VerifyEmailFunction} verifyEmail used to verify e-mail address input
- * @param {SendMailFunction} sendMail used to send e-mail
  * @param {Function} createProperty used to create property
  */
 export const configurePostPropertyRoute = (
     logger: Logger,
     router: Router,
     verifyEmail: VerifyEmailFunction,
-    sendMail: SendMailFunction,
-    createProperty: {
-        (title: string, tenants: string[], createdBy: User, admin: User)
-            : Promise<StatusDataContainer<PropertyDto>>;
-        },
+    createProperty: CreatePropertyFunction,
 ) => {
   router.post('/create',
       body('title', 'Title must be of length 5-25 characters')
