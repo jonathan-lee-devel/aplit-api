@@ -7,6 +7,7 @@ import {ExpenseFrequency} from '../../services/expenses/enum/expense-frequency';
 
 export interface Expense {
     id: string;
+    title: string;
     amount: string;
     frequency: ExpenseFrequency;
     startDate: Date;
@@ -20,6 +21,11 @@ const schema = new Schema<Expense>({
     type: String,
     required: true,
     unique: true,
+  },
+  title: {
+    type: String,
+    required: true,
+    unique: false,
   },
   amount: {
     type: String,

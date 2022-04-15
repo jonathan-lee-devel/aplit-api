@@ -39,6 +39,7 @@ export const makeGetExpensesForProperty = (
       transformedExpenses.push({
         id: expense.id,
         propertyId,
+        title: expense.title,
         amount: expense.amount,
         frequency: expense.frequency,
         startDate: expense.startDate,

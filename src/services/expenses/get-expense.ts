@@ -52,6 +52,7 @@ export const makeGetExpense = (
         status: 200,
         data: {
           id: expense.id,
+          title: expense.title,
           amount: expense.amount,
           frequency: expense.frequency,
           startDate: expense.startDate,

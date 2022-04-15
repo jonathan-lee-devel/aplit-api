@@ -3,6 +3,7 @@ import {ExpenseFrequency} from
 
 export interface ExpenseDto {
     id: string;
+    title: string;
     propertyId: string;
     amount: string;
     frequency: ExpenseFrequency;

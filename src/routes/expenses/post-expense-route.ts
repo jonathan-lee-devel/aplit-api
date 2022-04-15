@@ -15,6 +15,9 @@ export const configurePostExpenseRoute = (
   router.post('/create',
       body('propertyId', 'Must be a valid propertyId')
           .exists(),
+      body('title', 'Must be a valid title')
+          .exists()
+          .isLength({min: 1, max: 30}),
       body('amount', 'Must be a non-negative integer')
           .exists()
           .isInt({min: 0}),
@@ -51,13 +54,16 @@ export const configurePostExpenseRoute = (
           return res.status(400).json({errors: errors.array()});
         }
 
-        const {propertyId, amount, frequency, startDate, endDate} = req.body;
+        const {
+          propertyId, title, amount, frequency, startDate, endDate,
+        } = req.body;
 
         // eslint-disable-next-line new-cap
         const dineroAmount = Dinero({amount, currency: 'EUR', precision: 2});
 
         const expenseContainer = await createExpense(
             propertyId,
+            title,
             dineroAmount,
             frequency,
             startDate,

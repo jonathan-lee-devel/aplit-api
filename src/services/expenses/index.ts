@@ -9,7 +9,7 @@ import {PropertyModel} from '../../models/properties/Property';
 import {ExpenseModel} from '../../models/expenses/Expense';
 import {makeGetExpense} from './get-expense';
 import {ExpenseFrequency} from './enum/expense-frequency';
-import {makeGetExpensesForProperty} from "./get-expenses-for-property";
+import {makeGetExpensesForProperty} from './get-expenses-for-property';
 
 const logger = loggerConfig();
 
@@ -26,6 +26,7 @@ export const getExpense = makeGetExpense(
 
 export type CreateExpenseFunction = (
     propertyId: string,
+    title: string,
     amount: Dinero,
     frequency: ExpenseFrequency,
     startDate: Date,

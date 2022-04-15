@@ -17,6 +17,7 @@ export const makeCreateExpense = (
 ): CreateExpenseFunction => {
   return async function createExpense(
       propertyId: string,
+      title: string,
       amount: Dinero,
       frequency: ExpenseFrequency,
       startDate: Date,
@@ -47,6 +48,7 @@ export const makeCreateExpense = (
     const id = await generateId();
     const expense: Expense = {
       id,
+      title,
       property,
       frequency,
       startDate,
@@ -69,6 +71,7 @@ export const makeCreateExpense = (
       status: 201,
       data: {
         id,
+        title,
         frequency: frequency,
         amount: amount.toFormat(),
         startDate,
