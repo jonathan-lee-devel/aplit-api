@@ -5,7 +5,7 @@ import {verifyEmail} from '../../services/email';
 import {
   confirmPropertyInvitation,
   createProperty,
-  getPropertyIdFromInvitationToken,
+  getPropertyIdFromInvitationToken, getPropertyIsAdmin,
 } from
   '../../services/properties';
 import {loggerConfig} from '../../config/Logger';
@@ -20,6 +20,7 @@ import {configureGetPropertiesForUserAsAdminRoute} from
   './get-property-for-user-as-admin-route';
 import {configureGetPropertiesForUserAsTenantRoute} from
   './get-property-for-user-as-tenant-route';
+import {configureGetPropertyIsAdminRoute} from './get-property-is-admin';
 
 const logger = loggerConfig();
 
@@ -35,6 +36,11 @@ export type FormatPropertyInvitationResponseFunction = (
 const formatPropertyInvitationResponse = makeFormatPropertyInvitationResponse();
 
 configureGetPropertyRoute(logger, router);
+configureGetPropertyIsAdminRoute(
+    logger,
+    router,
+    getPropertyIsAdmin,
+);
 configurePostPropertyRoute(
     logger,
     router,

@@ -29,6 +29,7 @@ import {makeGetPropertiesForUserAsAdmin} from
   './get-properties-for-user-as-admin';
 import {makeGetPropertiesForUserAsTenant} from
   './get-properties-for-user-as-tenant';
+import {makeGetPropertyIsAdmin} from './get-property-is-admin';
 
 const logger = loggerConfig();
 
@@ -37,6 +38,12 @@ export type GetPropertyFunction = (
     id: string
 ) => Promise<StatusDataContainer<PropertyDto>>;
 export const getProperty = makeGetProperty(PropertyModel);
+
+export type GetPropertyIsAdminFunction = (
+    user: User,
+    id: string,
+) => Promise<boolean>;
+export const getPropertyIsAdmin = makeGetPropertyIsAdmin(PropertyModel);
 
 export type GeneratePropertyInvitationTokenFunction = (
     tokenSize: number,
