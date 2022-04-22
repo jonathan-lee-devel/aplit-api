@@ -5,7 +5,8 @@
  */
 import {app} from '../app';
 
-import http from 'http';
+import https from 'https';
+import fs from 'fs';
 
 import debug from 'debug';
 
@@ -17,9 +18,17 @@ const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTPS server.
  */
-const server = http.createServer(app);
+const options = {
+  key: fs
+      .readFileSync(
+          '/etc/letsencrypt/live/api.split.jonathanlee.io/privkey.pem'),
+  cert: fs
+      .readFileSync(
+          '/etc/letsencrypt/live/api.split.jonathanlee.io/fullchain.pem'),
+};
+const server = https.createServer(options, app);
 
 /**
  * Listen on provided port, on all network interfaces.

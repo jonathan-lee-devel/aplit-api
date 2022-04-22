@@ -10,7 +10,7 @@ import {corsConfig} from './config/Cors';
 import {UsersRouter} from './routes/users';
 import {PropertiesRouter} from './routes/properties';
 import {loggerConfig} from './config/Logger';
-import {ExpensesRouter} from "./routes/expenses";
+import {ExpensesRouter} from './routes/expenses';
 
 const logger = loggerConfig();
 
