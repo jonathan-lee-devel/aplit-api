@@ -23,10 +23,12 @@ app.set('port', port);
 const options = {
   key: fs
       .readFileSync(
-          '/etc/letsencrypt/live/api.split.jonathanlee.io/privkey.pem'),
+          // eslint-disable-next-line max-len
+          '../../../../../../../../etc/letsencrypt/live/api.split.jonathanlee.io/privkey.pem'),
   cert: fs
       .readFileSync(
-          '/etc/letsencrypt/live/api.split.jonathanlee.io/fullchain.pem'),
+          // eslint-disable-next-line max-len
+          '../../../../../../../../etc/letsencrypt/live/api.split.jonathanlee.io/fullchain.pem'),
 };
 const server = https.createServer(options, app);
 
