@@ -13,7 +13,8 @@ services:
       EMAIL_USER: ${EMAIL_USER}
       EMAIL_PASSWORD: ${EMAIL_PASSWORD}
     volumes:
-      - /etc/letsencrypt/live/api.split.jonathanlee.io/:/etc/letsencrypt/live/api.split.jonathanlee.io/
+      - /etc/letsencrypt/live/api.split.jonathanlee.io/privkey.pem:/etc/letsencrypt/live/api.split.jonathanlee.io/privkey.pem
+      - /etc/letsencrypt/live/api.split.jonathanlee.io/fullchain.pem:/etc/letsencrypt/live/api.split.jonathanlee.io/fullchain.pem
   database:
     image: mongo:latest
     ports:
