@@ -24,11 +24,11 @@ const options = {
   key: fs
       .readFileSync(
           // eslint-disable-next-line max-len
-          '../../../../../../../../etc/letsencrypt/live/api.split.jonathanlee.io/privkey.pem'),
+          '/etc/letsencrypt/live/api.split.jonathanlee.io/privkey.pem'),
   cert: fs
       .readFileSync(
           // eslint-disable-next-line max-len
-          '../../../../../../../../etc/letsencrypt/live/api.split.jonathanlee.io/fullchain.pem'),
+          '/etc/letsencrypt/live/api.split.jonathanlee.io/fullchain.pem'),
 };
 const server = https.createServer(options, app);
 
