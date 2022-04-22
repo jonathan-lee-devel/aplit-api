@@ -28,9 +28,9 @@ app.use(cookieParser());
 // TODO re-enable CSRF
 app.use(interceptAndLogAuthError);
 
-app.use('/users', UsersRouter);
-app.use('/properties', PropertiesRouter);
-app.use('/expenses', ExpensesRouter);
+app.use('/api/users', UsersRouter);
+app.use('/api/properties', PropertiesRouter);
+app.use('/api/expenses', ExpensesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
