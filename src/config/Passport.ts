@@ -14,7 +14,7 @@ export const passportConfig =
       passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: 'http://localhost:3000/auth/google/callback',
+        callbackURL: process.env.GOOGLE_CALLBACK_URL,
       },
       async (
           accessToken: string | Request,
@@ -23,14 +23,14 @@ export const passportConfig =
           done: VerifyCallback) => {
         const user = await UserModel.findOne({googleProfileId: profile.id});
         if (user) {
-          done(null, user);
+          return done(null, user);
         } else {
           const existingUser =
               await UserModel.findOne({email: profile.emails[0].value});
           if (existingUser) {
             existingUser.googleProfileId = profile.id;
             await existingUser.save();
-            return;
+            return done(null, existingUser);
           }
           const newUser: User = {
             googleProfileId: profile.id,
@@ -42,11 +42,13 @@ export const passportConfig =
             passwordResetToken: undefined,
             registrationVerificationToken: undefined,
           };
+          let newUserDocument;
           try {
-            await new UserModel(newUser).save();
+            newUserDocument = await new UserModel(newUser).save();
           } catch (err) {
             logger.error(err);
           }
+          return done(null, newUserDocument);
         }
       }));
       passport.use(

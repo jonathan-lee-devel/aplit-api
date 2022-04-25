@@ -7,6 +7,6 @@ export const configureGetGoogleAuthCallbackRoute = (
   router.get('/google/callback',
       passport.authenticate('google', {failureRedirect: '/login'}),
       (req, res) => {
-        res.redirect(`${process.env.FRONT_END_URL}/home`);
+        res.redirect(`${process.env.FRONT_END_URL}/login/auth/google`);
       });
 };

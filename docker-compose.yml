@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   express:
+    restart: on-failure
     build: .
     environment:
       SESSION_SECRET: ${SESSION_SECRET}
@@ -10,6 +11,9 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       EMAIL_USER: ${EMAIL_USER}
       EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GOOGLE_CALLBACK_URL: ${GOOGLE_CALLBACK_URL}
     links:
       - database
 

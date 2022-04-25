@@ -32,10 +32,10 @@ app.use(cookieParser());
 app.use(interceptAndLogAuthError);
 
 app.use('/auth', AuthRouter);
-app.use('/api/users', UsersRouter);
-app.use('/api/properties', PropertiesRouter);
-app.use('/api/expenses', ExpensesRouter);
-app.use('/api/user-notifications', UserNotificationsRouter);
+app.use('/users', UsersRouter);
+app.use('/properties', PropertiesRouter);
+app.use('/expenses', ExpensesRouter);
+app.use('/user-notifications', UserNotificationsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
