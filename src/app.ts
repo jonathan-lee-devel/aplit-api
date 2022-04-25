@@ -12,13 +12,15 @@ import {PropertiesRouter} from './routes/properties';
 import {loggerConfig} from './config/Logger';
 import {ExpensesRouter} from './routes/expenses';
 import {UserNotificationsRouter} from './routes/notifications';
+import {UserModel} from './models/User';
+import {AuthRouter} from './routes/auth';
 
 const logger = loggerConfig();
 
 const app = express();
 databaseConfig(logger);
 app.use(expressSessionConfig());
-const passport = passportConfig();
+const passport = passportConfig(logger, UserModel);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(helmet.hidePoweredBy());
@@ -29,6 +31,7 @@ app.use(cookieParser());
 // TODO re-enable CSRF
 app.use(interceptAndLogAuthError);
 
+app.use('/auth', AuthRouter);
 app.use('/api/users', UsersRouter);
 app.use('/api/properties', PropertiesRouter);
 app.use('/api/expenses', ExpensesRouter);

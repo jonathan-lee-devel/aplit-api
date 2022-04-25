@@ -9,6 +9,7 @@ import {PasswordResetToken} from './password/PasswordResetToken';
  * Used to represent a user.
  */
 export interface User {
+  googleProfileId: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -19,6 +20,11 @@ export interface User {
 }
 
 const schema = new Schema<User>({
+  googleProfileId: {
+    type: String,
+    required: false,
+    unique: true,
+  },
   email: {
     type: String,
     required: true,
@@ -34,7 +40,7 @@ const schema = new Schema<User>({
   },
   password: {
     type: String,
-    required: true,
+    required: false, // To allow for Google accounts
     unique: false,
   },
   emailVerified: {
@@ -44,12 +50,12 @@ const schema = new Schema<User>({
   },
   registrationVerificationToken: {
     type: ObjectID,
-    required: true,
+    required: false, // To allow for Google accounts
     unique: true,
   },
   passwordResetToken: {
     type: ObjectID,
-    required: true,
+    required: false, // To allow for Google accounts
     unique: true,
   },
 });
