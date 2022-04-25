@@ -4,6 +4,8 @@ import {loggerConfig} from '../../config/Logger';
 import {transporterConfig} from '../../config/Mail';
 import {SentMessageInfo} from 'nodemailer';
 import {makeSendMailCallback} from './callbacks/send-mail-callback';
+import {User, UserModel} from '../../models/User';
+import {makeObtainUserFromEmail} from './obtain-user-from-email';
 
 const logger = loggerConfig();
 const transporter = transporterConfig();
@@ -31,3 +33,11 @@ export type VerifyEmailFunction = (
     emailToVerify: string,
 ) => boolean;
 export const verifyEmail = makeVerifyEmail();
+
+export type ObtainUserFromEmailFunction = (
+    email: string,
+) => Promise<User>;
+export const obtainUserFromEmail = makeObtainUserFromEmail(
+    logger,
+    UserModel,
+);

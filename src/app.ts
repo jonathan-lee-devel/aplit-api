@@ -11,6 +11,7 @@ import {UsersRouter} from './routes/users';
 import {PropertiesRouter} from './routes/properties';
 import {loggerConfig} from './config/Logger';
 import {ExpensesRouter} from './routes/expenses';
+import {UserNotificationsRouter} from './routes/notifications';
 
 const logger = loggerConfig();
 
@@ -31,6 +32,7 @@ app.use(interceptAndLogAuthError);
 app.use('/api/users', UsersRouter);
 app.use('/api/properties', PropertiesRouter);
 app.use('/api/expenses', ExpensesRouter);
+app.use('/api/user-notifications', UserNotificationsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
