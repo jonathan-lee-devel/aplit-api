@@ -30,9 +30,7 @@ export const configureGetProfileRoute = (
         }
 
         // @ts-ignore
-        const {email} = req.user.email;
-
-        const profile = await getUserProfile(email);
+        const profile = await getUserProfile(req.user.email);
 
         return res.status(200).json(profile);
       },
