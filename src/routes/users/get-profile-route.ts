@@ -29,7 +29,6 @@ export const configureGetProfileRoute = (
           return res.status(400).json({errors: errors.array()});
         }
 
-        logger.info(JSON.stringify(req.user));
         // @ts-ignore
         const profile = await getUserProfile(req.user.email);
 
