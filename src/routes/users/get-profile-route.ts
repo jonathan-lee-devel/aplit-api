@@ -1,23 +1,20 @@
 import {Router} from 'express';
 import {validationResult} from 'express-validator';
 import {isLoggedIn} from '../../config/Auth';
-import {UserProfileDto} from '../../data/dto/UserProfileDto';
 import {Logger} from '../../generic/Logger';
+import {GetUserProfileFunction} from '../../services/user-profile';
 
 /**
  * Configure GET profile route.
  *
  * @param {Logger} logger used for logging
  * @param {Router} router used for routing
- * @param {Function} getUserProfile used to get user profile
+ * @param {GetUserProfileFunction} getUserProfile used to get user profile
  */
 export const configureGetProfileRoute = (
     logger: Logger,
     router: Router,
-    getUserProfile: {
-        (email: string)
-            : Promise<UserProfileDto>;
-        },
+    getUserProfile: GetUserProfileFunction,
 ) => {
   router.get('/profile', isLoggedIn,
       async (req, res, _) => {
