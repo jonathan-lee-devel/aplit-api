@@ -27,6 +27,9 @@ services:
       context: nginx
       dockerfile: Dockerfile
     ports:
-      - '80:80'
+      - '443:443'
     links:
       - express
+    volumes:
+      - ${SERVER_CERT_PATH}:/etc/nginx/server.crt
+      - ${SERVER_KEY_PATH}:/etc/nginx/server.key
