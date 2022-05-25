@@ -16,14 +16,14 @@ export const makeHandleExistingUser = (
       email,
     });
 
-    if (existingUser) {
-      if (existingUser.emailVerified) {
-        return false;
-      } else {
-        await UserModel.findByIdAndDelete(existingUser.id);
-      }
+    if (!existingUser) {
+      return true;
     }
 
-    return true;
+    if (existingUser.emailVerified) {
+      return false;
+    } else {
+      await UserModel.findByIdAndDelete(existingUser.id);
+    }
   };
 };
