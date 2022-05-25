@@ -22,8 +22,9 @@ export const makeHandleExistingUser = (
 
     if (existingUser.emailVerified) {
       return false;
-    } else {
-      await UserModel.findByIdAndDelete(existingUser.id);
     }
+
+    await UserModel.findByIdAndDelete(existingUser.id);
+    return true;
   };
 };
