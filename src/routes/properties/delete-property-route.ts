@@ -1,26 +1,19 @@
+import {Logger} from '../../generic/Logger';
 import {Router} from 'express';
 import {isLoggedIn} from '../../config/Auth';
-import {GetPropertyFunction} from '../../services/properties';
-import {Logger} from '../../generic/Logger';
+import {DeletePropertyFunction} from '../../services/properties';
 
-/**
- * Configure GET property route.
- *
- * @param {Logger} logger used for logging
- * @param {Router} router used for routing
- * @param {GetPropertyFunction} getProperty used to get property data
- */
-export const configureGetPropertyRoute = (
+export const configureDeletePropertyRoute = (
     logger: Logger,
     router: Router,
-    getProperty: GetPropertyFunction,
+    deleteProperty: DeletePropertyFunction,
 ) => {
-  router.get('/:id', isLoggedIn, async (req, res, _) => {
+  router.delete('/delete/:id', isLoggedIn, async (req, res, _) => {
     try {
       // @ts-ignore
-      const propertyContainer = await getProperty(req.user, req.params.id);
+      const propertyContainer = await deleteProperty(req.user, req.params.id);
       switch (propertyContainer.status) {
-        case 200:
+        case 204:
           return res
               .status(propertyContainer.status)
               .json(propertyContainer.data);

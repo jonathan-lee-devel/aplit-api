@@ -102,6 +102,7 @@ export const createProperty = makeCreateProperty(
 );
 
 export type DeletePropertyFunction = (
+    user: User,
     id: string,
 ) => Promise<StatusDataContainer<PropertyDto>>;
 export const deleteProperty = makeDeleteProperty(

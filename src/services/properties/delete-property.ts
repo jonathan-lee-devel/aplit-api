@@ -3,6 +3,7 @@ import {PropertyDto} from '../../data/dto/properties/PropertyDto';
 import {PropertyModel} from '../../models/properties/Property';
 import {Logger} from '../../generic/Logger';
 import {DeletePropertyFunction} from './index';
+import {User} from '../../models/User';
 
 /**
  * Maker-function for the function to delete properties.
@@ -16,13 +17,29 @@ export const makeDeleteProperty = (
   /**
    * Used to delete properties.
    *
+   * @param {User} user user attempting to delete the property
    * @param {string} id of the property to delete
    * @return {Promise<StatusDataContainer<PropertyDto>>} property deleted
    */
   return async function deleteProperty(
+      user: User,
       id: string,
   ): Promise<StatusDataContainer<PropertyDto>> {
     const property = await PropertyModel.findOne({id});
+    if (!property) {
+      return {
+        status: 404,
+        data: undefined,
+      };
+    }
+    // Comparison invalid unless both are strings
+    // @ts-ignore
+    if (String(property.admin) !== String(user.id)) {
+      return {
+        status: 403,
+        data: undefined,
+      };
+    }
     try {
       await PropertyModel.deleteOne({id});
     } catch (err) {
@@ -35,13 +52,8 @@ export const makeDeleteProperty = (
 
     return {
       status: 204,
-      data: {
-        id: property.id,
-        title: property.title,
-        tenantEmails: property.tenantEmails,
-        createdBy: property.createdBy.email,
-        admin: property.admin.email,
-      },
+      // No content response has no response body
+      data: undefined,
     };
   };
 };
