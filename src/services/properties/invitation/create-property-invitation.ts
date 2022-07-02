@@ -34,20 +34,20 @@ export const makeCreatePropertyInvitation = (
    * Function to create a property invitation.
    *
    * @param {string} propertyId id of property
-   * @param {string} inviteeEmail tenant being invited
    * @param {string} inviterEmail tenant inviting
+   * @param {string} inviteeEmail tenant being invited
    * @return {Promise<StatusDataContainer<PropertyInvitation>>} invitation
    */
   return async function createPropertyInvitation(
       propertyId: string,
-      inviteeEmail: string,
       inviterEmail: string,
+      inviteeEmail: string,
   ): Promise<StatusDataContainer<PropertyInvitation>> {
     const propertyInvitation: PropertyInvitation = {
       id: await generateId(),
       propertyId: propertyId,
-      inviteeEmail: inviteeEmail,
       inviterEmail: inviterEmail,
+      inviteeEmail: inviteeEmail,
       accepted: false,
       propertyInvitationToken: null,
     };
@@ -75,8 +75,8 @@ export const makeCreatePropertyInvitation = (
       data: {
         id: propertyInvitation.id,
         propertyId: propertyInvitation.propertyId,
-        inviteeEmail: propertyInvitation.inviteeEmail,
         inviterEmail: propertyInvitation.inviterEmail,
+        inviteeEmail: propertyInvitation.inviteeEmail,
         accepted: propertyInvitation.accepted,
         propertyInvitationToken: propertyInvitationToken,
       },
