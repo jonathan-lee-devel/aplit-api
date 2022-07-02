@@ -42,7 +42,7 @@ export const makeCreateProperty = (
     const property: Property = {
       id,
       title,
-      tenantEmails,
+      tenantEmails: [], // e-mails get added on invitation
       createdBy,
       admin,
     };

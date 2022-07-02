@@ -87,6 +87,7 @@ export type InviteToPropertyFunction = (
     => void;
 export const inviteToProperty = makeInviteToProperty(
     logger,
+    PropertyModel,
     createPropertyInvitation,
     sendPropertyInvitation,
 );
@@ -119,6 +120,7 @@ export const confirmPropertyInvitation = makeConfirmPropertyInvitation(
     logger,
     PropertyInvitationTokenModel,
     PropertyInvitationModel,
+    PropertyModel,
 );
 
 export type GetPropertyIdFromInvitationTokenFunction = (

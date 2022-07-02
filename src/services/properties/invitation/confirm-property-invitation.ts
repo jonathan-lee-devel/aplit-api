@@ -7,11 +7,13 @@ import {PropertyInvitationToken} from
   '../../../models/properties/invitation/PropertyInvitationToken';
 import {PropertyInvitation} from
   '../../../models/properties/invitation/PropertyInvitation';
+import {Property} from '../../../models/properties/Property';
 
 export const makeConfirmPropertyInvitation = (
     logger: Logger,
     PropertyInvitationTokenModel: Model<PropertyInvitationToken>,
     PropertyInvitationModel: Model<PropertyInvitation>,
+    PropertyModel: Model<Property>,
 ): ConfirmPropertyInvitationFunction => {
   return async function confirmPropertyInvitation(
       tokenValue: string,
@@ -38,11 +40,19 @@ export const makeConfirmPropertyInvitation = (
       return PropertyInvitationStatus.EMAIL_VERIFICATION_EXPIRED;
     }
 
+    const property = await PropertyModel.findOne({id: invitation.propertyId});
+    if (!property) {
+      logger.error('Associated property for invitation has been deleted');
+      return PropertyInvitationStatus.FAILURE;
+    }
+
+    property.tenantEmails.push(invitation.inviteeEmail);
     token.expiryDate = new Date();
     invitation.accepted = true;
     try {
       await token.save();
       await invitation.save();
+      await property.save();
     } catch (err) {
       logger.error(`An error has occurred: ${err.message}`);
       return PropertyInvitationStatus.FAILURE;

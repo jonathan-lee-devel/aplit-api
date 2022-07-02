@@ -4,17 +4,21 @@ import {
   InviteToPropertyFunction,
   SendPropertyInvitationFunction,
 } from '../index';
+import {Property} from '../../../models/properties/Property';
+import {Model} from 'mongoose';
 
 /**
  * Maker-function to invite to property.
  *
  * @param {Logger} logger used for logging
+ * @param {Model<Property>} PropertyModel used to add tenant to property
  * @param {CreatePropertyInvitationFunction} createPropertyInvitation to invite
  * @param {SendPropertyInvitationFunction} sendPropertyInvitation to send
  * @return {InviteToPropertyFunction} function to invite to property
  */
 export const makeInviteToProperty = (
     logger: Logger,
+    PropertyModel: Model<Property>,
     createPropertyInvitation: CreatePropertyInvitationFunction,
     sendPropertyInvitation: SendPropertyInvitationFunction,
 ): InviteToPropertyFunction => {
@@ -31,6 +35,15 @@ export const makeInviteToProperty = (
       inviterEmail: string,
       inviteeEmail: string,
   ) {
+    const property = await PropertyModel.findOne({id: propertyId});
+    if (!property) {
+      logger
+          .error('Error cannot invite to property as property does not exist');
+      return;
+    }
+    property.tenantEmails.push(inviteeEmail);
+    await property.save();
+
     const propertyInvitationContainer =
           await createPropertyInvitation(
               propertyId,
