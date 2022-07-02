@@ -30,6 +30,7 @@ import {makeGetPropertiesForUserAsAdmin} from
 import {makeGetPropertiesForUserAsTenant} from
   './get-properties-for-user-as-tenant';
 import {makeGetPropertyIsAdmin} from './get-property-is-admin';
+import {makeRemoveTenantFromProperty} from './remove-tenant-from-property';
 
 const logger = loggerConfig();
 
@@ -139,3 +140,11 @@ export type GetPropertiesForUserAsTenantFunction = (
 ) => Promise<StatusDataContainer<PropertyDto[]>>;
 export const getPropertiesForUserAsTenant =
     makeGetPropertiesForUserAsTenant(PropertyModel);
+
+export type RemoveTenantFromPropertyFunction = (
+    user: User,
+    propertyId: string,
+    tenantEmailToRemove: string,
+) => Promise<StatusDataContainer<PropertyDto>>;
+export const removeTenantFromProperty =
+    makeRemoveTenantFromProperty(logger, PropertyModel);
