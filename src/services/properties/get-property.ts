@@ -37,7 +37,8 @@ export const makeGetProperty = (
     }
 
     if (property.tenantEmails.includes(user.email) ||
-        property.admin.email === user.email) {
+        // @ts-ignore
+        String(property.admin) === String(user._id)) {
       return {
         status: 200,
         data: {
