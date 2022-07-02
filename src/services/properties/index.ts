@@ -15,7 +15,7 @@ import {PropertyInvitation, PropertyInvitationModel}
 import {makeSendPropertyInvitation}
   from './invitation/send-property-invitation';
 import {makeInviteToProperty} from './invitation/invite-to-property';
-import {User} from '../../models/User';
+import {User, UserModel} from '../../models/User';
 import {StatusDataContainer} from '../../data/StatusDataContainer';
 import {PropertyDto} from '../../data/dto/properties/PropertyDto';
 import {PropertyInvitationStatus} from
@@ -147,4 +147,4 @@ export type RemoveTenantFromPropertyFunction = (
     tenantEmailToRemove: string,
 ) => Promise<StatusDataContainer<PropertyDto>>;
 export const removeTenantFromProperty =
-    makeRemoveTenantFromProperty(logger, PropertyModel);
+    makeRemoveTenantFromProperty(logger, PropertyModel, UserModel);

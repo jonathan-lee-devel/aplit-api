@@ -46,6 +46,11 @@ export const configureRemoveTenantFromPropertyRoute = (
               .status(propertyContainer.status)
               .json({error: 'Failed to find tenant or property'});
         }
+        if (propertyContainer.status === 403) {
+          return res
+              .status(propertyContainer.status)
+              .json({error: 'Permission denied'});
+        }
         logger.error(
             'Error has occurred while removing tenant from property',
         );

@@ -7,6 +7,7 @@ import {RemoveTenantFromPropertyFunction} from './index';
 export const makeRemoveTenantFromProperty = (
     logger: Logger,
     PropertyModel: Model<Property>,
+    UserModel: Model<User>,
 ): RemoveTenantFromPropertyFunction => {
   return async function removeTenantFromProperty(
       user: User,
@@ -23,9 +24,11 @@ export const makeRemoveTenantFromProperty = (
       };
     }
 
+    const propertyAdmin = await UserModel.findOne({_id: property.admin});
+
     if (
       user.email !== tenantEmailToRemove &&
-        user.email !== property.admin.email
+        user.email !== propertyAdmin.email
     ) {
       return {
         status: 403,
