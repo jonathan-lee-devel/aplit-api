@@ -6,6 +6,7 @@ import {
   confirmPropertyInvitation,
   createProperty, deleteProperty, getProperty,
   getPropertyIdFromInvitationToken, getPropertyIsAdmin,
+  removeCurrentUserAsTenantFromProperty,
   removeTenantFromProperty,
 } from
   '../../services/properties';
@@ -25,6 +26,9 @@ import {configureGetPropertyIsAdminRoute} from './get-property-is-admin';
 import {configureDeletePropertyRoute} from './delete-property-route';
 import {configureRemoveTenantFromPropertyRoute} from
   './remove-tenant-from-property-route';
+import {
+  configureRemoveCurrentUserAsTenantTenantFromPropertyRoute,
+} from './remove-current-user-as-tenant-from-property-route';
 
 const logger = loggerConfig();
 
@@ -76,6 +80,11 @@ configureRemoveTenantFromPropertyRoute(
     router,
     verifyEmail,
     removeTenantFromProperty,
+);
+configureRemoveCurrentUserAsTenantTenantFromPropertyRoute(
+    logger,
+    router,
+    removeCurrentUserAsTenantFromProperty,
 );
 
 export {router as PropertiesRouter};
