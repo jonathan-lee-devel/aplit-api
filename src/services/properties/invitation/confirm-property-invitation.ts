@@ -46,7 +46,6 @@ export const makeConfirmPropertyInvitation = (
       return PropertyInvitationStatus.FAILURE;
     }
 
-    property.tenantEmails.push(invitation.inviteeEmail);
     token.expiryDate = new Date();
     invitation.accepted = true;
     try {
