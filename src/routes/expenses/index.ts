@@ -2,11 +2,12 @@ import express from 'express';
 import {loggerConfig} from '../../config/Logger';
 import {configureGetExpenseRoute} from './get-expense-route';
 import {configurePostExpenseRoute} from './post-expense-route';
-import {createExpense, getExpense, getExpensesForProperty, updateExpense} from
-  '../../services/expenses';
+import {createExpense, deleteExpense, getExpense, getExpensesForProperty, updateExpense} from
+        '../../services/expenses';
 import {configureGetExpensesForPropertyRoute} from
   './get-expenses-for-property-route';
 import {configurePatchExpenseRoute} from './patch-expense-route';
+import {configureDeleteExpenseRoute} from "./delete-expense-route";
 
 const logger = loggerConfig();
 
@@ -32,6 +33,11 @@ configurePatchExpenseRoute(
     logger,
     router,
     updateExpense,
+);
+configureDeleteExpenseRoute(
+    logger,
+    router,
+    deleteExpense,
 );
 
 export {router as ExpensesRouter};

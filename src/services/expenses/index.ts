@@ -11,6 +11,7 @@ import {makeGetExpense} from './get-expense';
 import {ExpenseFrequency} from './enum/expense-frequency';
 import {makeGetExpensesForProperty} from './get-expenses-for-property';
 import {makeUpdateExpense} from './update-expense';
+import {makeDeleteExpense} from './delete-expense';
 
 const logger = loggerConfig();
 
@@ -67,4 +68,14 @@ export const updateExpense = makeUpdateExpense(
     PropertyModel,
     UserModel,
     ExpenseModel,
+);
+
+export type DeleteExpenseFunction = (
+    user: User,
+    id: string,
+) => Promise<StatusDataContainer<ExpenseDto>>;
+export const deleteExpense = makeDeleteExpense(
+    logger,
+    ExpenseModel,
+    PropertyModel,
 );
