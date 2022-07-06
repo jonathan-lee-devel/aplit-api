@@ -10,6 +10,7 @@ import {ExpenseModel} from '../../models/expenses/Expense';
 import {makeGetExpense} from './get-expense';
 import {ExpenseFrequency} from './enum/expense-frequency';
 import {makeGetExpensesForProperty} from './get-expenses-for-property';
+import {makeUpdateExpense} from './update-expense';
 
 const logger = loggerConfig();
 
@@ -46,6 +47,22 @@ export type GetExpensesForPropertyFunction = (
     user: User,
 ) => Promise<StatusDataContainer<ExpenseDto[]>>;
 export const getExpensesForProperty = makeGetExpensesForProperty(
+    logger,
+    PropertyModel,
+    UserModel,
+    ExpenseModel,
+);
+
+export type UpdateExpenseFunction = (
+    expenseId: string,
+    title: string,
+    amount: string,
+    frequency: ExpenseFrequency,
+    startDate: Date,
+    endDate: Date,
+    user: User,
+) => Promise<StatusDataContainer<ExpenseDto>>;
+export const updateExpense = makeUpdateExpense(
     logger,
     PropertyModel,
     UserModel,
