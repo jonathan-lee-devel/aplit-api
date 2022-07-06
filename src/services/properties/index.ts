@@ -120,7 +120,6 @@ export const confirmPropertyInvitation = makeConfirmPropertyInvitation(
     logger,
     PropertyInvitationTokenModel,
     PropertyInvitationModel,
-    PropertyModel,
 );
 
 export type GetPropertyIdFromInvitationTokenFunction = (
